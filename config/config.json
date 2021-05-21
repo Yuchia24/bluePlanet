@@ -3,14 +3,14 @@
     "username": "awsuserds",
     "password": "awsaurora",
     "database": "vender",
-    "host": "127.0.0.1",
+    "host": "dev.cnuh6ufclt3g.ap-northeast-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
     "username": "awsuserds",
     "password": "awsaurora",
     "database": "vender",
-    "host": "127.0.0.1",
+    "host": "dev.cnuh6ufclt3g.ap-northeast-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "production": {
