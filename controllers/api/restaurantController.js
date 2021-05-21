@@ -1,10 +1,18 @@
 const apiHelper = require('../../utils/helper')
 const token = process.env.token
+const qs = require('qs')
 
 const restaurantController = {
   getVenderKeyword: async (req, res) => {
     try {
-      
+      const { kw } = req.body
+      const response = await apiHelper.post('/all_kw',
+        qs.stringify({
+          token,
+          kw
+        })
+      )
+      console.log('response', response.data.result)
     } catch (error) {
       console.log(error)
     }
