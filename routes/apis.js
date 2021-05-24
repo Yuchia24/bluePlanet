@@ -7,7 +7,7 @@ router.post('/restaurants/keywords', restaurantController.getVenderKeyword)
 router.get('/restaurants/keywords/:kw', restaurantController.getKeyword)
 // 用餐目的
 router.post('/restaurants/purpose', restaurantController.getVenderPurpose)
-router.get('/restaurants/purpose/:restaurant_id', restaurantController.getPurpose)
+router.get('/restaurants/purpose', restaurantController.getPurpose)
 // 菜餚類別
 router.post('/restaurants/type', restaurantController.getVenderType)
 router.get('/restaurant/type/:restaurant_id', restaurantController.getType)

@@ -51,7 +51,8 @@ const restaurantController = {
   },
   getPurpose: async (req, res) => {
     try {
-
+      // ./purpose?restaurant_name={restaurantName}&restaurant_id={restaurantId}
+      console.log('query', req.query)
     } catch (error) {
       console.log(error)
     }
