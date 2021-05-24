@@ -9,10 +9,10 @@ router.get('/restaurants/keywords/:kw', restaurantController.getKeyword)
 router.post('/restaurants/purpose', restaurantController.getVenderPurpose)
 router.get('/restaurants/purpose/:restaurant_id', restaurantController.getPurpose)
 // 菜餚類別
-router.post('/restaurant/type', restaurantController.getVenderType)
+router.post('/restaurants/type', restaurantController.getVenderType)
 router.get('/restaurant/type/:restaurant_id', restaurantController.getType)
 // 地區美食
-router.post('/restaurant/dish', restaurantController.getVenderDish)
+router.post('/restaurants/dish', restaurantController.getVenderDish)
 router.get('/restaurant/dish/:restaurant_id', restaurantController.getDish)
 
 module.exports = router

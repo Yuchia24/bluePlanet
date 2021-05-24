@@ -58,7 +58,14 @@ const restaurantController = {
   },
   getVenderType: async (req, res) => {
     try {
-
+      const { kw } = req.body
+      const response = await apiHelper.post('/type',
+        qs.stringify({
+          token,
+          kw
+        })
+      )
+      console.log('response', response.data.result)
     } catch (error) {
       console.log(error)
     }
@@ -72,7 +79,14 @@ const restaurantController = {
   },
   getVenderDish: async (req, res) => {
     try {
-
+      const { kw } = req.body
+      const response = await apiHelper.post('/dish',
+        qs.stringify({
+          token,
+          kw
+        })
+      )
+      console.log('response', response.data.result)
     } catch (error) {
       console.log(error)
     }
