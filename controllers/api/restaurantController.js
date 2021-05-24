@@ -20,15 +20,20 @@ const restaurantController = {
   },
   getKeyword: async (req, res) => {
     try {
-      const { kw } = req.params
+      // ./keywords?kw={kw}
+      const { kw } = req.query
       const response = await apiHelper.post('/all_kw',
         qs.stringify({
           token,
           kw
         })
       )
+      if (response.data.success) {
+        return res.status(400).json({
+          error: response.data.error
+        })
+      }
       return res.status(200).json({
-        status: 'success',
         result: response.data.result
       })
     } catch (error) {
@@ -51,7 +56,8 @@ const restaurantController = {
   },
   getPurpose: async (req, res) => {
     try {
-
+      // ./purpose?restaurant_name={restaurantName}&restaurant_id={restaurantId}
+      console.log('query', req.query)
     } catch (error) {
       console.log(error)
     }
