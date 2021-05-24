@@ -27,7 +27,7 @@ const restaurantController = {
           kw
         })
       )
-      return res.json({
+      return res.status(200).json({
         status: 'success',
         result: response.data.result
       })
@@ -37,7 +37,14 @@ const restaurantController = {
   },
   getVenderPurpose: async (req, res) => {
     try {
-
+      const { kw } = req.body
+      const response = await apiHelper.post('/purpose',
+        qs.stringify({
+          token,
+          kw
+        })
+      )
+      console.log('response', response.data.result)
     } catch (error) {
       console.log(error)
     }
