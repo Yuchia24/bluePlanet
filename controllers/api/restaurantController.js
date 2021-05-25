@@ -28,11 +28,6 @@ const restaurantController = {
           kw
         })
       )
-      if (response.data.success) {
-        return res.status(400).json({
-          error: response.data.error
-        })
-      }
       return res.status(200).json({
         result: response.data.result
       })
