@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const db = require('./models')
 const cors = require('cors')
+const handleErrors = require('./middleware/handleErrors')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -19,3 +20,4 @@ app.listen(PORT, () => {
 })
 
 require('./routes')(app)
+app.use(handleErrors)
