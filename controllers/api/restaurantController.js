@@ -43,11 +43,8 @@ const restaurantController = {
           keyword_data: JSON.stringify({ data: response.data })
         })
         console.log('done for raw data')
-        // 存入 vender_input_data
+        // update vender_input_data
         await vender_input_data.update({
-          vender_id,
-          restaurant_id,
-          restaurant_name: restaurant.restaurant_name,
           keyword: JSON.stringify(response.data.result)
         }, { where: { restaurant_id } })
 
@@ -57,15 +54,46 @@ const restaurantController = {
         })
       }
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   },
-  getPurpose: async (req, res) => {
+  getPurpose: async (req, res, next) => {
     try {
-      // ./purpose?restaurant_name={restaurantName}&restaurant_id={restaurantId}
-      console.log("query", req.query);
+      // ./purpose?restaurant_id={restaurantId}
+      const { restaurant_id } = req.query
+      if (!restaurant_id) {
+        throw new BadRequest('Missing keyword for request.')
+      }
+      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      console.log('restaurant', restaurant)
+      if (restaurant.purpose) {
+        return res.status(200).json({
+          status: 'success',
+          result: restaurant.keyword
+        })
+      } else {
+        const response = await venderAction.getVenderPurpose(restaurant.restaurant_name)
+        console.log('response', response.data)
+        // 存入 raw data table
+        await vender_suitable_purpose_rawData.create({
+          vender_id,
+          restaurant_id,
+          posted_data: JSON.stringify({ purpose: restaurant.restaurant_name }),
+          suitable_purpose_data: JSON.stringify({ data: response.data })
+        })
+        console.log('done for raw data')
+        // update vender_input_data
+        await vender_input_data.update({
+          purpose: JSON.stringify(response.data.result)
+        }, { where: { restaurant_id } })
+
+        return res.status(200).json({
+          status: 'success',
+          result: response.data.result
+        })
+      }
     } catch (error) {
-      console.log(error);
+      next(error)
     }
   },
   getType: async (req, res) => {
@@ -88,12 +116,10 @@ const venderAction = {
       resolve(apiHelper.post('/all_kw', qs.stringify({ token, kw })))
     })
   },
-  getVenderPurpose: async (kw) => {
-    try {
-
-    } catch (error) {
-
-    }
+  getVenderPurpose: (kw) => {
+    return new Promise((resolve, reject) => {
+      resolve(apiHelper.post('/purpose', qs.stringify({ token, kw })))
+    })
   },
   getVenderType: async (kw) => {
     try {
