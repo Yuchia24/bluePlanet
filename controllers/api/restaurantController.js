@@ -10,6 +10,8 @@ const Vender_restaurant_keyword_rawData = db.vender_restaurant_keyword_rawData;
 const Vender_restaurant_review_rawData = db.vender_restaurant_review_rawData;
 const Vender_suitable_purpose_rawData = db.vender_suitable_purpose_rawData;
 const { BadRequest, NotFound } = require('../../utils/errors')
+const dayjs = require("dayjs");
+const time = dayjs().format("YYYY-MM-DD", { timeZone: "zh-tw" });
 
 const restaurantController = {
   getDish: async (req, res, next) => {
@@ -117,7 +119,9 @@ const restaurantController = {
         keyword: JSON.stringify(response.data.result),
         vender_id: 1,
         where: { restaurant_name: search_name },
-        restaurant_id: restaurant_id
+        restaurant_id: restaurant_id,
+        created_datetime: time,
+        updated_datetime: time
       });
 
       // const test = await Vender_input_data.findByPk(20);
