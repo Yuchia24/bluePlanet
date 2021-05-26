@@ -2,35 +2,39 @@
 
 const fs = require('fs');
 const path = require('path');
-const Sequelize = require('sequelize');
-const basename = path.basename(__filename);
+const { Sequelize, DataTypes, Op } = require("sequelize");
+//const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 
 const sequelize = new Sequelize(
-    process.env.DATABASE,
-    process.env.DATABASE_USER,
-    process.env.DATABASE_PASSWORD,
-    {
-      host: process.env.DATABASE_HOST,
-      dialect: "mysql",
-      dialectOptions: {
-        timezone: "Asia/Taipei",
-        useUTC: false,
-      },
+  process.env.DATABASE,
+  process.env.DATABASE_USER,
+  process.env.DATABASE_PASSWORD,
+  {
+    host: "dev.cnuh6ufclt3g.ap-northeast-1.rds.amazonaws.com",
+    username: "awsuserds",
+    password: "awsaurora",
+    port: process.env.DATABASE_PORT,
+    database: "vender",
+    dialect: "mysql",
+    dialectOptions: {
       timezone: "Asia/Taipei",
-      operatorsAliases: false,
+      useUTC: false,
+    },
+    timezone: "Asia/Taipei",
+    operatorsAliases: false,
 
-      // poll: {
-      //   max: config.db.pool.max,
-      //   min: config.db.pool.min,
-      //   acquire: config.db.pool.acquire,
-      //   idle: config.db.pool.idle
-      // }
-    }
-  );
+    // poll: {
+    //   max: config.db.pool.max,
+    //   min: config.db.pool.min,
+    //   acquire: config.db.pool.acquire,
+    //   idle: config.db.pool.idle
+    // }
+  }
+);
 
 
 // fs
