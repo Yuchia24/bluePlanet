@@ -33,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'vender_cuisine_nationality_rawData',
+    tableName: 'vender_cuisine_dish_rawData',
     timestamps: false,
     indexes: [
       {

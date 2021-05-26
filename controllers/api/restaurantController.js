@@ -69,7 +69,7 @@ const restaurantController = {
       if (restaurant.purpose) {
         return res.status(200).json({
           status: 'success',
-          result: restaurant.keyword
+          result: restaurant.purpose
         })
       } else {
         const response = await venderAction.getVenderPurpose(restaurant.restaurant_name)
@@ -108,7 +108,7 @@ const restaurantController = {
       if (restaurant.type) {
         return res.status(200).json({
           status: 'success',
-          result: restaurant.keyword
+          result: restaurant.type
         })
       } else {
         const response = await venderAction.getVenderType(restaurant.restaurant_name)
@@ -135,10 +135,43 @@ const restaurantController = {
       next(error)
     }
   },
-  getDish: async (req, res) => {
+  getDish: async (req, res, next) => {
     try {
+      // ./dish?restaurant_id={restaurantId}
+      const { restaurant_id } = req.query
+      if (!restaurant_id) {
+        throw new BadRequest('Missing keyword for request.')
+      }
+      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      console.log('restaurant', restaurant)
+      if (restaurant.dish) {
+        return res.status(200).json({
+          status: 'success',
+          result: restaurant.dish
+        })
+      } else {
+        const response = await venderAction.getVenderDish(restaurant.restaurant_name)
+        console.log('response', response.data)
+        // 存入 raw data table
+        await vender_cuisine_dish_rawData.create({
+          vender_id,
+          restaurant_id,
+          posted_data: JSON.stringify({ purpose: restaurant.restaurant_name }),
+          cuisine_dish_data: JSON.stringify({ data: response.data })
+        })
+        console.log('done for raw data')
+        // update vender_input_data
+        await vender_input_data.update({
+          dish: JSON.stringify(response.data.result)
+        }, { where: { restaurant_id } })
+
+        return res.status(200).json({
+          status: 'success',
+          result: response.data.result
+        })
+      }
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   },
 };
@@ -160,11 +193,9 @@ const venderAction = {
     })
   },
   getVenderDish: async (kw) => {
-    try {
-
-    } catch (error) {
-
-    }
+    return new Promise((resolve, reject) => {
+      resolve(apiHelper.post('/dish', qs.stringify({ token, kw })))
+    })
   }
 }
 
