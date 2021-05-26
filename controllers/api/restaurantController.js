@@ -1,17 +1,20 @@
 const apiHelper = require('../../utils/helper')
-// const { data1, vender, vender_restaurant_keyword_rawData, vender_input_data } = require('../../models')
 const token = process.env.token
 const qs = require('qs')
-const db = require("../../models");
-const Vender_input_data = db.vender_input_data;
-const Vender_cuisine_dish_rawData = db.vender_cuisine_dish_rawData;
-const Vender_cuisine_type_rawData = db.vender_cuisine_type_rawData;
-const Vender_restaurant_keyword_rawData = db.vender_restaurant_keyword_rawData;
-const Vender_restaurant_review_rawData = db.vender_restaurant_review_rawData;
-const Vender_suitable_purpose_rawData = db.vender_suitable_purpose_rawData;
+
+const {
+  Vender_input_data,
+  Vender_cuisine_dish_rawData,
+  Vender_cuisine_type_rawData,
+  Vender_restaurant_keyword_rawData,
+  Vender_restaurant_review_rawData,
+  Vender_suitable_purpose_rawData,
+  Venders
+} = require('../../models')
+
 const { BadRequest, NotFound } = require('../../utils/errors')
-const dayjs = require("dayjs");
-const time = dayjs().format("YYYY-MM-DD", { timeZone: "zh-tw" });
+const dayjs = require("dayjs")
+const time = dayjs().format("YYYY-MM-DD", { timeZone: "zh-tw" })
 
 const restaurantController = {
   getDish: async (req, res, next) => {
