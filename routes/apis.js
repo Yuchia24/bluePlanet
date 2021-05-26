@@ -3,7 +3,7 @@ const router = express.Router()
 const restaurantController = require('../controllers/api/restaurantController')
 
 // 餐廳關鍵字
-router.get('/restaurants/keywords', restaurantController.getKeyword)
+router.get('/restaurants/keyword', restaurantController.getKeyword)
 // 用餐目的
 router.get('/restaurants/purpose', restaurantController.getPurpose)
 // 菜餚類別
