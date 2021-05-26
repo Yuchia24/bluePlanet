@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('vender_cuisine_nationality_rawData', {
+  return sequelize.define('vender_cuisine_dish_rawData', {
     vcn_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    cuisine_nationality_data: {
+    cuisine_dish_data: {
       type: DataTypes.TEXT,
       allowNull: false
     },

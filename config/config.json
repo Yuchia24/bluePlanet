@@ -14,10 +14,11 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
+    "username": "awsrdsuser",
+    "password": "RdsKernelSql",
     "database": "database_production",
-    "host": "127.0.0.1",
+    "host": "eztsequelpro.c7ft8vuuzs5r.ap-southeast-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
+
