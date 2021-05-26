@@ -7,8 +7,8 @@ router.get('/restaurants/keywords', restaurantController.getKeyword)
 // 用餐目的
 router.get('/restaurants/purpose', restaurantController.getPurpose)
 // 菜餚類別
-router.get('/restaurant/type', restaurantController.getType)
+router.get('/restaurants/type', restaurantController.getType)
 // 地區美食
-router.get('/restaurant/dish', restaurantController.getDish)
+router.get('/restaurants/dish', restaurantController.getDish)
 
 module.exports = router
