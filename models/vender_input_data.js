@@ -15,11 +15,19 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    restaurant_name: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
     keyword: {
       type: DataTypes.TEXT,
       allowNull: true
     },
     review: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    dish: {
       type: DataTypes.TEXT,
       allowNull: true
     },
