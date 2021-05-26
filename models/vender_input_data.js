@@ -23,11 +23,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    restaurant_attribute: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-      defaultValue: ""
-    },
     created_datetime: {
       type: DataTypes.DATE,
       allowNull: false
