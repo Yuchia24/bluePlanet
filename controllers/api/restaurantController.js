@@ -35,32 +35,6 @@ const restaurantController = {
         throw new NotFound("No match keywords for your request.");
       }
 
-      const search_name = req.body.kw
-      const restaurant_id = Vender_input_data.findAll({
-        where: {
-          restaurant_name: search_name,
-        },
-      });
-
-      Vender_input_data.create({
-        keyword: JSON.stringify(response.data.result),
-        vender_id: 1,
-        where: { restaurant_name: search_name },
-        restaurant_id: restaurant_id,
-        created_datetime: time,
-        updated_datetime: time
-      });
-
-      // const test = await Vender_input_data.findByPk(20);
-      // console.log(test);
-
-      Vender_restaurant_keyword_rawData.create({
-        vender_id: 1,
-        restaurant_id: restaurant_id,
-        posted_data: req.body,
-        keyword_data: res.data.result
-      })
-
       return res.status(200).json({
         status: "success",
         result: response.data.result,
