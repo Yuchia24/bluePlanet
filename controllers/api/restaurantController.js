@@ -115,14 +115,17 @@ const restaurantController = {
         },
       });
 
-      Vender_input_data.create({
-        keyword: JSON.stringify(response.data.result),
-        vender_id: 1,
-        where: { restaurant_name: search_name },
-        restaurant_id: restaurant_id,
-        created_datetime: time,
-        updated_datetime: time
-      });
+      Vender_input_data.create(
+        {
+          keyword: JSON.stringify(response.data.result),
+          vender_id: 1,
+
+          restaurant_id: restaurant_id,
+          created_datetime: time,
+          updated_datetime: time,
+        },
+        { where: { restaurant_name: search_name } }
+      );
 
       // const test = await Vender_input_data.findByPk(20);
       // console.log(test);
