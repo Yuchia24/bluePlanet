@@ -3,16 +3,12 @@ const router = express.Router()
 const restaurantController = require('../controllers/api/restaurantController')
 
 // 餐廳關鍵字
-// router.post('/restaurants/keywords', restaurantController.getVenderKeyword)
-router.get('/restaurants/keywords', restaurantController.getKeyword)
+router.get('/restaurants/keyword', restaurantController.getKeyword)
 // 用餐目的
-// router.post('/restaurants/purpose', restaurantController.getVenderPurpose)
 router.get('/restaurants/purpose', restaurantController.getPurpose)
 // 菜餚類別
-// router.post('/restaurants/type', restaurantController.getVenderType)
-router.get('/restaurant/type', restaurantController.getType)
+router.get('/restaurants/type', restaurantController.getType)
 // 地區美食
-// router.post('/restaurants/dish', restaurantController.getVenderDish)
-router.get('/restaurant/dish', restaurantController.getDish)
+router.get('/restaurants/dish', restaurantController.getDish)
 
 module.exports = router

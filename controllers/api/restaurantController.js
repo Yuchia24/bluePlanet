@@ -1,229 +1,199 @@
 const apiHelper = require('../../utils/helper')
-// const { data1, vender, vender_restaurant_keyword_rawData, vender_input_data } = require('../../models')
 const token = process.env.token
 const qs = require('qs')
-const db = require("../../models");
-const Vender_input_data = db.vender_input_data;
-const Vender_cuisine_dish_rawData = db.vender_cuisine_dish_rawData;
-const Vender_cuisine_type_rawData = db.vender_cuisine_type_rawData;
-const Vender_restaurant_keyword_rawData = db.vender_restaurant_keyword_rawData;
-const Vender_restaurant_review_rawData = db.vender_restaurant_review_rawData;
-const Vender_suitable_purpose_rawData = db.vender_suitable_purpose_rawData;
-const { BadRequest, NotFound } = require('../../utils/errors')
-const dayjs = require("dayjs");
-const time = dayjs().format("YYYY-MM-DD", { timeZone: "zh-tw" });
+const vender_id = 1
+
+const {
+  vender_input_data,
+  vender_cuisine_dish_rawData,
+  vender_cuisine_type_rawData,
+  vender_restaurant_keyword_rawData,
+  vender_restaurant_review_rawData,
+  vender_suitable_purpose_rawData,
+  venders
+} = require('../../models')
+
+const { BadRequest, NotFound, InputInvalid } = require('../../utils/errors')
+const dayjs = require('dayjs')
+const time = dayjs().format("YYYY-MM-DD", { timeZone: "zh-tw" })
 
 const restaurantController = {
-  getDish: async (req, res, next) => {
+  getKeyword: async (req, res, next) => {
     try {
-      // ./dish?kw={kw}
-      const { kw } = req.query;
-      if (!kw) {
-        throw new BadRequest("Missing kw for request.");
+      // ./keywords?restaurant_id={restaurant_id}
+      const { restaurant_id } = req.query
+      if (!restaurant_id) {
+        throw new BadRequest('Missing keyword for request.')
       }
-      const response = await apiHelper.post(
-        "/dish",
-        qs.stringify({
-          token,
-          kw,
+      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      if (restaurant.keyword) {
+        return res.status(200).json({
+          status: 'success',
+          result: JSON.parse(restaurant.keyword)
         })
-      );
-      if (!response.data.result.length) {
-        throw new NotFound("No match keywords for your request.");
-      }
-      return res.status(200).json({
-        status: "success",
-        result: response.data.result,
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
+      } else {
+        const response = await venderAction.getVenderKeyword(restaurant.restaurant_name)
+        // 存入 raw data table
+        await vender_restaurant_keyword_rawData.create({
+          vender_id,
+          restaurant_id,
+          posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
+          keyword_data: JSON.stringify({ data: response.data })
+        })
 
-  getType: async (req, res, next) => {
-    try {
-      // ./type?kw={kw}
-      const { kw } = req.query;
-      if (!kw) {
-        throw new BadRequest("Missing kw for request.");
-      }
-      const response = await apiHelper.post(
-        "/type",
-        qs.stringify({
-          token,
-          kw,
+        // update vender_input_data
+        await vender_input_data.update({
+          keyword: JSON.stringify(response.data.result)
+        }, { where: { restaurant_id } })
+
+        return res.status(200).json({
+          status: 'success',
+          result: response.data.result
         })
-      );
-      if (!response.data.result.length) {
-        throw new NotFound("No match keywords for your request.");
       }
-      return res.status(200).json({
-        status: "success",
-        result: response.data.result,
-      });
     } catch (error) {
-      next(error);
+      next(error)
     }
   },
   getPurpose: async (req, res, next) => {
     try {
-      // ./purpose?kw={kw}
-      const { kw } = req.query;
-      if (!kw) {
-        throw new BadRequest("Missing kw for request.");
+      // ./purpose?restaurant_id={restaurantId}
+      const { restaurant_id } = req.query
+      if (!restaurant_id) {
+        throw new BadRequest('Missing keyword for request.')
       }
-      const response = await apiHelper.post(
-        "/purpose",
-        qs.stringify({
-          token,
-          kw,
+      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+
+      if (restaurant.purpose) {
+        return res.status(200).json({
+          status: 'success',
+          result: JSON.parse(restaurant.purpose)
         })
-      );
-      if (!response.data.result.length) {
-        throw new NotFound("No match keywords for your request.");
+      } else {
+        const response = await venderAction.getVenderPurpose(restaurant.restaurant_name)
+
+        // 存入 raw data table
+        await vender_suitable_purpose_rawData.create({
+          vender_id,
+          restaurant_id,
+          posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
+          suitable_purpose_data: JSON.stringify({ data: response.data })
+        })
+
+        // update vender_input_data
+        await vender_input_data.update({
+          purpose: JSON.stringify(response.data.result)
+        }, { where: { restaurant_id } })
+
+        return res.status(200).json({
+          status: 'success',
+          result: response.data.result
+        })
       }
-      return res.status(200).json({
-        status: "success",
-        result: response.data.result,
-      });
+    } catch (error) {
+      next(error)
+    }
+  },
+  getType: async (req, res, next) => {
+    try {
+      // ./type?restaurant_id={restaurantId}
+      const { restaurant_id } = req.query
+      if (!restaurant_id) {
+        throw new BadRequest('Missing keyword for request.')
+      }
+      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+
+      if (restaurant.type) {
+        return res.status(200).json({
+          status: 'success',
+          result: JSON.parse(restaurant.type)
+        })
+      } else {
+        const response = await venderAction.getVenderType(restaurant.restaurant_name)
+
+        // 存入 raw data table
+        await vender_cuisine_type_rawData.create({
+          vender_id,
+          restaurant_id,
+          posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
+          cuisine_type_data: JSON.stringify({ data: response.data })
+        })
+
+        // update vender_input_data
+        await vender_input_data.update({
+          type: JSON.stringify(response.data.result)
+        }, { where: { restaurant_id } })
+
+        return res.status(200).json({
+          status: 'success',
+          result: response.data.result
+        })
+      }
+    } catch (error) {
+      next(error)
+    }
+  },
+  getDish: async (req, res, next) => {
+    try {
+      // ./dish?restaurant_id={restaurantId}
+      const { restaurant_id } = req.query
+      if (!restaurant_id) {
+        throw new BadRequest('Missing keyword for request.')
+      }
+      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+
+      if (restaurant.dish) {
+        return res.status(200).json({
+          status: 'success',
+          result: JSON.parse(restaurant.dish)
+        })
+      } else {
+        const response = await venderAction.getVenderDish(restaurant.restaurant_name)
+
+        // 存入 raw data table
+        await vender_cuisine_dish_rawData.create({
+          vender_id,
+          restaurant_id,
+          posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
+          cuisine_dish_data: JSON.stringify({ data: response.data })
+        })
+
+        // update vender_input_data
+        await vender_input_data.update({
+          dish: JSON.stringify(response.data.result)
+        }, { where: { restaurant_id } })
+
+        return res.status(200).json({
+          status: 'success',
+          result: response.data.result
+        })
+      }
     } catch (error) {
       next(error);
-    }
-  },
-  getKeyword: async (req, res, next) => {
-    try {
-      // ./keywords?kw={kw}
-      const { kw } = req.query;
-      if (!kw) {
-        throw new BadRequest("Missing kw for request.");
-      }
-      const response = await apiHelper.post(
-        "/all_kw",
-        qs.stringify({
-          token,
-          kw,
-        })
-      );
-      if (!response.data.result.length) {
-        throw new NotFound("No match keywords for your request.");
-      }
-
-      const search_name = req.body.kw
-      const restaurant_id = Vender_input_data.findAll({
-        where: {
-          restaurant_name: search_name,
-        },
-      });
-
-      Vender_input_data.create(
-        {
-          keyword: JSON.stringify(response.data.result),
-          vender_id: 1,
-
-          restaurant_id: restaurant_id,
-          created_datetime: time,
-          updated_datetime: time,
-        },
-        { where: { restaurant_name: search_name } }
-      );
-
-      // const test = await Vender_input_data.findByPk(20);
-      // console.log(test);
-
-      Vender_restaurant_keyword_rawData.create({
-        vender_id: 1,
-        restaurant_id: restaurant_id,
-        posted_data: req.body,
-        keyword_data: res.data.result
-      })
-
-      return res.status(200).json({
-        status: "success",
-        result: response.data.result,
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
-  getPurpose: async (req, res) => {
-    try {
-      // ./purpose?restaurant_name={restaurantName}&restaurant_id={restaurantId}
-      console.log("query", req.query);
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  getType: async (req, res) => {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  getDish: async (req, res) => {
-    try {
-    } catch (error) {
-      console.log(error);
     }
   },
 };
 
-async function getVenderKeyword (req, res) {
-  try {
-    const { kw } = req.body
-    const response = await apiHelper.post('/all_kw',
-      qs.stringify({
-        token,
-        kw
-      })
-    )
-    console.log('response', response.data.result)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-async function getVenderPurpose (req, res) {
-  try {
-    const { kw } = req.body
-    const response = await apiHelper.post('/purpose',
-      qs.stringify({
-        token,
-        kw
-      })
-    )
-    console.log('response', response.data.result)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-async function getVenderType (req, res) {
-  try {
-    const { kw } = req.body
-    const response = await apiHelper.post('/type',
-      qs.stringify({
-        token,
-        kw
-      })
-    )
-    console.log('response', response.data.result)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-async function getVenderDish (req, res) {
-  try {
-    const { kw } = req.body
-    const response = await apiHelper.post('/dish',
-      qs.stringify({
-        token,
-        kw
-      })
-    )
-    console.log('response', response.data.result)
-  } catch (error) {
-    console.log(error)
+const venderAction = {
+  getVenderKeyword: (kw) => {
+    return new Promise((resolve, reject) => {
+      resolve(apiHelper.post('/all_kw', qs.stringify({ token, kw })))
+    })
+  },
+  getVenderPurpose: (kw) => {
+    return new Promise((resolve, reject) => {
+      resolve(apiHelper.post('/purpose', qs.stringify({ token, kw })))
+    })
+  },
+  getVenderType: (kw) => {
+    return new Promise((resolve, reject) => {
+      resolve(apiHelper.post('/type', qs.stringify({ token, kw })))
+    })
+  },
+  getVenderDish: async (kw) => {
+    return new Promise((resolve, reject) => {
+      resolve(apiHelper.post('/dish', qs.stringify({ token, kw })))
+    })
   }
 }
 

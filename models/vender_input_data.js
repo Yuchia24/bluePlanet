@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
     "vender_input_data",
     {
@@ -7,31 +7,39 @@ module.exports = function(sequelize, DataTypes) {
         autoIncrement: true,
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       vender_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       restaurant_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       restaurant_name: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: true
       },
       keyword: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: true
       },
       review: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: true
       },
       dish: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: true
+      },
+      type: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      },
+      purpose: {
+        type: DataTypes.TEXT,
+        allowNull: true
       },
       created_datetime: {
         type: DataTypes.DATE,

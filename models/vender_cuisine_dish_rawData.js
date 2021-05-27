@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('vender_cuisine_dish_rawData', {
     vcn_id: {
       autoIncrement: true,
@@ -25,15 +25,15 @@ module.exports = function(sequelize, DataTypes) {
     },
     created_datetime: {
       type: DataTypes.DATE,
-      allowNull: false
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
     },
     updated_datetime: {
       type: DataTypes.DATE,
-      allowNull: false
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
     }
   }, {
     sequelize,
-    tableName: 'vender_cuisine_nationality_rawData',
+    tableName: 'vender_cuisine_dish_rawData',
     timestamps: false,
     indexes: [
       {
