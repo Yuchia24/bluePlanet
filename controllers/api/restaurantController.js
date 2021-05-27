@@ -211,7 +211,7 @@ const venderAction = {
       resolve(apiHelper.post('/type', qs.stringify({ token, kw })))
     })
   },
-  getVenderDish: async (kw) => {
+  getVenderDish: (kw) => {
     return new Promise((resolve, reject) => {
       resolve(apiHelper.post('/dish', qs.stringify({ token, kw })))
     })
