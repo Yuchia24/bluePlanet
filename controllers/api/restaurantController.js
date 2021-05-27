@@ -14,8 +14,8 @@ const {
 } = require('../../models')
 
 const { BadRequest, NotFound, InputInvalid } = require('../../utils/errors')
-const dayjs = require('dayjs')
-const time = dayjs().format("YYYY-MM-DD", { timeZone: "zh-tw" })
+// const dayjs = require('dayjs')
+// const time = dayjs().format("YYYY-MM-DD", { timeZone: "zh-tw" })
 
 const restaurantController = {
   getKeyword: async (req, res, next) => {
@@ -61,6 +61,7 @@ const restaurantController = {
         })
       }
     } catch (error) {
+      console.log(error)
       next(error)
     }
   },
