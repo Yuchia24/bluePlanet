@@ -5,7 +5,7 @@ const fs = require('fs')
 const morgan = require('morgan')
 const path = require('path')
 const dayjs = require('dayjs')
-const time = dayjs().format('{YYYY} MM-DDTHH:mm:ss')
+const time = dayjs().format('{YYYY} MM-DDTHH:mm:ss', { timeZone: 'zh-tw' })
 
 const handleErrors = require('./middleware/handleErrors')
 
