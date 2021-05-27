@@ -14,8 +14,8 @@ const {
 } = require('../../models')
 
 const { BadRequest, NotFound, InputInvalid } = require('../../utils/errors')
-const dayjs = require('dayjs')
-const time = dayjs().format("YYYY-MM-DD", { timeZone: "zh-tw" })
+// const dayjs = require('dayjs')
+// const time = dayjs().format("YYYY-MM-DD", { timeZone: "zh-tw" })
 
 const restaurantController = {
   getKeyword: async (req, res, next) => {
@@ -26,6 +26,10 @@ const restaurantController = {
         throw new BadRequest('Missing keyword for request.')
       }
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      // 餐廳不存在 vender DB
+      if (!restaurant) {
+        throw new NotFound('The restaurant does not exist.')
+      }
       if (restaurant.keyword) {
         return res.status(200).json({
           status: 'success',
@@ -33,6 +37,11 @@ const restaurantController = {
         })
       } else {
         const response = await venderAction.getVenderKeyword(restaurant.restaurant_name)
+        // 沒有回傳資料
+        if (!response.data) {
+          throw new NotFound('No match data with your input')
+        }
+
         // 存入 raw data table
         await vender_restaurant_keyword_rawData.create({
           vender_id,
@@ -52,6 +61,7 @@ const restaurantController = {
         })
       }
     } catch (error) {
+      console.log(error)
       next(error)
     }
   },
@@ -64,6 +74,10 @@ const restaurantController = {
       }
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
 
+      if (!restaurant) {
+        throw new NotFound('The restaurant does not exist.')
+      }
+
       if (restaurant.purpose) {
         return res.status(200).json({
           status: 'success',
@@ -71,7 +85,9 @@ const restaurantController = {
         })
       } else {
         const response = await venderAction.getVenderPurpose(restaurant.restaurant_name)
-
+        if (!response.data) {
+          throw new NotFound('No match data with your input')
+        }
         // 存入 raw data table
         await vender_suitable_purpose_rawData.create({
           vender_id,
@@ -102,7 +118,9 @@ const restaurantController = {
         throw new BadRequest('Missing keyword for request.')
       }
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-
+      if (!restaurant) {
+        throw new NotFound('The restaurant does not exist.')
+      }
       if (restaurant.type) {
         return res.status(200).json({
           status: 'success',
@@ -110,7 +128,9 @@ const restaurantController = {
         })
       } else {
         const response = await venderAction.getVenderType(restaurant.restaurant_name)
-
+        if (!response.data) {
+          throw new NotFound('No match data with your input')
+        }
         // 存入 raw data table
         await vender_cuisine_type_rawData.create({
           vender_id,
@@ -141,7 +161,9 @@ const restaurantController = {
         throw new BadRequest('Missing keyword for request.')
       }
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-
+      if (!restaurant) {
+        throw new NotFound('The restaurant does not exist.')
+      }
       if (restaurant.dish) {
         return res.status(200).json({
           status: 'success',
@@ -149,7 +171,9 @@ const restaurantController = {
         })
       } else {
         const response = await venderAction.getVenderDish(restaurant.restaurant_name)
-
+        if (!response.data) {
+          throw new NotFound('No match data with your input')
+        }
         // 存入 raw data table
         await vender_cuisine_dish_rawData.create({
           vender_id,
@@ -169,10 +193,10 @@ const restaurantController = {
         })
       }
     } catch (error) {
-      next(error);
+      next(error)
     }
-  },
-};
+  }
+}
 
 const venderAction = {
   getVenderKeyword: (kw) => {
