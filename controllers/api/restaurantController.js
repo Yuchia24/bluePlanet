@@ -26,6 +26,10 @@ const restaurantController = {
         throw new BadRequest('Missing keyword for request.')
       }
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      // 餐廳不存在 vender DB
+      if (!restaurant) {
+        throw new NotFound('The restaurant does not exist.')
+      }
       if (restaurant.keyword) {
         return res.status(200).json({
           status: 'success',
@@ -63,6 +67,10 @@ const restaurantController = {
         throw new BadRequest('Missing keyword for request.')
       }
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+
+      if (!restaurant) {
+        throw new NotFound('The restaurant does not exist.')
+      }
 
       if (restaurant.purpose) {
         return res.status(200).json({
@@ -102,7 +110,9 @@ const restaurantController = {
         throw new BadRequest('Missing keyword for request.')
       }
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-
+      if (!restaurant) {
+        throw new NotFound('The restaurant does not exist.')
+      }
       if (restaurant.type) {
         return res.status(200).json({
           status: 'success',
@@ -141,7 +151,9 @@ const restaurantController = {
         throw new BadRequest('Missing keyword for request.')
       }
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-
+      if (!restaurant) {
+        throw new NotFound('The restaurant does not exist.')
+      }
       if (restaurant.dish) {
         return res.status(200).json({
           status: 'success',
