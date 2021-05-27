@@ -37,6 +37,11 @@ const restaurantController = {
         })
       } else {
         const response = await venderAction.getVenderKeyword(restaurant.restaurant_name)
+        // 沒有回傳資料
+        if (!response.data) {
+          throw new NotFound('No match data with your input')
+        }
+
         // 存入 raw data table
         await vender_restaurant_keyword_rawData.create({
           vender_id,
@@ -79,7 +84,9 @@ const restaurantController = {
         })
       } else {
         const response = await venderAction.getVenderPurpose(restaurant.restaurant_name)
-
+        if (!response.data) {
+          throw new NotFound('No match data with your input')
+        }
         // 存入 raw data table
         await vender_suitable_purpose_rawData.create({
           vender_id,
@@ -120,7 +127,9 @@ const restaurantController = {
         })
       } else {
         const response = await venderAction.getVenderType(restaurant.restaurant_name)
-
+        if (!response.data) {
+          throw new NotFound('No match data with your input')
+        }
         // 存入 raw data table
         await vender_cuisine_type_rawData.create({
           vender_id,
@@ -161,7 +170,9 @@ const restaurantController = {
         })
       } else {
         const response = await venderAction.getVenderDish(restaurant.restaurant_name)
-
+        if (!response.data) {
+          throw new NotFound('No match data with your input')
+        }
         // 存入 raw data table
         await vender_cuisine_dish_rawData.create({
           vender_id,
@@ -181,10 +192,10 @@ const restaurantController = {
         })
       }
     } catch (error) {
-      next(error);
+      next(error)
     }
-  },
-};
+  }
+}
 
 const venderAction = {
   getVenderKeyword: (kw) => {
