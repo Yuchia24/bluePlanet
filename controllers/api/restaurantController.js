@@ -12,7 +12,7 @@ const {
   venders
 } = require('../../models')
 
-const { BadRequest, NotFound } = require('../../utils/errors')
+const { BadRequest, NotFound, BluePlanetError } = require('../../utils/errors')
 
 const vender_id = 1
 const dataUpdateTimeLimit = '7d'
