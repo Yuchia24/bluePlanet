@@ -46,10 +46,6 @@ app.use(morgan((tokens, req, res) => {
   skip: (req, res) => res.statusCode <= 400
 }))
 
-app.get('/', (req, res) => {
-  res.send('hello')
-})
-
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
 })
