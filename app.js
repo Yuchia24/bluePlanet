@@ -43,7 +43,7 @@ app.use(morgan((tokens, req, res) => {
   ].join(' ')
 }, {
   stream: errorLogStream,
-  skip: (req, res) => res.statusCode < 400
+  skip: (req, res) => res.statusCode <= 400
 }))
 
 app.get('/', (req, res) => {

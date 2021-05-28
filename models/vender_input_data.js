@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
-    "vender_input_data",
+    'vender_input_data',
     {
       id: {
         autoIncrement: true,
@@ -43,25 +43,25 @@ module.exports = function (sequelize, DataTypes) {
       },
       created_datetime: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updated_datetime: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-      },
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      }
     },
     {
       sequelize,
-      tableName: "vender_input_data",
+      tableName: 'vender_input_data',
       timestamps: false,
       indexes: [
         {
-          name: "PRIMARY",
+          name: 'PRIMARY',
           unique: true,
-          using: "BTREE",
-          fields: [{ name: "id" }],
-        },
-      ],
+          using: 'BTREE',
+          fields: [{ name: 'id' }]
+        }
+      ]
     }
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+const Sequelize = require('sequelize')
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('source', {
     source_id: {
       autoIncrement: true,
@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      defaultValue: ""
+      defaultValue: ''
     },
     created_datetime: {
       type: DataTypes.DATE,
@@ -26,13 +26,13 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
+        using: 'BTREE',
         fields: [
-          { name: "source_id" },
+          { name: 'source_id' }
         ]
-      },
+      }
     ]
-  });
-};
+  })
+}

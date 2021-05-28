@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+const Sequelize = require('sequelize')
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('vender_restaurant_review_rawData', {
     vrr_id: {
       autoIncrement: true,
@@ -37,13 +37,13 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
+        using: 'BTREE',
         fields: [
-          { name: "vrr_id" },
+          { name: 'vrr_id' }
         ]
-      },
+      }
     ]
-  });
-};
+  })
+}

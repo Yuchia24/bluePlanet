@@ -1,7 +1,6 @@
 const apiHelper = require('../../utils/helper')
 const token = process.env.token
 const qs = require('qs')
-const vender_id = 1
 
 const {
   vender_input_data,
@@ -14,6 +13,9 @@ const {
 } = require('../../models')
 
 const { BadRequest, NotFound } = require('../../utils/errors')
+
+const vender_id = 1
+const dataUpdateTimeLimit = '7d'
 
 const restaurantController = {
   getKeyword: async (req, res, next) => {

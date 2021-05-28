@@ -1,23 +1,22 @@
-var DataTypes = require("sequelize").DataTypes;
-var _source = require("./source");
-var _vender_cuisine_dish_rawData = require("./vender_cuisine_dish_rawData");
-var _vender_cuisine_type_rawData = require("./vender_cuisine_type_rawData");
-var _vender_input_data = require("./vender_input_data");
-var _vender_restaurant_keyword_rawData = require("./vender_restaurant_keyword_rawData");
-var _vender_restaurant_review_rawData = require("./vender_restaurant_review_rawData");
-var _vender_suitable_purpose_rawData = require("./vender_suitable_purpose_rawData");
-var _venders = require("./venders");
+const DataTypes = require('sequelize').DataTypes
+const _source = require('./source')
+const _vender_cuisine_dish_rawData = require('./vender_cuisine_dish_rawData')
+const _vender_cuisine_type_rawData = require('./vender_cuisine_type_rawData')
+const _vender_input_data = require('./vender_input_data')
+const _vender_restaurant_keyword_rawData = require('./vender_restaurant_keyword_rawData')
+const _vender_restaurant_review_rawData = require('./vender_restaurant_review_rawData')
+const _vender_suitable_purpose_rawData = require('./vender_suitable_purpose_rawData')
+const _venders = require('./venders')
 
-function initModels(sequelize) {
-  var source = _source(sequelize, DataTypes);
-  var vender_cuisine_dish_rawData = _vender_cuisine_dish_rawData(sequelize, DataTypes);
-  var vender_cuisine_type_rawData = _vender_cuisine_type_rawData(sequelize, DataTypes);
-  var vender_input_data = _vender_input_data(sequelize, DataTypes);
-  var vender_restaurant_keyword_rawData = _vender_restaurant_keyword_rawData(sequelize, DataTypes);
-  var vender_restaurant_review_rawData = _vender_restaurant_review_rawData(sequelize, DataTypes);
-  var vender_suitable_purpose_rawData = _vender_suitable_purpose_rawData(sequelize, DataTypes);
-  var venders = _venders(sequelize, DataTypes);
-
+function initModels (sequelize) {
+  const source = _source(sequelize, DataTypes)
+  const vender_cuisine_dish_rawData = _vender_cuisine_dish_rawData(sequelize, DataTypes)
+  const vender_cuisine_type_rawData = _vender_cuisine_type_rawData(sequelize, DataTypes)
+  const vender_input_data = _vender_input_data(sequelize, DataTypes)
+  const vender_restaurant_keyword_rawData = _vender_restaurant_keyword_rawData(sequelize, DataTypes)
+  const vender_restaurant_review_rawData = _vender_restaurant_review_rawData(sequelize, DataTypes)
+  const vender_suitable_purpose_rawData = _vender_suitable_purpose_rawData(sequelize, DataTypes)
+  const venders = _venders(sequelize, DataTypes)
 
   return {
     source,
@@ -27,9 +26,9 @@ function initModels(sequelize) {
     vender_restaurant_keyword_rawData,
     vender_restaurant_review_rawData,
     vender_suitable_purpose_rawData,
-    venders,
-  };
+    venders
+  }
 }
-module.exports = initModels;
-module.exports.initModels = initModels;
-module.exports.default = initModels;
+module.exports = initModels
+module.exports.initModels = initModels
+module.exports.default = initModels

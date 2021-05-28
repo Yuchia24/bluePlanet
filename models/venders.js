@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+const Sequelize = require('sequelize')
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('venders', {
     v_id: {
       autoIncrement: true,
@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING(11),
       allowNull: false,
-      defaultValue: ""
+      defaultValue: ''
     },
     start_date: {
       type: DataTypes.DATE,
@@ -34,13 +34,13 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
+        using: 'BTREE',
         fields: [
-          { name: "v_id" },
+          { name: 'v_id' }
         ]
-      },
+      }
     ]
-  });
-};
+  })
+}

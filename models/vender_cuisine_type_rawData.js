@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('vender_cuisine_type_rawData', {
     vct_id: {
@@ -25,11 +25,11 @@ module.exports = function (sequelize, DataTypes) {
     },
     created_datetime: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     },
     updated_datetime: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,
@@ -37,13 +37,13 @@ module.exports = function (sequelize, DataTypes) {
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
+        using: 'BTREE',
         fields: [
-          { name: "vct_id" },
+          { name: 'vct_id' }
         ]
-      },
+      }
     ]
-  });
-};
+  })
+}
