@@ -23,5 +23,10 @@ module.exports = {
   // kw or token mistake, unknown error
   exception_5: {
     errorCode: '202'
+  },
+  // keyword return data length < 40
+  exception_6: {
+    errorCode: '203',
+    message: 'Number of keywords should not be under 40'
   }
 }

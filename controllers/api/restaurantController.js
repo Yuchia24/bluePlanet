@@ -17,6 +17,7 @@ const errorCodes = require('../../utils/errorCodes')
 
 const vender_id = 1
 const dataUpdateTimeLimit = '7d'
+const keywordMinNum = 40
 
 const restaurantController = {
   getKeyword: async (req, res, next) => {
@@ -63,10 +64,17 @@ const restaurantController = {
           keyword: JSON.stringify(response.result)
         }, { where: { restaurant_id } })
 
-        return res.status(200).json({
+        const responseData = {
           status: 'success',
           result: response.result
-        })
+        }
+        // keyword number under keywordMinNum
+        if (response.result.length < keywordMinNum) {
+          responseData.errorCode = errorCodes.exception_6.errorCode
+          responseData.message = errorCodes.exception_6.message
+        }
+
+        return res.status(200).json(responseData)
       }
     } catch (error) {
       next(error)
