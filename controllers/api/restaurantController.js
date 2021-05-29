@@ -12,7 +12,8 @@ const {
   venders
 } = require('../../models')
 
-const { BadRequest, NotFound, BluePlanetError } = require('../../utils/errors')
+const { BadRequest, BluePlanetError } = require('../../utils/errors')
+const errorCodes = require('../../utils/errorCodes')
 
 const vender_id = 1
 const dataUpdateTimeLimit = '7d'
@@ -22,24 +23,31 @@ const restaurantController = {
     try {
       // ./keywords?restaurant_id={restaurant_id}
       const { restaurant_id } = req.query
+
       if (!restaurant_id) {
-        throw new BadRequest('Missing keyword for request.')
+        throw new BadRequest(errorCodes.exception_1.errorCode, errorCodes.exception_1.message)
       }
+      if (!Number.isInteger(Number(restaurant_id))) {
+        throw new BadRequest(errorCodes.exception_2.errorCode, errorCodes.exception_2.message)
+      }
+
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       // 餐廳不存在 vender DB
       if (!restaurant) {
-        throw new NotFound('The restaurant does not exist.')
+        throw new BadRequest(errorCodes.exception_3.errorCode, errorCodes.exception_3.message)
       }
+      // 餐廳資料已存在 vender DB
       if (restaurant.keyword) {
         return res.status(200).json({
           status: 'success',
           result: JSON.parse(restaurant.keyword)
         })
       } else {
+        // 餐廳資料不存在 -> call 藍星球 API
         const response = await venderAction.getVenderKeyword(restaurant.restaurant_name)
         // 沒有回傳資料
-        if (!response.data) {
-          throw new NotFound('No match data with your input')
+        if (!response) {
+          throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
         }
 
         // 存入 raw data table
@@ -47,17 +55,17 @@ const restaurantController = {
           vender_id,
           restaurant_id,
           posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
-          keyword_data: JSON.stringify({ data: response.data })
+          keyword_data: JSON.stringify({ data: response })
         })
 
         // update vender_input_data
         await vender_input_data.update({
-          keyword: JSON.stringify(response.data.result)
+          keyword: JSON.stringify(response.result)
         }, { where: { restaurant_id } })
 
         return res.status(200).json({
           status: 'success',
-          result: response.data.result
+          result: response.result
         })
       }
     } catch (error) {
@@ -198,10 +206,25 @@ const restaurantController = {
 }
 
 const venderAction = {
-  getVenderKeyword: (kw) => {
-    return new Promise((resolve, reject) => {
-      resolve(apiHelper.post('/all_kw', qs.stringify({ token, kw })))
-    })
+  getVenderKeyword: async (kw) => {
+    try {
+      const res = await apiHelper.post('/all_kw', qs.stringify({ token, kw }))
+      return res.data
+    } catch (err) {
+      // 紀錄 log
+      throw new BluePlanetError(errorCodes.exception_5.errorCode, err.response.data.error)
+    }
+
+    // return new Promise((resolve, reject) => {
+    //   const response = apiHelper.post('/all_kw', qs.stringify({ token, kw }))
+    //   resolve(response.data)
+    // if (response.data) {
+    //   console.log('response', response.data)
+    //   resolve(response.data)
+    // } else {
+    //   reject(new BluePlanetError('blue planet error'))
+    // }
+    // })
   },
   getVenderPurpose: (kw) => {
     return new Promise((resolve, reject) => {
