@@ -19,6 +19,13 @@ const vender_id = 1
 const dataUpdateTimeLimit = '7d'
 const keywordMinNum = 40
 
+const venderUrl = {
+  keyword: '/all_kw',
+  purpose: '/purpose',
+  type: '/type',
+  dish: '/dish'
+}
+
 const restaurantController = {
   getKeyword: async (req, res, next) => {
     try {
@@ -45,7 +52,7 @@ const restaurantController = {
         })
       } else {
         // 餐廳資料不存在 -> call 藍星球 API
-        const response = await venderAction.getVenderKeyword(restaurant.restaurant_name)
+        const response = await getVenderData(venderUrl.keyword, restaurant.restaurant_name)
         // 沒有回傳資料
         if (!response) {
           throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
@@ -213,41 +220,13 @@ const restaurantController = {
   }
 }
 
-const venderAction = {
-  getVenderKeyword: async (kw) => {
-    try {
-      const res = await apiHelper.post('/all_kw', qs.stringify({ token, kw }))
-      return res.data
-    } catch (err) {
-      // 紀錄 log
-      throw new BluePlanetError(errorCodes.exception_5.errorCode, err.response.data.error)
-    }
-
-    // return new Promise((resolve, reject) => {
-    //   const response = apiHelper.post('/all_kw', qs.stringify({ token, kw }))
-    //   resolve(response.data)
-    // if (response.data) {
-    //   console.log('response', response.data)
-    //   resolve(response.data)
-    // } else {
-    //   reject(new BluePlanetError('blue planet error'))
-    // }
-    // })
-  },
-  getVenderPurpose: (kw) => {
-    return new Promise((resolve, reject) => {
-      resolve(apiHelper.post('/purpose', qs.stringify({ token, kw })))
-    })
-  },
-  getVenderType: (kw) => {
-    return new Promise((resolve, reject) => {
-      resolve(apiHelper.post('/type', qs.stringify({ token, kw })))
-    })
-  },
-  getVenderDish: (kw) => {
-    return new Promise((resolve, reject) => {
-      resolve(apiHelper.post('/dish', qs.stringify({ token, kw })))
-    })
+const getVenderData = async (url, kw) => {
+  try {
+    const res = await apiHelper.post(url, qs.stringify({ token, kw }))
+    return res.data
+  } catch (err) {
+    // 紀錄 log
+    throw new BluePlanetError(errorCodes.exception_5.errorCode, err.response.data.error)
   }
 }
 
