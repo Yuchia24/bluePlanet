@@ -84,13 +84,11 @@ const restaurantController = {
     try {
       // ./purpose?restaurant_id={restaurantId}
       const { restaurant_id } = req.query
-      if (!restaurant_id) {
-        throw new BadRequest('Missing keyword for request.')
-      }
+
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
 
       if (!restaurant) {
-        throw new NotFound('The restaurant does not exist.')
+        throw new BadRequest(errorCodes.exception_3.errorCode, errorCodes.exception_3.message)
       }
 
       if (restaurant.purpose) {
@@ -99,26 +97,26 @@ const restaurantController = {
           result: JSON.parse(restaurant.purpose)
         })
       } else {
-        const response = await venderAction.getVenderPurpose(restaurant.restaurant_name)
-        if (!response.data) {
-          throw new NotFound('No match data with your input')
+        const response = await getVenderData(venderUrl.purpose, restaurant.restaurant_name)
+        if (!response) {
+          throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
         }
         // 存入 raw data table
         await vender_suitable_purpose_rawData.create({
           vender_id,
           restaurant_id,
           posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
-          suitable_purpose_data: JSON.stringify({ data: response.data })
+          suitable_purpose_data: JSON.stringify({ data: response })
         })
 
         // update vender_input_data
         await vender_input_data.update({
-          purpose: JSON.stringify(response.data.result)
+          purpose: JSON.stringify(response.result)
         }, { where: { restaurant_id } })
 
         return res.status(200).json({
           status: 'success',
-          result: response.data.result
+          result: response.result
         })
       }
     } catch (error) {
@@ -129,12 +127,10 @@ const restaurantController = {
     try {
       // ./type?restaurant_id={restaurantId}
       const { restaurant_id } = req.query
-      if (!restaurant_id) {
-        throw new BadRequest('Missing keyword for request.')
-      }
+
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       if (!restaurant) {
-        throw new NotFound('The restaurant does not exist.')
+        throw new BadRequest(errorCodes.exception_3.errorCode, errorCodes.exception_3.message)
       }
       if (restaurant.type) {
         return res.status(200).json({
@@ -142,26 +138,26 @@ const restaurantController = {
           result: JSON.parse(restaurant.type)
         })
       } else {
-        const response = await venderAction.getVenderType(restaurant.restaurant_name)
-        if (!response.data) {
-          throw new NotFound('No match data with your input')
+        const response = await getVenderData(venderUrl.keyword, restaurant.restaurant_name)
+        if (!response) {
+          throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
         }
         // 存入 raw data table
         await vender_cuisine_type_rawData.create({
           vender_id,
           restaurant_id,
           posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
-          cuisine_type_data: JSON.stringify({ data: response.data })
+          cuisine_type_data: JSON.stringify({ data: response })
         })
 
         // update vender_input_data
         await vender_input_data.update({
-          type: JSON.stringify(response.data.result)
+          type: JSON.stringify(response.result)
         }, { where: { restaurant_id } })
 
         return res.status(200).json({
           status: 'success',
-          result: response.data.result
+          result: response.result
         })
       }
     } catch (error) {
@@ -172,12 +168,9 @@ const restaurantController = {
     try {
       // ./dish?restaurant_id={restaurantId}
       const { restaurant_id } = req.query
-      if (!restaurant_id) {
-        throw new BadRequest('Missing keyword for request.')
-      }
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       if (!restaurant) {
-        throw new NotFound('The restaurant does not exist.')
+        throw new BadRequest(errorCodes.exception_3.errorCode, errorCodes.exception_3.message)
       }
       if (restaurant.dish) {
         return res.status(200).json({
@@ -185,26 +178,27 @@ const restaurantController = {
           result: JSON.parse(restaurant.dish)
         })
       } else {
-        const response = await venderAction.getVenderDish(restaurant.restaurant_name)
-        if (!response.data) {
-          throw new NotFound('No match data with your input')
+        const response = await getVenderData(venderUrl.keyword, restaurant.restaurant_name)
+        // 沒有回傳資料
+        if (!response) {
+          throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
         }
         // 存入 raw data table
         await vender_cuisine_dish_rawData.create({
           vender_id,
           restaurant_id,
           posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
-          cuisine_dish_data: JSON.stringify({ data: response.data })
+          cuisine_dish_data: JSON.stringify({ data: response })
         })
 
         // update vender_input_data
         await vender_input_data.update({
-          dish: JSON.stringify(response.data.result)
+          dish: JSON.stringify(response.result)
         }, { where: { restaurant_id } })
 
         return res.status(200).json({
           status: 'success',
-          result: response.data.result
+          result: response.result
         })
       }
     } catch (error) {
