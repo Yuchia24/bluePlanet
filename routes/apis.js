@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const restaurantController = require('../controllers/api/restaurantController')
+const { inputRules } = require('../middleware/validator')
 
 // 餐廳關鍵字
-router.get('/restaurants/keyword', restaurantController.getKeyword)
+router.get('/restaurants/keyword', inputRules, restaurantController.getKeyword)
 // 用餐目的
 router.get('/restaurants/purpose', restaurantController.getPurpose)
 // 菜餚類別

@@ -32,13 +32,6 @@ const restaurantController = {
       // ./keywords?restaurant_id={restaurant_id}
       const { restaurant_id } = req.query
 
-      if (!restaurant_id) {
-        throw new BadRequest(errorCodes.exception_1.errorCode, errorCodes.exception_1.message)
-      }
-      if (!Number.isInteger(Number(restaurant_id))) {
-        throw new BadRequest(errorCodes.exception_2.errorCode, errorCodes.exception_2.message)
-      }
-
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       // 餐廳不存在 vender DB
       if (!restaurant) {
