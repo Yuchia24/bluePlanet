@@ -138,7 +138,7 @@ const restaurantController = {
           result: JSON.parse(restaurant.type)
         })
       } else {
-        const response = await getVenderData(venderUrl.keyword, restaurant.restaurant_name)
+        const response = await getVenderData(venderUrl.type, restaurant.restaurant_name)
         if (!response) {
           throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
         }
@@ -178,7 +178,7 @@ const restaurantController = {
           result: JSON.parse(restaurant.dish)
         })
       } else {
-        const response = await getVenderData(venderUrl.keyword, restaurant.restaurant_name)
+        const response = await getVenderData(venderUrl.dish, restaurant.restaurant_name)
         // 沒有回傳資料
         if (!response) {
           throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)

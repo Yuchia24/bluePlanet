@@ -6,10 +6,10 @@ const { inputRules } = require('../middleware/validator')
 // 餐廳關鍵字
 router.get('/restaurants/keyword', inputRules, restaurantController.getKeyword)
 // 用餐目的
-router.get('/restaurants/purpose', restaurantController.getPurpose)
+router.get('/restaurants/purpose', inputRules, restaurantController.getPurpose)
 // 菜餚類別
-router.get('/restaurants/type', restaurantController.getType)
+router.get('/restaurants/type', inputRules, restaurantController.getType)
 // 地區美食
-router.get('/restaurants/dish', restaurantController.getDish)
+router.get('/restaurants/dish', inputRules, restaurantController.getDish)
 
 module.exports = router
