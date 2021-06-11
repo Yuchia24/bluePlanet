@@ -9,6 +9,8 @@ const {
   vender_restaurant_keyword_rawData,
   vender_restaurant_review_rawData,
   vender_suitable_purpose_rawData,
+  vender_enum,
+  vender_item,
   venders
 } = require('../../models')
 
@@ -138,6 +140,10 @@ const restaurantController = {
           result: JSON.parse(restaurant.type)
         })
       } else {
+        // 取得 types 資料
+        const types = await vender_enum.findAll({ raw: true })
+        console.log('types', types)
+
         const response = await getVenderData(venderUrl.type, restaurant.restaurant_name)
         if (!response) {
           throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
@@ -150,10 +156,25 @@ const restaurantController = {
           cuisine_type_data: JSON.stringify({ data: response })
         })
 
-        // update vender_input_data
-        await vender_input_data.update({
-          type: JSON.stringify(response.result)
-        }, { where: { restaurant_id } })
+        const newResult = response.result.map((item) => ({
+          count: item.count,
+          keyId: types.find((type) => type.value === item.type).keyId
+        }))
+
+        // 存入 vender_item
+        newResult.forEach(async (result) => {
+          try {
+            await vender_item.create({
+              restaurant_id,
+              restaurant_name: restaurant.restaurant_name,
+              kind: 'type',
+              keyId: result.keyId,
+              count: result.count
+            })
+          } catch (error) {
+            console.log(error)
+          }
+        })
 
         return res.status(200).json({
           status: 'success',

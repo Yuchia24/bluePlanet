@@ -81,5 +81,15 @@ db.vender_suitable_purpose_rawData =
     sequelize,
     Sequelize
   )
+db.vender_enum =
+  require('./vender_enum.js')(
+    sequelize,
+    Sequelize
+  )
+db.vender_item =
+  require('./vender_item.js')(
+    sequelize,
+    Sequelize
+  )
 
 module.exports = db
