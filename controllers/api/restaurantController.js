@@ -99,6 +99,8 @@ const restaurantController = {
           result: JSON.parse(restaurant.purpose)
         })
       } else {
+        const types = await vender_enum.findAll({ raw: true })
+
         const response = await getVenderData(venderUrl.purpose, restaurant.restaurant_name)
         if (!response) {
           throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
@@ -111,10 +113,25 @@ const restaurantController = {
           suitable_purpose_data: JSON.stringify({ data: response })
         })
 
-        // update vender_input_data
-        await vender_input_data.update({
-          purpose: JSON.stringify(response.result)
-        }, { where: { restaurant_id } })
+        const newResult = response.result.map((item) => ({
+          count: item.count,
+          keyId: types.find((type) => type.value === item.word).keyId
+        }))
+
+        // insert into vender_item
+        newResult.forEach(async (result) => {
+          try {
+            await vender_item.create({
+              restaurant_id,
+              restaurant_name: restaurant.restaurant_name,
+              kind: 'purpose',
+              keyId: result.keyId,
+              count: result.count
+            })
+          } catch (error) {
+            console.log(error)
+          }
+        })
 
         return res.status(200).json({
           status: 'success',
@@ -199,6 +216,8 @@ const restaurantController = {
           result: JSON.parse(restaurant.dish)
         })
       } else {
+        const types = await vender_enum.findAll({ raw: true })
+
         const response = await getVenderData(venderUrl.dish, restaurant.restaurant_name)
         // 沒有回傳資料
         if (!response) {
@@ -212,10 +231,25 @@ const restaurantController = {
           cuisine_dish_data: JSON.stringify({ data: response })
         })
 
-        // update vender_input_data
-        await vender_input_data.update({
-          dish: JSON.stringify(response.result)
-        }, { where: { restaurant_id } })
+        const newResult = response.result.map((item) => ({
+          count: item.count,
+          keyId: types.find((type) => type.value === item.word).keyId
+        }))
+
+        // vender_item
+        newResult.forEach(async (result) => {
+          try {
+            await vender_item.create({
+              restaurant_id,
+              restaurant_name: restaurant.restaurant_name,
+              kind: 'dish',
+              keyId: result.keyId,
+              count: result.count
+            })
+          } catch (error) {
+            console.log(error)
+          }
+        })
 
         return res.status(200).json({
           status: 'success',
