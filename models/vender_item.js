@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize')
-module.exports = function (sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   return sequelize.define('vender_item', {
     id: {
+      primaryKey: true,
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      primaryKey: true
+      allowNull: false
     },
     restaurant_id: {
       type: DataTypes.INTEGER,
@@ -37,17 +37,6 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'vender_item',
-    timestamps: false,
-    indexes: [
-      {
-        name: 'PRIMARY',
-        unique: true,
-        using: 'BTREE',
-        fields: [
-          { name: 'id' }
-        ]
-      }
-    ]
+    tableName: 'vender_item'
   })
 }
