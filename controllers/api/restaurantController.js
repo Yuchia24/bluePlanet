@@ -113,13 +113,35 @@ const restaurantController = {
           suitable_purpose_data: JSON.stringify({ data: response })
         })
 
-        const newResult = response.result.map((item) => ({
+        /* 比較新舊資料 */
+        // 抓取舊資料
+        const originalRecords = await vender_item.findAll({
+          raw: true,
+          where: {
+            restaurant_id,
+            kind: 'purpose'
+          }
+        })
+        console.log('originalRecords', originalRecords)
+        // 新資料
+        const newRecords = response.result.map((item) => ({
           count: item.count,
           keyId: types.find((type) => type.value === item.word).keyId
         }))
+        // 找出需新增的資料
+        const inputData = newRecords.filter((record) => {
+          return !originalRecords.map((oldRecord) => oldRecord.keyId).includes(record.keyId)
+        })
+        console.log('inputData', inputData)
+
+        // 找出需刪除的資料
+        const deleteData = originalRecords.filter((record) => {
+          return !newRecords.map((newRecord) => newRecord.keyId).includes(record.keyId)
+        })
+        console.log('deleteData', deleteData)
 
         // insert into vender_item
-        newResult.forEach(async (result) => {
+        inputData.forEach(async (result) => {
           try {
             await vender_item.create({
               restaurant_id,
@@ -127,6 +149,21 @@ const restaurantController = {
               kind: 'purpose',
               keyId: result.keyId,
               count: result.count
+            })
+          } catch (error) {
+            console.log(error)
+          }
+        })
+
+        // delete from vender_item
+        deleteData.forEach(async (result) => {
+          try {
+            await vender_item.destroy({
+              where: {
+                restaurant_id,
+                kind: 'purpose',
+                keyId: result.keyId
+              }
             })
           } catch (error) {
             console.log(error)
