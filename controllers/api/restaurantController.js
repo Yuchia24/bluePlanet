@@ -18,7 +18,6 @@ const { BadRequest, BluePlanetError } = require('../../utils/errors')
 const errorCodes = require('../../utils/errorCodes')
 
 const vender_id = 1
-const dataUpdateTimeLimit = '7d'
 const keywordMinNum = 40
 
 const venderUrl = {
