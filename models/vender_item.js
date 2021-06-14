@@ -1,42 +1,20 @@
-const Sequelize = require('sequelize')
+'use strict';
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('vender_item', {
-    id: {
-      primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false
-    },
-    restaurant_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    restaurant_name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    kind: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    keyId: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    count: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+  class vender_item extends Model {
+    static associate (models) {
+      // define association
     }
+  }
+  vender_item.init({
+    restaurant_id: DataTypes.INTEGER,
+    restaurant_name: DataTypes.STRING,
+    kind: DataTypes.STRING,
+    keyId: DataTypes.STRING,
+    count: DataTypes.INTEGER
   }, {
     sequelize,
-    tableName: 'vender_item'
+    modelName: 'vender_item'
   })
+  return vender_item
 }

@@ -1,41 +1,19 @@
-const Sequelize = require('sequelize')
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('vender_enum', {
-    id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      primaryKey: true
-    },
-    kind: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    value: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    remark: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    keyId: {
-      type: DataTypes.STRING,
-      allowNull: false
+'use strict';
+const { Model } = require('sequelize')
+module.exports = (sequelize, DataTypes) => {
+  class vender_enum extends Model {
+    static associate (models) {
+      // define association
     }
+  }
+  vender_enum.init({
+    kind: DataTypes.STRING,
+    value: DataTypes.STRING,
+    remark: DataTypes.STRING
   }, {
     sequelize,
-    tableName: 'vender_enum',
-    timestamps: false,
-    indexes: [
-      {
-        name: 'PRIMARY',
-        unique: true,
-        using: 'BTREE',
-        fields: [
-          { name: 'id' }
-        ]
-      }
-    ]
+    modelName: 'vender_enum',
+    freezeTableName: true
   })
+  return vender_enum
 }

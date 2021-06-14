@@ -2,6 +2,8 @@ const apiHelper = require('../../utils/helper')
 const token = process.env.token
 const qs = require('qs')
 
+const { getOriginalRecords } = require('../../modules/common')
+
 const {
   vender_input_data,
   vender_cuisine_dish_rawData,
@@ -10,8 +12,7 @@ const {
   vender_restaurant_review_rawData,
   vender_suitable_purpose_rawData,
   vender_enum,
-  vender_item,
-  venders
+  vender_item
 } = require('../../models')
 
 const { BadRequest, BluePlanetError } = require('../../utils/errors')
@@ -83,19 +84,35 @@ const restaurantController = {
   },
   getPurpose: async (req, res, next) => {
     try {
-      // ./purpose?restaurant_id={restaurantId}
       const { restaurant_id } = req.query
 
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      const restaurants = await getOriginalRecords(restaurant_id, 'purpose')
+      if (restaurants.length) {
+        console.log('length', restaurants)
+        const result = await Promise.all(restaurants.map(async (item) => {
+          try {
+            const [word] = await vender_enum.findAll({
+              raw: true,
+              attributes: ['value'],
+              where: {
+                kind: 'purpose',
+                keyId: item.keyId
+              }
+            })
 
-      if (!restaurant) {
-        throw new BadRequest(errorCodes.exception_3.errorCode, errorCodes.exception_3.message)
-      }
+            const data = {
+              count: item.count,
+              word: word.value
+            }
+            return data
+          } catch (error) {
+            console.log(error)
+          }
+        }))
 
-      if (restaurant.purpose) {
         return res.status(200).json({
           status: 'success',
-          result: JSON.parse(restaurant.purpose)
+          result
         })
       } else {
         const types = await vender_enum.findAll({ raw: true })
@@ -114,19 +131,15 @@ const restaurantController = {
 
         /* 比較新舊資料 */
         // 抓取舊資料
-        const originalRecords = await vender_item.findAll({
-          raw: true,
-          where: {
-            restaurant_id,
-            kind: 'purpose'
-          }
-        })
+        const originalRecords = await getOriginalRecords(restaurant_id, 'purpose')
         console.log('originalRecords', originalRecords)
+
         // 新資料
         const newRecords = response.result.map((item) => ({
           count: item.count,
           keyId: types.find((type) => type.value === item.word).keyId
         }))
+
         // 找出需新增的資料
         const inputData = newRecords.filter((record) => {
           return !originalRecords.map((oldRecord) => oldRecord.keyId).includes(record.keyId)
