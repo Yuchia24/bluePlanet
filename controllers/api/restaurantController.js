@@ -2,7 +2,7 @@ const apiHelper = require('../../utils/helper')
 const token = process.env.token
 const qs = require('qs')
 
-const { getOriginalRecords, insertRawData } = require('../../modules/common')
+const { getOriginalRecords, insertRawData, insertNewRecords, findKeyName } = require('../../modules/common')
 
 const {
   vender_input_data,
@@ -83,31 +83,18 @@ const restaurantController = {
 
       // 要從 data1 拉資料
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      console.log('restaurant', restaurant)
 
       const originalRecords = await getOriginalRecords(restaurant_id, 'purpose')
       console.log('originalRecords', originalRecords)
       if (originalRecords.length) {
-        const result = await Promise.all(originalRecords.map(async (item) => {
-          try {
-            const [word] = await vender_enum.findAll({
-              raw: true,
-              attributes: ['value'],
-              where: {
-                kind: 'purpose',
-                keyId: item.keyId
-              }
-            })
-
-            const data = {
-              count: item.count,
-              word: word.value
-            }
-            return data
-          } catch (error) {
-            console.log(error)
+        const resultPromise = originalRecords.map(async (record) => {
+          const word = await findKeyName(record.keyId, 'purpose')
+          return {
+            count: record.count,
+            word: word.value
           }
-        }))
+        })
+        const result = await Promise.all(resultPromise)
 
         return res.status(200).json({
           status: 'success',
@@ -122,7 +109,9 @@ const restaurantController = {
         const types = await vender_enum.findAll({ raw: true })
 
         const response = await getVenderData(venderUrl.purpose, restaurant_id, restaurant.restaurant_name)
-
+        if (!response.result.length) {
+          return console.log('no response data')
+        }
         /* 比較新舊資料 */
         // 新資料
         const newRecords = response.result.map((item) => ({
@@ -135,42 +124,14 @@ const restaurantController = {
           return !originalRecords.map((oldRecord) => oldRecord.keyId).includes(record.keyId)
         })
         console.log('inputData', inputData)
-
-        // 找出需刪除的資料
-        const deleteData = originalRecords.filter((record) => {
-          return !newRecords.map((newRecord) => newRecord.keyId).includes(record.keyId)
-        })
-        console.log('deleteData', deleteData)
+        // // 找出需刪除的資料
+        // const deleteData = originalRecords.filter((record) => {
+        //   return !newRecords.map((newRecord) => newRecord.keyId).includes(record.keyId)
+        // })
 
         // insert into vender_items
-        inputData.forEach(async (result) => {
-          try {
-            await vender_items.create({
-              restaurant_id,
-              restaurant_name: restaurant.restaurant_name,
-              kind: 'purpose',
-              keyId: result.keyId,
-              count: result.count
-            })
-          } catch (error) {
-            console.log(error)
-          }
-        })
-
-        // delete from vender_items
-        deleteData.forEach(async (result) => {
-          try {
-            await vender_items.destroy({
-              where: {
-                restaurant_id,
-                kind: 'purpose',
-                keyId: result.keyId
-              }
-            })
-          } catch (error) {
-            console.log(error)
-          }
-        })
+        const recordPromises = inputData.map((item) => insertNewRecords(item, restaurant_id, restaurant.restaurant_name, 'purpose'))
+        await Promise.all(recordPromises)
 
         return res.status(200).json({
           status: 'success',
@@ -304,7 +265,7 @@ const restaurantController = {
 const getVenderData = async (url, restaurant_id, kw) => {
   try {
     const res = await apiHelper.post(url, qs.stringify({ token, kw }))
-    await insertRawData(restaurant_id, kw, res.data.result, url, res.status)
+    await insertRawData(restaurant_id, kw, res.data, url, res.status)
     return res.data
   } catch (err) {
     // 紀錄 log

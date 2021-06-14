@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   vender_items.init({
+    vender_id: DataTypes.INTEGER,
     restaurant_id: DataTypes.INTEGER,
     restaurant_name: DataTypes.STRING,
     kind: DataTypes.STRING,
