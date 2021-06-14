@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   vender_enum.init({
     kind: DataTypes.STRING,
+    keyId: DataTypes.STRING,
     value: DataTypes.STRING,
     remark: DataTypes.STRING
   }, {

@@ -2,23 +2,18 @@ const apiHelper = require('../../utils/helper')
 const token = process.env.token
 const qs = require('qs')
 
-const { getOriginalRecords } = require('../../modules/common')
+const { getOriginalRecords, insertRawData } = require('../../modules/common')
 
 const {
   vender_input_data,
-  vender_cuisine_dish_rawData,
-  vender_cuisine_type_rawData,
-  vender_restaurant_keyword_rawData,
-  vender_restaurant_review_rawData,
-  vender_suitable_purpose_rawData,
   vender_enum,
-  vender_item
+  vender_items,
+  vender_rawData
 } = require('../../models')
 
 const { BadRequest, BluePlanetError } = require('../../utils/errors')
 const errorCodes = require('../../utils/errorCodes')
 
-const vender_id = 1
 const keywordMinNum = 40
 
 const venderUrl = {
@@ -86,10 +81,14 @@ const restaurantController = {
     try {
       const { restaurant_id } = req.query
 
-      const restaurants = await getOriginalRecords(restaurant_id, 'purpose')
-      if (restaurants.length) {
-        console.log('length', restaurants)
-        const result = await Promise.all(restaurants.map(async (item) => {
+      // 要從 data1 拉資料
+      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      console.log('restaurant', restaurant)
+
+      const originalRecords = await getOriginalRecords(restaurant_id, 'purpose')
+      console.log('originalRecords', originalRecords)
+      if (originalRecords.length) {
+        const result = await Promise.all(originalRecords.map(async (item) => {
           try {
             const [word] = await vender_enum.findAll({
               raw: true,
@@ -112,28 +111,19 @@ const restaurantController = {
 
         return res.status(200).json({
           status: 'success',
-          result
+          response: {
+            restaurant_id,
+            restaurant_name: restaurant.restaurant_name,
+            result
+          }
         })
       } else {
+        // 要存成全域變數
         const types = await vender_enum.findAll({ raw: true })
 
-        const response = await getVenderData(venderUrl.purpose, restaurant.restaurant_name)
-        if (!response) {
-          throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
-        }
-        // 存入 raw data table
-        await vender_suitable_purpose_rawData.create({
-          vender_id,
-          restaurant_id,
-          posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
-          suitable_purpose_data: JSON.stringify({ data: response })
-        })
+        const response = await getVenderData(venderUrl.purpose, restaurant_id, restaurant.restaurant_name)
 
         /* 比較新舊資料 */
-        // 抓取舊資料
-        const originalRecords = await getOriginalRecords(restaurant_id, 'purpose')
-        console.log('originalRecords', originalRecords)
-
         // 新資料
         const newRecords = response.result.map((item) => ({
           count: item.count,
@@ -152,10 +142,10 @@ const restaurantController = {
         })
         console.log('deleteData', deleteData)
 
-        // insert into vender_item
+        // insert into vender_items
         inputData.forEach(async (result) => {
           try {
-            await vender_item.create({
+            await vender_items.create({
               restaurant_id,
               restaurant_name: restaurant.restaurant_name,
               kind: 'purpose',
@@ -167,10 +157,10 @@ const restaurantController = {
           }
         })
 
-        // delete from vender_item
+        // delete from vender_items
         deleteData.forEach(async (result) => {
           try {
-            await vender_item.destroy({
+            await vender_items.destroy({
               where: {
                 restaurant_id,
                 kind: 'purpose',
@@ -227,10 +217,10 @@ const restaurantController = {
           keyId: types.find((type) => type.value === item.type).keyId
         }))
 
-        // 存入 vender_item
+        // 存入 vender_items
         newResult.forEach(async (result) => {
           try {
-            await vender_item.create({
+            await vender_items.create({
               restaurant_id,
               restaurant_name: restaurant.restaurant_name,
               kind: 'type',
@@ -285,10 +275,10 @@ const restaurantController = {
           keyId: types.find((type) => type.value === item.word).keyId
         }))
 
-        // vender_item
+        // vender_items
         newResult.forEach(async (result) => {
           try {
-            await vender_item.create({
+            await vender_items.create({
               restaurant_id,
               restaurant_name: restaurant.restaurant_name,
               kind: 'dish',
@@ -311,9 +301,10 @@ const restaurantController = {
   }
 }
 
-const getVenderData = async (url, kw) => {
+const getVenderData = async (url, restaurant_id, kw) => {
   try {
     const res = await apiHelper.post(url, qs.stringify({ token, kw }))
+    await insertRawData(restaurant_id, kw, res.data.result, url, res.status)
     return res.data
   } catch (err) {
     // 紀錄 log
