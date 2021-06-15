@@ -1,18 +1,18 @@
-const apiHelper = require('../../utils/helper')
+const apiHelper = require('../utils/helper')
 const token = process.env.token
 const qs = require('qs')
 
-const { getOriginalRecords, insertRawData, insertNewRecords, findKeyName } = require('../../modules/common')
+const { getOriginalRecords, insertRawData, insertNewRecords, findKeyName } = require('../modules/venderRepository')
 
 const {
   vender_input_data,
   vender_enum,
   vender_items,
   vender_rawData
-} = require('../../models')
+} = require('../models')
 
-const { BadRequest, BluePlanetError } = require('../../utils/errors')
-const errorCodes = require('../../utils/errorCodes')
+const { BadRequest, BluePlanetError } = require('../utils/errors')
+const errorCodes = require('../utils/errorCodes')
 
 const keywordMinNum = 40
 
