@@ -95,10 +95,16 @@ module.exports = class RestaurantService {
   matchKeyId (array) {
     return new Promise((resolve, reject) => {
       resolve(
-        array.map((item) => ({
-          count: item.count,
-          keyId: types.find((type) => type.value === item.word).keyId
-        }))
+        array.map((item) => {
+          if (item.type) {
+            item.word = item.type
+            delete item.type
+          }
+          return {
+            count: item.count,
+            keyId: types.find((type) => type.value === item.word).keyId
+          }
+        })
       )
     })
   }

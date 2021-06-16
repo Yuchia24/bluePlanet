@@ -53,7 +53,6 @@ module.exports = class VenderRepository {
   removeOldRecords (array, restaurant_id, kind) {
     return new Promise((resolve, reject) => {
       const newArray = array.map((item) => item.keyId)
-      console.log('newArray', newArray)
       resolve(
         vender_items.destroy({
           where: {

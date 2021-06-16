@@ -124,118 +124,93 @@ const restaurantController = {
   },
   getType: async (req, res, next) => {
     try {
-      // ./type?restaurant_id={restaurantId}
       const { restaurant_id } = req.query
 
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new BadRequest(errorCodes.exception_3.errorCode, errorCodes.exception_3.message)
+      // 跟藍星球要資料
+      const { response, status } = await venderService.getVenderData(venderUrl.type, restaurant.restaurant_name)
+      if (!response.result.length) {
+        return console.log('blue planet no value')
       }
-      if (restaurant.type) {
-        return res.status(200).json({
-          status: 'success',
-          result: JSON.parse(restaurant.type)
-        })
-      } else {
-        // 取得 types 資料
-        const types = await vender_enum.findAll({ raw: true })
-        console.log('types', types)
+      console.log('response', response)
+      // 抓取舊資料
+      const originalRecords = await venderRepository.getOriginalRecords(restaurant_id, 'type')
+      console.log('originalRecords', originalRecords)
+      /* 新舊資料比對 */
+      // 新資料 -> response data 配對 keyId
+      const newRecords = await restaurantService.matchKeyId(response.result)
+      console.log('newRecords', newRecords)
 
-        const response = await getVenderData(venderUrl.type, restaurant.restaurant_name)
-        if (!response) {
-          throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
-        }
-        // 存入 raw data table
-        await vender_cuisine_type_rawData.create({
-          vender_id,
+      // newRecords 與 originalRecords 比較 -> get inputData
+      const inputData = await restaurantService.getInputData(originalRecords, newRecords)
+      console.log('inputData', inputData)
+
+      // originalRecords 與 newRecords 比較 -> get removeData
+      const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
+      console.log('removeData', removeData)
+
+      // 新增 raw data
+      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.type, status)
+
+      // 新增及刪除 vender_items
+      await venderRepository.insertNewRecords(inputData, restaurant_id, restaurant.restaurant_name, 'type')
+      await venderRepository.removeOldRecords(removeData, restaurant_id, 'type')
+
+      // return data
+      return res.status(200).json({
+        status: 'success',
+        response: {
           restaurant_id,
-          posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
-          cuisine_type_data: JSON.stringify({ data: response })
-        })
-
-        const newResult = response.result.map((item) => ({
-          count: item.count,
-          keyId: types.find((type) => type.value === item.type).keyId
-        }))
-
-        // 存入 vender_items
-        newResult.forEach(async (result) => {
-          try {
-            await vender_items.create({
-              restaurant_id,
-              restaurant_name: restaurant.restaurant_name,
-              kind: 'type',
-              keyId: result.keyId,
-              count: result.count
-            })
-          } catch (error) {
-            console.log(error)
-          }
-        })
-
-        return res.status(200).json({
-          status: 'success',
+          restaurant_name: restaurant.restaurant_name,
           result: response.result
-        })
-      }
+        }
+      })
     } catch (error) {
       next(error)
     }
   },
   getDish: async (req, res, next) => {
     try {
-      // ./dish?restaurant_id={restaurantId}
       const { restaurant_id } = req.query
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new BadRequest(errorCodes.exception_3.errorCode, errorCodes.exception_3.message)
+      // 跟藍星球要資料
+      const { response, status } = await venderService.getVenderData(venderUrl.dish, restaurant.restaurant_name)
+      if (!response.result.length) {
+        return console.log('blue planet no value')
       }
-      if (restaurant.dish) {
-        return res.status(200).json({
-          status: 'success',
-          result: JSON.parse(restaurant.dish)
-        })
-      } else {
-        const types = await vender_enum.findAll({ raw: true })
+      console.log('response', response)
+      // 抓取舊資料
+      const originalRecords = await venderRepository.getOriginalRecords(restaurant_id, 'dish')
+      console.log('originalRecords', originalRecords)
+      /* 新舊資料比對 */
+      // 新資料 -> response data 配對 keyId
+      const newRecords = await restaurantService.matchKeyId(response.result)
+      console.log('newRecords', newRecords)
 
-        const response = await getVenderData(venderUrl.dish, restaurant.restaurant_name)
-        // 沒有回傳資料
-        if (!response) {
-          throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
-        }
-        // 存入 raw data table
-        await vender_cuisine_dish_rawData.create({
-          vender_id,
+      // newRecords 與 originalRecords 比較 -> get inputData
+      const inputData = await restaurantService.getInputData(originalRecords, newRecords)
+      console.log('inputData', inputData)
+
+      // originalRecords 與 newRecords 比較 -> get removeData
+      const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
+      console.log('removeData', removeData)
+
+      // 新增 raw data
+      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.dish, status)
+
+      // 新增及刪除 vender_items
+      await venderRepository.insertNewRecords(inputData, restaurant_id, restaurant.restaurant_name, 'dish')
+      await venderRepository.removeOldRecords(removeData, restaurant_id, 'dish')
+
+      // return data
+      return res.status(200).json({
+        status: 'success',
+        response: {
           restaurant_id,
-          posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
-          cuisine_dish_data: JSON.stringify({ data: response })
-        })
-
-        const newResult = response.result.map((item) => ({
-          count: item.count,
-          keyId: types.find((type) => type.value === item.word).keyId
-        }))
-
-        // vender_items
-        newResult.forEach(async (result) => {
-          try {
-            await vender_items.create({
-              restaurant_id,
-              restaurant_name: restaurant.restaurant_name,
-              kind: 'dish',
-              keyId: result.keyId,
-              count: result.count
-            })
-          } catch (error) {
-            console.log(error)
-          }
-        })
-
-        return res.status(200).json({
-          status: 'success',
+          restaurant_name: restaurant.restaurant_name,
           result: response.result
-        })
-      }
+        }
+      })
     } catch (error) {
       next(error)
     }
