@@ -31,9 +31,6 @@ const restaurantController = {
       // 要改成從 data1 拉資料
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       const { response, status } = await venderService.getVenderData(venderUrl.keyword, restaurant.restaurant_name)
-      if (!response.result.length) {
-        return console.log('blue planet no value')
-      }
       console.log('response', response.result)
       // get original records
       const originalRecords = await venderRepository.getBasicExtendOriginals(restaurant_id, 'keyword')
@@ -75,9 +72,7 @@ const restaurantController = {
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.purpose, restaurant.restaurant_name)
-      if (!response.result.length) {
-        return console.log('blue planet no value')
-      }
+      console.log(response.result)
       // 抓取舊資料
       const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'purpose')
 
@@ -119,9 +114,6 @@ const restaurantController = {
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.type, restaurant.restaurant_name)
-      if (!response.result.length) {
-        return console.log('blue planet no value')
-      }
       console.log('response', response)
       // 抓取舊資料
       const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'type')
@@ -165,9 +157,6 @@ const restaurantController = {
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.dish, restaurant.restaurant_name)
-      if (!response.result.length) {
-        return console.log('blue planet no value')
-      }
       console.log('response', response)
       // 抓取舊資料
       const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'dish')

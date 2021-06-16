@@ -111,25 +111,26 @@ module.exports = class RestaurantService {
 
   getInputData (oldArray, newArray) {
     return new Promise((resolve, reject) => {
-
-      newArray.filter((newItem) => {
-        if (newItem.keyId) {
-          return !oldArray.map((oldItem) => oldItem.keyId).includes(newItem.keyId)
-        }
-        // keyword
-        if (newItem.word) {
-          /* new value !== old value -> new value 存到 inputData */
-          if (!oldArray.map((oldItem) => oldItem.value).includes(newItem.word)) {
-            console.log('不一樣')
-            console.log('newItem', newItem)
+      resolve(
+        newArray.filter((newItem) => {
+          if (newItem.keyId) {
+            return !oldArray.map((oldItem) => oldItem.keyId).includes(newItem.keyId)
           }
+          // keyword
+          if (newItem.word) {
+            /* new value !== old value -> new value 存到 inputData */
+            if (!oldArray.map((oldItem) => oldItem.value).includes(newItem.word)) {
+              console.log('不一樣')
+              console.log('newItem', newItem)
+            }
 
-          /* new value === old value -> 比對 count */
-          // count 相同 -> pass / count 不同 -> new value 存到 inputData
+            /* new value === old value -> 比對 count */
+            // count 相同 -> pass / count 不同 -> new value 存到 inputData
 
-          return !oldArray.map((oldItem) => oldItem.value).includes(newItem.word)
-        }
-      })
+            return !oldArray.map((oldItem) => oldItem.value).includes(newItem.word)
+          }
+        })
+      )
     })
   }
 
