@@ -5,7 +5,8 @@ const {
   restaurant_basic_extend,
   restaurant_basic,
   restaurant_comments,
-  restaurant_openingHours
+  restaurant_openingHours,
+  google_details
 } = require('../models')
 
 const vender_id = 1
@@ -41,6 +42,15 @@ module.exports = class VenderRepository {
           status
         }))
       }
+    })
+  }
+
+  insertGoogleDetails (response) {
+    return new Promise((resolve, reject) => {
+      resolve(google_details.create(
+        response
+      ))
+
     })
   }
 
