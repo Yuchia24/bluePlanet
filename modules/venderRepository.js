@@ -110,14 +110,16 @@ module.exports = class VenderRepository {
 
   removeBasicExtend (array, restaurant_id, group) {
     return new Promise((resolve, reject) => {
-      const removeArray = array.map((item) => item.value)
       resolve(
-        restaurant_basic_extend.destroy({
-          where: {
-            restaurant_id,
-            group,
-            value: removeArray
-          }
+        array.forEach((item) => {
+          restaurant_basic_extend.destroy({
+            where: {
+              restaurant_id,
+              group,
+              value: item.value,
+              count: item.count
+            }
+          })
         })
       )
     })

@@ -8,6 +8,8 @@ const restaurantService = new RestaurantService()
 // const { BadRequest, BluePlanetError } = require('../utils/errors')
 // const errorCodes = require('../utils/errorCodes')
 
+const { vender_input_data } = require('../models')
+
 const venderUrl = {
   keyword: '/all_kw',
   purpose: '/purpose',
