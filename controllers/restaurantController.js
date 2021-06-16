@@ -27,53 +27,15 @@ const venderUrl = {
 const restaurantController = {
   getKeyword: async (req, res, next) => {
     try {
-      // ./keywords?restaurant_id={restaurant_id}
       const { restaurant_id } = req.query
-
+      // 要改成從 data1 拉資料
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      // 餐廳不存在 vender DB
-      if (!restaurant) {
-        throw new BadRequest(errorCodes.exception_3.errorCode, errorCodes.exception_3.message)
+      const { response, status } = await venderService.getVenderData(venderUrl.keyword, restaurant.restaurant_name)
+      if (!response.result.length) {
+        return console.log('blue planet no value')
       }
-      // 餐廳資料已存在 vender DB
-      if (restaurant.keyword) {
-        return res.status(200).json({
-          status: 'success',
-          result: JSON.parse(restaurant.keyword)
-        })
-      } else {
-        // 餐廳資料不存在 -> call 藍星球 API
-        const response = await getVenderData(venderUrl.keyword, restaurant.restaurant_name)
-        // 沒有回傳資料
-        if (!response) {
-          throw new BluePlanetError(errorCodes.exception_4.errorCode, errorCodes.exception_4.message)
-        }
 
-        // 存入 raw data table
-        await vender_restaurant_keyword_rawData.create({
-          vender_id,
-          restaurant_id,
-          posted_data: JSON.stringify({ data: restaurant.restaurant_name }),
-          keyword_data: JSON.stringify({ data: response })
-        })
 
-        // update vender_input_data
-        await vender_input_data.update({
-          keyword: JSON.stringify(response.result)
-        }, { where: { restaurant_id } })
-
-        const responseData = {
-          status: 'success',
-          result: response.result
-        }
-        // keyword number under keywordMinNum
-        if (response.result.length < keywordMinNum) {
-          responseData.errorCode = errorCodes.exception_6.errorCode
-          responseData.message = errorCodes.exception_6.message
-        }
-
-        return res.status(200).json(responseData)
-      }
     } catch (error) {
       next(error)
     }

@@ -1,6 +1,28 @@
-const { vender_enum, vender_items, vender_rawData } = require('../models')
+const {
+  vender_enum,
+  vender_items,
+  vender_rawData,
+  restaurant_basic_extend,
+  restaurant_basic,
+  restaurant_comments,
+  restaurant_openingHours
+} = require('../models')
 
 const vender_id = 1
+
+async function myFunc () {
+  try {
+    const extend = await restaurant_basic_extend.findAll()
+    const basic = await restaurant_basic.findAll()
+    const comments = await restaurant_comments.findAll()
+    const hours = await restaurant_openingHours.findAll()
+    console.log('extend', extend, 'basic', basic, 'comments', comments, 'hours', hours)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+myFunc()
 
 module.exports = class VenderRepository {
   getOriginalRecords (restaurant_id, kind) {
