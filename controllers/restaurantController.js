@@ -5,17 +5,8 @@ const venderService = new VenderService()
 const RestaurantService = require('../service/restaurantService')
 const restaurantService = new RestaurantService()
 
-const {
-  vender_input_data,
-  vender_enum,
-  vender_items,
-  vender_rawData
-} = require('../models')
-
-const { BadRequest, BluePlanetError } = require('../utils/errors')
-const errorCodes = require('../utils/errorCodes')
-
-const keywordMinNum = 40
+// const { BadRequest, BluePlanetError } = require('../utils/errors')
+// const errorCodes = require('../utils/errorCodes')
 
 const venderUrl = {
   keyword: '/all_kw',

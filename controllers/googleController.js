@@ -3,12 +3,6 @@ const venderRepository = new VenderRepository()
 const GoogleService = require('../service/googleService')
 const googleService = new GoogleService()
 
-
-const { BadRequest, BluePlanetError } = require('../utils/errors')
-const errorCodes = require('../utils/errorCodes')
-
-const keywordMinNum = 40
-
 const GoogleUrl = {
   details: 'https://maps.googleapis.com/maps/api/place/details/json?language=zh-TW&fields=formatted_address,rating,price_level,geometry,formatted_phone_number,name,user_ratings_total,website&key=AIzaSyAcNoyMhP8l_6xLW2ycrzafVqn_NldQ27Y'
 }
@@ -16,9 +10,7 @@ const GoogleUrl = {
 const googleController = {
 
   getDetails: async (req, res, next) => {
-
     try {
-
       // 跟Google要資料
       const { response, status } = await googleService.getVenderData(GoogleUrl.details, req.params.placeId)
       const googleApiModel = {
@@ -45,7 +37,7 @@ const googleController = {
       // 紀錄log
       console.log(error)
     }
-  },
+  }
 
 }
 

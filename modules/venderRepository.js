@@ -64,7 +64,6 @@ module.exports = class VenderRepository {
       resolve(google_details.create(
         response
       ))
-
     })
   }
 
