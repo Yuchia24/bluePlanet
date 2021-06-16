@@ -2,7 +2,8 @@ const VenderRepository = require('../modules/venderRepository')
 const venderRepository = new VenderRepository()
 const GoogleService = require('../service/googleService')
 const googleService = new GoogleService()
-
+const env = process.env.NODE_ENV || 'development'
+const config = require(__dirname + '/../config/config.js')[env]
 
 const { BadRequest, BluePlanetError } = require('../utils/errors')
 const errorCodes = require('../utils/errorCodes')
@@ -10,7 +11,7 @@ const errorCodes = require('../utils/errorCodes')
 const keywordMinNum = 40
 
 const GoogleUrl = {
-  details: 'https://maps.googleapis.com/maps/api/place/details/json?language=zh-TW&fields=formatted_address,rating,price_level,geometry,formatted_phone_number,name,user_ratings_total,website&key=AIzaSyAcNoyMhP8l_6xLW2ycrzafVqn_NldQ27Y'
+  details: `https://maps.googleapis.com/maps/api/place/details/json?language=zh-TW&fields=formatted_address,rating,price_level,geometry,formatted_phone_number,name,user_ratings_total,website&key=${config.googleAPIKey}`
 }
 
 const googleController = {

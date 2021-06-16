@@ -4,7 +4,8 @@ module.exports = {
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
     host: process.env.HOSTNAME,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    googleAPIKey: process.env.GOOGLEAPIKEY
   },
   production: {
     use_env_variable: ''
