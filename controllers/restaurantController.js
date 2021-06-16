@@ -34,9 +34,36 @@ const restaurantController = {
       if (!response.result.length) {
         return console.log('blue planet no value')
       }
-      console.log('response', response)
+      console.log('response', response.result)
+      // get original records
+      const originalRecords = await venderRepository.getBasicExtendOriginals(restaurant_id, 'keyword')
+      console.log('originalRecords', originalRecords)
+      /* 差異比對 */
+      // get input data
+      const inputData = await restaurantService.getInputData(originalRecords, response.result)
+      console.log('inputData', inputData)
 
+      // get remove data
+      const removeData = await restaurantService.getRemoveData(originalRecords, response.result)
+      console.log('removeData', removeData)
 
+      // 新增 raw data
+      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.keyword, status)
+
+      // 新增 restaurant_basic_extend
+      await venderRepository.insertBasicExtend(inputData, restaurant_id, 'keyword')
+      // 刪除 restaurant_basic_extend
+      await venderRepository.removeBasicExtend(removeData, restaurant_id, 'keyword')
+
+      // return
+      return res.status(200).json({
+        status: 'success',
+        response: {
+          restaurant_id,
+          restaurant_name: restaurant.restaurant_name,
+          result: response.result
+        }
+      })
     } catch (error) {
       next(error)
     }
@@ -52,7 +79,7 @@ const restaurantController = {
         return console.log('blue planet no value')
       }
       // 抓取舊資料
-      const originalRecords = await venderRepository.getOriginalRecords(restaurant_id, 'purpose')
+      const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'purpose')
 
       /* 新舊資料比對 */
       // 新資料 -> response data 配對 keyId
@@ -97,7 +124,7 @@ const restaurantController = {
       }
       console.log('response', response)
       // 抓取舊資料
-      const originalRecords = await venderRepository.getOriginalRecords(restaurant_id, 'type')
+      const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'type')
       console.log('originalRecords', originalRecords)
       /* 新舊資料比對 */
       // 新資料 -> response data 配對 keyId
@@ -143,7 +170,7 @@ const restaurantController = {
       }
       console.log('response', response)
       // 抓取舊資料
-      const originalRecords = await venderRepository.getOriginalRecords(restaurant_id, 'dish')
+      const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'dish')
       console.log('originalRecords', originalRecords)
       /* 新舊資料比對 */
       // 新資料 -> response data 配對 keyId

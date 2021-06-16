@@ -111,16 +111,44 @@ module.exports = class RestaurantService {
 
   getInputData (oldArray, newArray) {
     return new Promise((resolve, reject) => {
-      resolve(
-        newArray.filter((item) => !oldArray.map((item2) => item2.keyId).includes(item.keyId))
-      )
+
+      newArray.filter((newItem) => {
+        if (newItem.keyId) {
+          return !oldArray.map((oldItem) => oldItem.keyId).includes(newItem.keyId)
+        }
+        // keyword
+        if (newItem.word) {
+          /* new value !== old value -> new value 存到 inputData */
+          if (!oldArray.map((oldItem) => oldItem.value).includes(newItem.word)) {
+            console.log('不一樣')
+            console.log('newItem', newItem)
+          }
+
+          /* new value === old value -> 比對 count */
+          // count 相同 -> pass / count 不同 -> new value 存到 inputData
+
+          return !oldArray.map((oldItem) => oldItem.value).includes(newItem.word)
+        }
+      })
     })
   }
 
   getRemoveData (oldArray, newArray) {
     return new Promise((resolve, reject) => {
       resolve(
-        oldArray.filter((item) => !newArray.map((item2) => item2.keyId).includes(item.keyId))
+        oldArray.filter((oldItem) => {
+          if (oldItem.keyId) {
+            return !newArray.map((newItem) => newItem.keyId).includes(oldItem.keyId)
+          }
+          // keyword
+          if (oldItem.value) {
+            /* old value !== new value -> old value 存到 removeData */
+
+            /* old value === new value -> 比對 count */
+            // count 相同 -> pass / count 不同 -> old value 存到 removeData
+            return !newArray.map((newItem) => newItem.word).includes(oldItem.value)
+          }
+        })
       )
     })
   }

@@ -11,7 +11,7 @@ const {
 const vender_id = 1
 
 module.exports = class VenderRepository {
-  getOriginalRecords (restaurant_id, kind) {
+  getVenderItemOriginals (restaurant_id, kind) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id || !kind) {
         reject(new Error('no value'))
@@ -20,10 +20,24 @@ module.exports = class VenderRepository {
           raw: true,
           attributes: ['count', 'keyId'],
           where: {
-            restaurant_id, kind
+            restaurant_id,
+            kind
           }
         }))
       }
+    })
+  }
+
+  getBasicExtendOriginals (restaurant_id, group) {
+    return new Promise((resolve, reject) => {
+      resolve(restaurant_basic_extend.findAll({
+        raw: true,
+        attributes: ['count', 'value'],
+        where: {
+          restaurant_id,
+          group
+        }
+      }))
     })
   }
 
@@ -58,15 +72,42 @@ module.exports = class VenderRepository {
     })
   }
 
+  insertBasicExtend (array, restaurant_id, group) {
+    return new Promise((resolve, reject) => {
+      const inputArray = array.map((item) => ({
+        restaurant_id,
+        group,
+        value: item.word,
+        count: item.count
+      }))
+      resolve(restaurant_basic_extend.bulkCreate(inputArray))
+    })
+  }
+
   removeVenderItems (array, restaurant_id, kind) {
     return new Promise((resolve, reject) => {
-      const newArray = array.map((item) => item.keyId)
+      const removeArray = array.map((item) => item.keyId)
       resolve(
         vender_items.destroy({
           where: {
             restaurant_id,
             kind,
-            keyId: newArray
+            keyId: removeArray
+          }
+        })
+      )
+    })
+  }
+
+  removeBasicExtend (array, restaurant_id, group) {
+    return new Promise((resolve, reject) => {
+      const removeArray = array.map((item) => item.value)
+      resolve(
+        restaurant_basic_extend.destroy({
+          where: {
+            restaurant_id,
+            group,
+            value: removeArray
           }
         })
       )
