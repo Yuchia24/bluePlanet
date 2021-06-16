@@ -44,7 +44,7 @@ module.exports = class VenderRepository {
     })
   }
 
-  insertNewRecords (array, restaurant_id, restaurant_name, kind) {
+  insertVenderItems (array, restaurant_id, restaurant_name, kind) {
     return new Promise((resolve, reject) => {
       const newArray = array.map((item) => ({
         vender_id,
@@ -58,7 +58,7 @@ module.exports = class VenderRepository {
     })
   }
 
-  removeOldRecords (array, restaurant_id, kind) {
+  removeVenderItems (array, restaurant_id, kind) {
     return new Promise((resolve, reject) => {
       const newArray = array.map((item) => item.keyId)
       resolve(

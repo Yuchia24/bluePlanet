@@ -34,6 +34,7 @@ const restaurantController = {
       if (!response.result.length) {
         return console.log('blue planet no value')
       }
+      console.log('response', response)
 
 
     } catch (error) {
@@ -67,8 +68,8 @@ const restaurantController = {
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.purpose, status)
 
       // 新增及刪除 vender_items
-      await venderRepository.insertNewRecords(inputData, restaurant_id, restaurant.restaurant_name, 'purpose')
-      await venderRepository.removeOldRecords(removeData, restaurant_id, 'purpose')
+      await venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'purpose')
+      await venderRepository.removeVenderItems(removeData, restaurant_id, 'purpose')
 
       // return data
       return res.status(200).json({
@@ -115,8 +116,8 @@ const restaurantController = {
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.type, status)
 
       // 新增及刪除 vender_items
-      await venderRepository.insertNewRecords(inputData, restaurant_id, restaurant.restaurant_name, 'type')
-      await venderRepository.removeOldRecords(removeData, restaurant_id, 'type')
+      await venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'type')
+      await venderRepository.removeVenderItems(removeData, restaurant_id, 'type')
 
       // return data
       return res.status(200).json({
@@ -161,8 +162,8 @@ const restaurantController = {
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.dish, status)
 
       // 新增及刪除 vender_items
-      await venderRepository.insertNewRecords(inputData, restaurant_id, restaurant.restaurant_name, 'dish')
-      await venderRepository.removeOldRecords(removeData, restaurant_id, 'dish')
+      await venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'dish')
+      await venderRepository.removeVenderItems(removeData, restaurant_id, 'dish')
 
       // return data
       return res.status(200).json({
