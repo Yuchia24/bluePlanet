@@ -171,32 +171,25 @@ const restaurantController = {
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.basic, restaurant.restaurant_name)
-      console.log('response', response.result)
 
-      // 抓取舊資料 basic_extend, opening_hour
-      const photoRecords = await venderRepository.getPhotoOriginals(restaurant_id)
-      const opening_hours = await venderRepository.getHoursOriginals(restaurant_id)
-      console.log('photoRecords', photoRecords)
-      console.log('opening_hours', opening_hours)
-
-      /* 新舊資料比對 */
-
+      // get original data (comments, photos, opening_hours)
+      const hourRecords = await venderRepository.getHourOriginals(restaurant_id)
+      console.log('hourRecords', hourRecords)
 
       // 新增 raw data
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
-      console.log('done raw data')
 
       // update basic
       await venderRepository.updateBasic(restaurant_id, response.result)
 
-      // update comments
-      await venderRepository.updateComments(restaurant_id, response.result.comments_highest.good)
-
-      // update opening_hour
+      // update openingHours
       await venderRepository.updateOpeningHours(restaurant_id, response.result.opening_hours.periods)
 
-      // update basic_extend
-      await venderRepository.updateBasicExtend(response.result.photos, restaurant_id, 'photo', venderUrl.pic)
+      // insert comments
+      await venderRepository.insertComments(restaurant_id, response.result.comments_highest.good)
+
+      // insert photos
+      await venderRepository.insertBasicExtend(response.result.photos, restaurant_id, 'photo', venderUrl.pic)
 
       // return
       return res.status(200).json({

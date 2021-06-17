@@ -43,18 +43,37 @@ module.exports = class VenderRepository {
     })
   }
 
-  getPhotoOriginals (restaurant_id) {
+  getCommentOriginals (restaurant_id) {
     return new Promise((resolve, reject) => {
       resolve(
-        restaurant_basic_extend.findOne({ raw: true, where: { restaurant_id, group: 'photo' } })
+        restaurant_comments.findAll({
+          raw: true,
+          attributes: ['id'],
+          where: { restaurant_id }
+        })
       )
     })
   }
 
-  getHoursOriginals (restaurant_id) {
+  getPhotoOriginals (restaurant_id) {
     return new Promise((resolve, reject) => {
       resolve(
-        restaurant_openingHours.findAll({ raw: true, where: { restaurant_id } })
+        restaurant_basic_extend.findAll({
+          raw: true,
+          attributes: ['id'],
+          where: { restaurant_id, group: 'photo' }
+        })
+      )
+    })
+  }
+
+  getHourOriginals (restaurant_id) {
+    return new Promise((resolve, reject) => {
+      resolve(
+        restaurant_openingHours.findAll({
+          raw: true,
+          where: { restaurant_id }
+        })
       )
     })
   }
@@ -98,38 +117,33 @@ module.exports = class VenderRepository {
     })
   }
 
-  updateComments (restaurant_id, comments) {
+  insertComments (restaurant_id, comments) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id) {
         reject(new Error('no value'))
       } else {
         comments = comments.map((comment) => ({
-          restaurant_id,
-          author: comment.author,
-          comment_time: comment.comment_time,
-          content: comment.content,
-          star: comment.star
+          ...comment,
+          restaurant_id
         }))
-        resolve(restaurant_comments.bulkCreate(comments, {
-          updateOnDuplicate: ['id', 'author', 'restaurant_id', 'comment_time', 'content', 'star']
-        }))
+        resolve(restaurant_comments.bulkCreate(comments))
       }
     })
   }
 
-  insertOpeningHours (restaurant_id, hours) {
+  updateOpeningHours (restaurant_id, hours) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id) {
         reject(new Error('no value'))
       } else {
-        hours = hours.map((hour, index, array) => {
-          return {
+        hours = hours.map((hour, index, array) => (
+          {
             restaurant_id,
             day: hour.close.day,
             startTime: hour.open.time,
             endTime: hour.close.time
           }
-        })
+        ))
         resolve(restaurant_openingHours.bulkCreate(hours))
       }
     })

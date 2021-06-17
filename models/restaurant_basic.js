@@ -4,11 +4,6 @@ module.exports = (sequelize, DataTypes) => {
   class restaurant_basic extends Model {
     static associate (models) {
       // define association
-      // restaurant_basic.hasMany(models.restaurant_openingHours, {
-      //   raw: true,
-      //   foreignKey: 'restaurant_id',
-      //   as: 'OpeningHours'
-      // })
     }
   }
   restaurant_basic.init({
