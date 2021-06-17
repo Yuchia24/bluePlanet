@@ -8,10 +8,12 @@ const {
   restaurant_openingHours,
   google_details
 } = require('../models')
-
 const vender_id = 1
+<<<<<<< HEAD
 const baseURL = 'http://demo.blueplanet.com.tw:11693'
 
+=======
+>>>>>>> 9cbe2954646ad780a0e9e34810e3024769497752
 module.exports = class VenderRepository {
   getVenderItemOriginals (restaurant_id, kind) {
     return new Promise((resolve, reject) => {
@@ -29,7 +31,6 @@ module.exports = class VenderRepository {
       }
     })
   }
-
   getBasicExtendOriginals (restaurant_id, group) {
     return new Promise((resolve, reject) => {
       resolve(restaurant_basic_extend.findAll({
@@ -42,7 +43,6 @@ module.exports = class VenderRepository {
       }))
     })
   }
-
   insertRawData (restaurant_id, posted_data, response_data, api_url, status) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id || !posted_data || !api_url) {
@@ -59,7 +59,70 @@ module.exports = class VenderRepository {
       }
     })
   }
-
+  insertBasic (restaurant_id, response_data) {
+    return new Promise((resolve, reject) => {
+      if (!restaurant_id) {
+        reject(new Error('no value'))
+      } else {
+        resolve(restaurant_basic.create({
+          restaurant_id,
+          address: JSON.stringify(response_data.address),
+          country: JSON.stringify(response_data.country),
+          formatted_phone_number: JSON.stringify(response_data.formatted_phone_number),
+          name: JSON.stringify(response_data.name),
+          price_level: JSON.stringify(response_data.price_level),
+          rating: JSON.stringify(response_data.rating),
+          user_ratings_total: JSON.stringify(response_data.user_ratings_total),
+          route: JSON.stringify(response_data.user_ratings_total),
+          locationLat: JSON.stringify(response_data.geometry.location.lat),
+          locationLng: JSON.stringify(response_data.geometry.location.lng),
+          website: JSON.stringify(response_data.website)
+        }))
+      }
+    })
+  }
+  insertBasicExtend (restaurant_id, posted_data, response_data, api_url, status) {
+    return new Promise((resolve, reject) => {
+      if (!restaurant_id || !posted_data || !api_url) {
+        reject(new Error('no value'))
+      } else {
+        resolve(restaurant_basic_extend.create({
+          restaurant_id,
+          group: 'photo',
+          value: '123'
+        }))
+      }
+    })
+  }
+  insertComment (restaurant_id, posted_data, response_data) {
+    return new Promise((resolve, reject) => {
+      if (!restaurant_id || !posted_data) {
+        reject(new Error('no value'))
+      } else {
+        resolve(restaurant_comments.create({
+          restaurant_id,
+          author: JSON.stringify(response_data.comments_highest.good.author),
+          comment_time: JSON.stringify(response_data.comments_highest.good.comment_time),
+          content: JSON.stringify(response_data.comments_highest.good.content),
+          star: JSON.stringify(response_data.comments_highest.good.star)
+        }))
+      }
+    })
+  }
+  insertOpeningHours (restaurant_id, posted_data, response_data) {
+    return new Promise((resolve, reject) => {
+      if (!restaurant_id || !posted_data) {
+        reject(new Error('no value'))
+      } else {
+        resolve(restaurant_openingHours.create({
+          restaurant_id,
+          day: JSON.stringify(response_data.comments_highest.good.author),
+          startTime: JSON.stringify(response_data.comments_highest.good.comment_time),
+          endTime: JSON.stringify(response_data.comments_highest.good.content)
+        }))
+      }
+    })
+  }
   insertGoogleDetails (response) {
     return new Promise((resolve, reject) => {
       resolve(google_details.create(
@@ -67,7 +130,6 @@ module.exports = class VenderRepository {
       ))
     })
   }
-
   insertVenderItems (array, restaurant_id, restaurant_name, kind) {
     return new Promise((resolve, reject) => {
       const newArray = array.map((item) => ({
@@ -81,7 +143,6 @@ module.exports = class VenderRepository {
       resolve(vender_items.bulkCreate(newArray))
     })
   }
-
   insertBasicExtend (array, restaurant_id, group) {
     return new Promise((resolve, reject) => {
       const inputArray = array.map((item) => ({
@@ -93,7 +154,6 @@ module.exports = class VenderRepository {
       resolve(restaurant_basic_extend.bulkCreate(inputArray))
     })
   }
-
   removeVenderItems (array, restaurant_id, kind) {
     return new Promise((resolve, reject) => {
       const removeArray = array.map((item) => item.keyId)
@@ -108,7 +168,6 @@ module.exports = class VenderRepository {
       )
     })
   }
-
   removeBasicExtend (array, restaurant_id, group) {
     return new Promise((resolve, reject) => {
       resolve(
