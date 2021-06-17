@@ -43,6 +43,22 @@ module.exports = class VenderRepository {
     })
   }
 
+  getPhotoOriginals (restaurant_id) {
+    return new Promise((resolve, reject) => {
+      resolve(
+        restaurant_basic_extend.findOne({ raw: true, where: { restaurant_id, group: 'photo' } })
+      )
+    })
+  }
+
+  getHoursOriginals (restaurant_id) {
+    return new Promise((resolve, reject) => {
+      resolve(
+        restaurant_openingHours.findAll({ raw: true, where: { restaurant_id } })
+      )
+    })
+  }
+
   insertRawData (restaurant_id, posted_data, response_data, api_url, status) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id || !posted_data || !api_url) {
@@ -60,30 +76,29 @@ module.exports = class VenderRepository {
     })
   }
 
-  insertBasic (restaurant_id, response_data) {
+  updateBasic (restaurant_id, data) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id) {
         reject(new Error('no value'))
       } else {
-        resolve(restaurant_basic.create({
-          restaurant_id,
-          address: response_data.address,
-          country: response_data.country,
-          formatted_phone_number: response_data.formatted_phone_number,
-          name: response_data.name,
-          price_level: response_data.price_level,
-          rating: response_data.rating,
-          user_ratings_total: response_data.user_ratings_total,
-          route: response_data.route,
-          locationLat: response_data.geometry.location.lat,
-          locationLng: response_data.geometry.location.lng,
-          website: response_data.website
-        }))
+        resolve(restaurant_basic.update({
+          address: data.address,
+          country: data.country,
+          formatted_phone_number: data.formatted_phone_number,
+          name: data.name,
+          price_level: data.price_level,
+          rating: data.rating,
+          user_ratings_total: data.user_ratings_total,
+          route: data.route,
+          locationLat: data.geometry.location.lat,
+          locationLng: data.geometry.location.lng,
+          website: data.website
+        }, { where: { restaurant_id } }))
       }
     })
   }
 
-  insertComments (restaurant_id, comments) {
+  updateComments (restaurant_id, comments) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id) {
         reject(new Error('no value'))
@@ -95,7 +110,9 @@ module.exports = class VenderRepository {
           content: comment.content,
           star: comment.star
         }))
-        resolve(restaurant_comments.bulkCreate(comments))
+        resolve(restaurant_comments.bulkCreate(comments, {
+          updateOnDuplicate: ['id', 'author', 'restaurant_id', 'comment_time', 'content', 'star']
+        }))
       }
     })
   }
@@ -106,7 +123,6 @@ module.exports = class VenderRepository {
         reject(new Error('no value'))
       } else {
         hours = hours.map((hour, index, array) => {
-          console.log('hour', hour)
           return {
             restaurant_id,
             day: hour.close.day,
