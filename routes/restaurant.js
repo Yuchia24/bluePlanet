@@ -11,5 +11,7 @@ router.get('/purpose', inputRules, restaurantController.getPurpose)
 router.get('/type', inputRules, restaurantController.getType)
 // 地區美食
 router.get('/dish', inputRules, restaurantController.getDish)
+// basic
+router.get('/basic', inputRules, restaurantController.getBasic)
 
 module.exports = router

@@ -13,4 +13,19 @@ module.exports = class VenderService {
       // throw new BluePlanetError(errorCodes.exception_5.errorCode, err.response.data.error)
     }
   }
+
+  // async getPhotoUrl (url, photos) {
+  //   try {
+  //     photos.map(async (photo) => {
+  //       try {
+  //         const results = await apiHelper.get(url, { params: photo.photo_reference })
+  //         console.log(results)
+  //       } catch (error) {
+  //         console.log(error)
+  //       }
+  //     })
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 }

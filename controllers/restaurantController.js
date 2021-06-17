@@ -4,16 +4,8 @@ const VenderService = require('../service/venderService')
 const venderService = new VenderService()
 const RestaurantService = require('../service/restaurantService')
 const restaurantService = new RestaurantService()
-const {
-  vender_input_data,
-  vender_enum,
-  vender_items,
-  vender_rawData,
-  restaurant_basic_extend,
-  restaurant_basic,
-  restaurant_comments,
-  restaurant_openingHours
-} = require('../models')
+
+const { vender_input_data } = require('../models')
 // const { BadRequest, BluePlanetError } = require('../utils/errors')
 // const errorCodes = require('../utils/errorCodes')
 const venderUrl = {
@@ -179,34 +171,31 @@ const restaurantController = {
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.basic, restaurant.restaurant_name)
-      console.log('餐廳資訊是：')
-      console.log(response)
-      // if (!response.result.length) {
-      //   return console.log('blue planet no value')
-      // }
-      console.log('response', response)
-      // 抓取舊資料
-      const originalRecords = await venderRepository.getOriginalRecords(restaurant_id, 'basic')
-      console.log('originalRecords', originalRecords)
+      console.log('response', response.result)
+      console.log('photo', response.result.photos)
+
+      // 抓取舊資料 basic, comments, basic_extend, opening_hour
+
+
       /* 新舊資料比對 */
-      // 新資料 -> response data 配對 keyId
-      const newRecords = await restaurantService.matchKeyId(response.result)
-      console.log('newRecords', newRecords)
-      // newRecords 與 originalRecords 比較 -> get inputData
-      const inputData = await restaurantService.getInputData(originalRecords, newRecords)
-      console.log('inputData', inputData)
-      // originalRecords 與 newRecords 比較 -> get removeData
-      const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
-      console.log('removeData', removeData)
+
+
+
       // 新增 raw data
-      await venderRepository.insertBasic(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic)
-      await venderRepository.insertBasicExtend(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
-      await venderRepository.insertComment(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
-      //await venderRepository.insertOpeningHours(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
-      // 新增及刪除 vender_items
-      // await venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'basic')
-      // await venderRepository.removeVenderItems(removeData, restaurant_id, 'basic')
-      // return data
+      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
+      console.log('done raw data')
+
+      // insert basic
+      await venderRepository.insertBasic(restaurant_id, response.result)
+
+      // insert comments
+
+      // insert opening_hour
+
+      // insert basic_extend
+
+
+      // return
       return res.status(200).json({
         status: 'success',
         response: {
