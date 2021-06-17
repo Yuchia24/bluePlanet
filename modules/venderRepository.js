@@ -137,17 +137,18 @@ module.exports = class VenderRepository {
     })
   }
 
-  insertBasicExtend (array, restaurant_id, group) {
+  insertBasicExtend (array, restaurant_id, group, url) {
     return new Promise((resolve, reject) => {
       const inputArray = array.map((item) => {
-        if (item.photo_reference) {
+        if (url) {
           // group = 'photo'
           return {
             restaurant_id,
             group,
-            value: item.photo
+            value: baseURL.concat(url, '/', item.photo_reference)
           }
         } else {
+          // group = keyword
           return {
             restaurant_id,
             group,

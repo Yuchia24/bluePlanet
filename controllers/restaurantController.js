@@ -194,7 +194,7 @@ const restaurantController = {
       // insert opening_hour
 
       // insert basic_extend
-
+      await venderRepository.insertBasicExtend(response.result.photos, restaurant_id, 'photo', venderUrl.pic)
 
       // return
       return res.status(200).json({
