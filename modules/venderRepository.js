@@ -10,6 +10,7 @@ const {
 } = require('../models')
 
 const vender_id = 1
+const baseURL = 'http://demo.blueplanet.com.tw:11693'
 
 module.exports = class VenderRepository {
   getVenderItemOriginals (restaurant_id, kind) {
@@ -52,7 +53,7 @@ module.exports = class VenderRepository {
           restaurant_id,
           posted_data: JSON.stringify({ data: posted_data }),
           response_data: JSON.stringify(response_data),
-          api_url,
+          api_url: baseURL.concat(api_url),
           status
         }))
       }
