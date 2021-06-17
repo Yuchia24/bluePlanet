@@ -192,6 +192,7 @@ const restaurantController = {
       await venderRepository.insertComments(restaurant_id, response.result.comments_highest.good)
 
       // insert opening_hour
+      await venderRepository.insertOpeningHours(restaurant_id, response.result.opening_hours.periods)
 
       // insert basic_extend
       await venderRepository.insertBasicExtend(response.result.photos, restaurant_id, 'photo', venderUrl.pic)

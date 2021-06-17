@@ -100,17 +100,21 @@ module.exports = class VenderRepository {
     })
   }
 
-  insertOpeningHours (restaurant_id, posted_data, response_data) {
+  insertOpeningHours (restaurant_id, hours) {
     return new Promise((resolve, reject) => {
-      if (!restaurant_id || !posted_data) {
+      if (!restaurant_id) {
         reject(new Error('no value'))
       } else {
-        resolve(restaurant_openingHours.create({
-          restaurant_id,
-          day: JSON.stringify(response_data.comments_highest.good.author),
-          startTime: JSON.stringify(response_data.comments_highest.good.comment_time),
-          endTime: JSON.stringify(response_data.comments_highest.good.content)
-        }))
+        hours = hours.map((hour, index, array) => {
+          console.log('hour', hour)
+          return {
+            restaurant_id,
+            day: hour.close.day,
+            startTime: hour.open.time,
+            endTime: hour.close.time
+          }
+        })
+        resolve(restaurant_openingHours.bulkCreate(hours))
       }
     })
   }
