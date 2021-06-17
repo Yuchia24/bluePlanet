@@ -83,18 +83,19 @@ module.exports = class VenderRepository {
     })
   }
 
-  insertComment (restaurant_id, posted_data, response_data) {
+  insertComments (restaurant_id, comments) {
     return new Promise((resolve, reject) => {
-      if (!restaurant_id || !posted_data) {
+      if (!restaurant_id) {
         reject(new Error('no value'))
       } else {
-        resolve(restaurant_comments.create({
+        comments = comments.map((comment) => ({
           restaurant_id,
-          author: JSON.stringify(response_data.comments_highest.good.author),
-          comment_time: JSON.stringify(response_data.comments_highest.good.comment_time),
-          content: JSON.stringify(response_data.comments_highest.good.content),
-          star: JSON.stringify(response_data.comments_highest.good.star)
+          author: comment.author,
+          comment_time: comment.comment_time,
+          content: comment.content,
+          star: comment.star
         }))
+        resolve(restaurant_comments.bulkCreate(comments))
       }
     })
   }

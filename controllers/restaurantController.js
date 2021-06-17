@@ -189,6 +189,7 @@ const restaurantController = {
       await venderRepository.insertBasic(restaurant_id, response.result)
 
       // insert comments
+      await venderRepository.insertComments(restaurant_id, response.result.comments_highest.good)
 
       // insert opening_hour
 
