@@ -72,6 +72,7 @@ module.exports = class VenderRepository {
       resolve(
         restaurant_openingHours.findAll({
           raw: true,
+          attributes: ['id'],
           where: { restaurant_id }
         })
       )
@@ -131,12 +132,13 @@ module.exports = class VenderRepository {
     })
   }
 
-  updateOpeningHours (restaurant_id, hours) {
+  updateOpeningHours (restaurant_id, newRecords, oldRecords) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id) {
         reject(new Error('no value'))
       } else {
-        hours = hours.map((hour, index, array) => (
+        console.log('oldRecords', oldRecords)
+        newRecords = newRecords.map((hour, index, array) => (
           {
             restaurant_id,
             day: hour.close.day,
@@ -144,7 +146,21 @@ module.exports = class VenderRepository {
             endTime: hour.close.time
           }
         ))
-        resolve(restaurant_openingHours.bulkCreate(hours))
+        // newRecords [], oldRecords []
+        newRecords.forEach((newItem, index) => {
+          newRecords.splice(0, 1)
+          console.log('newRecords', newRecords)
+        })
+        console.log('newRecords', newRecords)
+        // if (!newRecords.length - oldRecords.length) {
+        //   // same rows
+
+        // } else if (newRecords.length - oldRecords.length > 0) {
+        //   // new rows > old raws
+
+        // } else {
+        //   // new raws < old raws
+        // }
       }
     })
   }
@@ -171,27 +187,56 @@ module.exports = class VenderRepository {
     })
   }
 
-  insertBasicExtend (array, restaurant_id, group, url) {
+  updateBasicExtend (array, restaurant_id, group, url, oldArray) {
     return new Promise((resolve, reject) => {
-      const inputArray = array.map((item) => {
-        if (url) {
-          // group = 'photo'
-          return {
-            restaurant_id,
-            group,
-            value: baseURL.concat(url, '/', item.photo_reference)
+      if (url) {
+        // group = 'photo'
+        array = array.map((item) => ({
+          restaurant_id,
+          group,
+          value: baseURL.concat(url, '/', item.photo_reference)
+        }))
+        const length = oldArray.length - array.length > 0 ? array.length : oldArray.length
+        let updateArray = []
+        let insertArray = [...array]
+        let deleteArray = [...oldArray]
+
+        for (let i = 0; i < length; i++) {
+          const updateData = {
+            id: oldArray[i].id,
+            ...array[i]
           }
-        } else {
-          // group = keyword
-          return {
-            restaurant_id,
-            group,
-            value: item.word,
-            count: item.count
-          }
+          updateArray.push(updateData)
+          insertArray.splice(0, 1)
+          deleteArray.splice(0, 1)
         }
-      })
-      resolve(restaurant_basic_extend.bulkCreate(inputArray))
+        deleteArray = deleteArray.map((item) => item.id)
+
+        resolve(
+          restaurant_basic_extend.bulkCreate(updateArray, { updateOnDuplicate: ['value'] })
+            .then(() => {
+              restaurant_basic_extend.bulkCreate(insertArray)
+            })
+            .then(() => {
+              restaurant_basic_extend.destroy({
+                where: {
+                  id: [deleteArray],
+                  restaurant_id,
+                  group
+                }
+              })
+            })
+        )
+      } else {
+        // group = keyword
+        const inputArray = array.map((item) => ({
+          restaurant_id,
+          group,
+          value: item.word,
+          count: item.count
+        }))
+        resolve(restaurant_basic_extend.bulkCreate(inputArray))
+      }
     })
   }
 

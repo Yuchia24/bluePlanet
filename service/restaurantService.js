@@ -136,7 +136,6 @@ module.exports = class RestaurantService {
             const target = newArray.find((newItem) => newItem.word === oldItem.value) || {}
             const condition1 = newArray.find((newItem) => newItem.word === oldItem.word)
             const condition2 = target.count !== oldItem.count
-            console.log('condition1', condition1, 'condition2', condition2)
             return condition1 || condition2
           }
           // other API
