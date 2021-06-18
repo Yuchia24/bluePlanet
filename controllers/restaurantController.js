@@ -182,13 +182,10 @@ const restaurantController = {
 
       // update basic
       await venderRepository.updateBasic(restaurant_id, response.result)
-
       // update openingHours
       await venderRepository.updateOpeningHours(restaurant_id, response.result.opening_hours.periods, hourRecords)
-
       // update comments
       await venderRepository.updateComments(restaurant_id, response.result.comments_highest.good, comments)
-
       // update photos
       await venderRepository.updateBasicExtend(response.result.photos, restaurant_id, 'photo', venderUrl.pic, photos)
 

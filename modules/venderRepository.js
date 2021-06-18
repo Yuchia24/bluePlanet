@@ -197,28 +197,6 @@ module.exports = class VenderRepository {
     })
   }
 
-  insertGoogleDetails (response) {
-    return new Promise((resolve, reject) => {
-      resolve(google_details.create(
-        response
-      ))
-    })
-  }
-
-  insertVenderItems (array, restaurant_id, restaurant_name, kind) {
-    return new Promise((resolve, reject) => {
-      const newArray = array.map((item) => ({
-        vender_id,
-        restaurant_id,
-        restaurant_name,
-        kind,
-        keyId: item.keyId,
-        count: item.count
-      }))
-      resolve(vender_items.bulkCreate(newArray))
-    })
-  }
-
   updateBasicExtend (array, restaurant_id, group, url, oldArray) {
     return new Promise((resolve, reject) => {
       if (url) {
@@ -263,6 +241,29 @@ module.exports = class VenderRepository {
       }
     })
   }
+
+  insertGoogleDetails (response) {
+    return new Promise((resolve, reject) => {
+      resolve(google_details.create(
+        response
+      ))
+    })
+  }
+
+  insertVenderItems (array, restaurant_id, restaurant_name, kind) {
+    return new Promise((resolve, reject) => {
+      const newArray = array.map((item) => ({
+        vender_id,
+        restaurant_id,
+        restaurant_name,
+        kind,
+        keyId: item.keyId,
+        count: item.count
+      }))
+      resolve(vender_items.bulkCreate(newArray))
+    })
+  }
+
 
   removeVenderItems (array, restaurant_id, kind) {
     return new Promise((resolve, reject) => {
