@@ -118,16 +118,40 @@ module.exports = class VenderRepository {
     })
   }
 
-  insertComments (restaurant_id, comments) {
+  updateComments (restaurant_id, newRecords, oldRecords) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id) {
         reject(new Error('no value'))
       } else {
-        comments = comments.map((comment) => ({
-          ...comment,
-          restaurant_id
+        newRecords = newRecords.map((comment) => ({
+          restaurant_id,
+          ...comment
         }))
-        resolve(restaurant_comments.bulkCreate(comments))
+        const length = oldRecords.length > newRecords.length ? newRecords.length : oldRecords.length
+        let updateArray = []
+        let insertArray = [...newRecords]
+        let deleteArray = [...oldRecords]
+
+        for (let i = 0; i < length; i++) {
+          const updateData = {
+            id: oldRecords[i].id,
+            ...newRecords[i]
+          }
+          updateArray.push(updateData)
+          insertArray.splice(0, 1)
+          deleteArray.splice(0, 1)
+        }
+        deleteArray = deleteArray.map((item) => item.id)
+
+        resolve(
+          restaurant_comments.bulkCreate(updateArray, {
+            updateOnDuplicate: ['author', 'comment_time', 'content', 'star']
+          })
+            .then(() => restaurant_comments.bulkCreate(insertArray))
+            .then(() => restaurant_comments.destroy({
+              where: { id: deleteArray }
+            }))
+        )
       }
     })
   }
