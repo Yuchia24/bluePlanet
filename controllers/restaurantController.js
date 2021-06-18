@@ -171,6 +171,9 @@ const restaurantController = {
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.basic, restaurant.restaurant_name)
+      console.log('response', response)
+      console.log('status', status)
+      // console.log('error', error)
 
       // get original data (comments, photos, opening_hours)
       const hourRecords = await venderRepository.getHourOriginals(restaurant_id)
@@ -179,6 +182,11 @@ const restaurantController = {
 
       // 新增 raw data
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
+
+      // blue planet response error
+      if (response.error) {
+        console.log('blue planet response error')
+      }
 
       // update basic
       await venderRepository.updateBasic(restaurant_id, response.result)

@@ -161,7 +161,6 @@ module.exports = class VenderRepository {
       if (!restaurant_id) {
         reject(new Error('no value'))
       } else {
-        console.log('oldRecords', oldRecords)
         newRecords = newRecords.map((hour) => ({
           restaurant_id,
           day: hour.close.day,

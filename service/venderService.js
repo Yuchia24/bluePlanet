@@ -8,9 +8,7 @@ module.exports = class VenderService {
       const res = await apiHelper.post(url, qs.stringify({ token, kw }))
       return { response: res.data, status: res.status }
     } catch (err) {
-      // 紀錄 log
-      console.log(err)
-      // throw new BluePlanetError(errorCodes.exception_5.errorCode, err.response.data.error)
+      return { response: err.response.data, status: err.response.status }
     }
   }
 
