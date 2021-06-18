@@ -138,29 +138,37 @@ module.exports = class VenderRepository {
         reject(new Error('no value'))
       } else {
         console.log('oldRecords', oldRecords)
-        newRecords = newRecords.map((hour, index, array) => (
-          {
-            restaurant_id,
-            day: hour.close.day,
-            startTime: hour.open.time,
-            endTime: hour.close.time
+        newRecords = newRecords.map((hour) => ({
+          restaurant_id,
+          day: hour.close.day,
+          startTime: hour.open.time,
+          endTime: hour.close.time
+        }))
+        const length = oldRecords.length > newRecords.length ? newRecords.length : oldRecords.length
+        let updateArray = []
+        let insertArray = [...newRecords]
+        let deleteArray = [...oldRecords]
+
+        for (let i = 0; i < length; i++) {
+          const updateData = {
+            id: oldRecords[i].id,
+            ...newRecords[i]
           }
-        ))
-        // newRecords [], oldRecords []
-        newRecords.forEach((newItem, index) => {
-          newRecords.splice(0, 1)
-          console.log('newRecords', newRecords)
-        })
-        console.log('newRecords', newRecords)
-        // if (!newRecords.length - oldRecords.length) {
-        //   // same rows
+          updateArray.push(updateData)
+          insertArray.splice(0, 1)
+          deleteArray.splice(0, 1)
+        }
+        deleteArray = deleteArray.map((item) => item.id)
 
-        // } else if (newRecords.length - oldRecords.length > 0) {
-        //   // new rows > old raws
-
-        // } else {
-        //   // new raws < old raws
-        // }
+        resolve(
+          restaurant_openingHours.bulkCreate(updateArray, {
+            updateOnDuplicate: ['day', 'startTime', 'endTime']
+          })
+            .then(() => restaurant_openingHours.bulkCreate(insertArray))
+            .then(() => restaurant_openingHours.destroy({
+              where: { id: deleteArray }
+            }))
+        )
       }
     })
   }
@@ -196,7 +204,7 @@ module.exports = class VenderRepository {
           group,
           value: baseURL.concat(url, '/', item.photo_reference)
         }))
-        const length = oldArray.length - array.length > 0 ? array.length : oldArray.length
+        const length = oldArray.length > array.length ? array.length : oldArray.length
         let updateArray = []
         let insertArray = [...array]
         let deleteArray = [...oldArray]
@@ -214,18 +222,10 @@ module.exports = class VenderRepository {
 
         resolve(
           restaurant_basic_extend.bulkCreate(updateArray, { updateOnDuplicate: ['value'] })
-            .then(() => {
-              restaurant_basic_extend.bulkCreate(insertArray)
-            })
-            .then(() => {
-              restaurant_basic_extend.destroy({
-                where: {
-                  id: [deleteArray],
-                  restaurant_id,
-                  group
-                }
-              })
-            })
+            .then(() => restaurant_basic_extend.bulkCreate(insertArray))
+            .then(() => restaurant_basic_extend.destroy({
+              where: { id: [deleteArray] }
+            }))
         )
       } else {
         // group = keyword

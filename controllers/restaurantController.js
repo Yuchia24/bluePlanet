@@ -174,7 +174,6 @@ const restaurantController = {
 
       // get original data (comments, photos, opening_hours)
       const hourRecords = await venderRepository.getHourOriginals(restaurant_id)
-      console.log('hourRecords', hourRecords)
       const photos = await venderRepository.getPhotoOriginals(restaurant_id)
 
       // 新增 raw data
@@ -184,7 +183,7 @@ const restaurantController = {
       await venderRepository.updateBasic(restaurant_id, response.result)
 
       // update openingHours
-      // await venderRepository.updateOpeningHours(restaurant_id, response.result.opening_hours.periods, hourRecords)
+      await venderRepository.updateOpeningHours(restaurant_id, response.result.opening_hours.periods, hourRecords)
 
       // insert comments
       await venderRepository.insertComments(restaurant_id, response.result.comments_highest.good)
