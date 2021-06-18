@@ -6,8 +6,7 @@ const RestaurantService = require('../service/restaurantService')
 const restaurantService = new RestaurantService()
 
 const { vender_input_data } = require('../models')
-// const { BadRequest, BluePlanetError } = require('../utils/errors')
-// const errorCodes = require('../utils/errorCodes')
+
 const venderUrl = {
   keyword: '/all_kw',
   purpose: '/purpose',
@@ -86,7 +85,7 @@ const restaurantController = {
       })
     } catch (error) {
       // 紀錄log
-      console.log(error)
+      next(error)
     }
   },
   getType: async (req, res, next) => {
@@ -171,9 +170,6 @@ const restaurantController = {
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.basic, restaurant.restaurant_name)
-      console.log('response', response)
-      console.log('status', status)
-      // console.log('error', error)
 
       // get original data (comments, photos, opening_hours)
       const hourRecords = await venderRepository.getHourOriginals(restaurant_id)
