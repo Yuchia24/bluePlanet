@@ -142,12 +142,12 @@ module.exports = class VenderRepository {
           deleteArray.splice(0, 1)
         }
         deleteArray = deleteArray.map((item) => item.id)
+        const newArray = updateArray.concat(insertArray)
 
         resolve(
-          restaurant_comments.bulkCreate(updateArray, {
+          restaurant_comments.bulkCreate(newArray, {
             updateOnDuplicate: ['author', 'comment_time', 'content', 'star']
           })
-            .then(() => restaurant_comments.bulkCreate(insertArray))
             .then(() => restaurant_comments.destroy({
               where: { id: deleteArray }
             }))
@@ -182,12 +182,12 @@ module.exports = class VenderRepository {
           deleteArray.splice(0, 1)
         }
         deleteArray = deleteArray.map((item) => item.id)
+        const newArray = updateArray.concat(insertArray)
 
         resolve(
-          restaurant_openingHours.bulkCreate(updateArray, {
+          restaurant_openingHours.bulkCreate(newArray, {
             updateOnDuplicate: ['day', 'startTime', 'endTime']
           })
-            .then(() => restaurant_openingHours.bulkCreate(insertArray))
             .then(() => restaurant_openingHours.destroy({
               where: { id: deleteArray }
             }))
@@ -220,10 +220,10 @@ module.exports = class VenderRepository {
           deleteArray.splice(0, 1)
         }
         deleteArray = deleteArray.map((item) => item.id)
+        const newArray = updateArray.concat(insertArray)
 
         resolve(
-          restaurant_basic_extend.bulkCreate(updateArray, { updateOnDuplicate: ['value'] })
-            .then(() => restaurant_basic_extend.bulkCreate(insertArray))
+          restaurant_basic_extend.bulkCreate(newArray, { updateOnDuplicate: ['value'] })
             .then(() => restaurant_basic_extend.destroy({
               where: { id: [deleteArray] }
             }))
