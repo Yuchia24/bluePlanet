@@ -9,6 +9,8 @@ const {
   google_details
 } = require('../models')
 
+const { BadRequest } = require('../utils/errors')
+
 const vender_id = 1
 const baseURL = 'http://demo.blueplanet.com.tw:11693'
 
@@ -16,7 +18,7 @@ module.exports = class VenderRepository {
   getVenderItemOriginals (restaurant_id, kind) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id || !kind) {
-        reject(new Error('no value'))
+        reject(new BadRequest('no value'))
       } else {
         resolve(vender_items.findAll({
           raw: true,
@@ -82,7 +84,7 @@ module.exports = class VenderRepository {
   insertRawData (restaurant_id, posted_data, response_data, api_url, status) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id || !posted_data || !api_url) {
-        reject(new Error('no value'))
+        reject(new Error(''))
       } else {
         resolve(vender_rawData.create({
           vender_id,

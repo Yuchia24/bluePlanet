@@ -168,8 +168,10 @@ const restaurantController = {
     try {
       const { restaurant_id } = req.query
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      console.log('restaurant', restaurant)
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.basic, restaurant.restaurant_name)
+      console.log('response', response)
 
       // get original data (comments, photos, opening_hours)
       const hourRecords = await venderRepository.getHourOriginals(restaurant_id)
