@@ -11,8 +11,8 @@ Desktop.ini
 # npm
 node_modules
 package-lock.json
-*.log
+# *.log
 *.gz
 
 .env
-error.log
+# error.log

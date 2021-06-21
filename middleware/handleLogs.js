@@ -31,8 +31,9 @@ const handleLogs = (app) => {
   }, {
     stream: errorLogStream,
     skip: (req, res) => {
-      const body = JSON.parse(res.__body_response)
-      return !body.errorCode
+      return res.statusCode < 400
+      // const body = JSON.parse(res.__body_response)
+      // return !body.errorCode
     }
   }))
 }

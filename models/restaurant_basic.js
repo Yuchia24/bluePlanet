@@ -7,7 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   restaurant_basic.init({
-    restaurant_id: DataTypes.INTEGER,
+    restaurant_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
     address: DataTypes.STRING,
     country: DataTypes.STRING,
     formatted_phone_number: DataTypes.STRING,

@@ -1,7 +1,7 @@
 class GeneralError extends Error {
-  constructor(code, message) {
+  constructor(message) {
     super()
-    this.errorCode = code
+    // this.errorCode = code
     this.message = message
   }
 
@@ -9,6 +9,10 @@ class GeneralError extends Error {
     // input keyword invalid
     if (this instanceof BadRequest) {
       return 400
+    }
+    // restaurant not found
+    if (this instanceof NotFound) {
+      return 404
     }
     // blue planet token error, kw error, server error, return empty result
     if (this instanceof BluePlanetError) {
@@ -22,9 +26,11 @@ class GeneralError extends Error {
 
 class BadRequest extends GeneralError { }
 class BluePlanetError extends GeneralError { }
+class NotFound extends GeneralError { }
 
 module.exports = {
   GeneralError,
   BadRequest,
-  BluePlanetError
+  BluePlanetError,
+  NotFound
 }

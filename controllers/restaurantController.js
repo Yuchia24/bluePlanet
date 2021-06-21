@@ -5,6 +5,8 @@ const venderService = new VenderService()
 const RestaurantService = require('../service/restaurantService')
 const restaurantService = new RestaurantService()
 
+const { BluePlanetError, NotFound } = require('../utils/errors')
+
 const { vender_input_data } = require('../models')
 
 const venderUrl = {
@@ -21,11 +23,18 @@ const restaurantController = {
       const { restaurant_id } = req.query
       // 要改成從 data1 拉資料
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      if (!restaurant) {
+        throw new NotFound('This restaurant does not exist.')
+      }
       const { response, status } = await venderService.getVenderData(venderUrl.keyword, restaurant.restaurant_name)
-      console.log('response', response.result)
+
+      if (!response) {
+        throw new BluePlanetError('Blue Planet return no value')
+      }
+
       // get original records
       const originalRecords = await venderRepository.getBasicExtendOriginals(restaurant_id, 'keyword')
-      console.log('originalRecords', originalRecords)
+
       /* 差異比對 */
       // get input data
       const inputData = await restaurantService.getInputData(originalRecords, response.result)

@@ -103,7 +103,8 @@ module.exports = class VenderRepository {
       if (!restaurant_id) {
         reject(new Error('no value'))
       } else {
-        resolve(restaurant_basic.update({
+        resolve(restaurant_basic.create({
+          restaurant_id,
           address: data.address,
           country: data.country,
           formatted_phone_number: data.formatted_phone_number,
@@ -115,7 +116,9 @@ module.exports = class VenderRepository {
           locationLat: data.geometry.location.lat,
           locationLng: data.geometry.location.lng,
           website: data.website
-        }, { where: { restaurant_id } }))
+        }, {
+          updateOnDuplicate: ['address', 'country', 'formatted_phone_number', 'name', 'price_level', 'rating', 'user_ratings_total', 'route', 'locationLat', 'locationLng', 'website']
+        }))
       }
     })
   }
