@@ -42,11 +42,11 @@ const restaurantController = {
       const removeData = await restaurantService.getRemoveData(originalRecords, response.result)
 
       // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.keyword, status)
+      venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.keyword, status)
       // 新增 restaurant_basic_extend
-      await venderRepository.updateBasicExtend(inputData, restaurant_id, 'keyword')
+      venderRepository.updateBasicExtend(inputData, restaurant_id, 'keyword')
       // 刪除 restaurant_basic_extend
-      await venderRepository.removeBasicExtend(removeData, restaurant_id, 'keyword')
+      venderRepository.removeBasicExtend(removeData, restaurant_id, 'keyword')
       // return
       return res.status(200).json({
         status: 'success',
@@ -83,10 +83,10 @@ const restaurantController = {
       // originalRecords 與 newRecords 比較 -> get removeData
       const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
       // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.purpose, status)
+      venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.purpose, status)
       // 新增及刪除 vender_items
-      await venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'purpose')
-      await venderRepository.removeVenderItems(removeData, restaurant_id, 'purpose')
+      venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'purpose')
+      venderRepository.removeVenderItems(removeData, restaurant_id, 'purpose')
       // return data
       return res.status(200).json({
         status: 'success',
@@ -124,10 +124,10 @@ const restaurantController = {
       // originalRecords 與 newRecords 比較 -> get removeData
       const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
       // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.type, status)
+      venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.type, status)
       // 新增及刪除 vender_items
-      await venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'type')
-      await venderRepository.removeVenderItems(removeData, restaurant_id, 'type')
+      venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'type')
+      venderRepository.removeVenderItems(removeData, restaurant_id, 'type')
       // return data
       return res.status(200).json({
         status: 'success',
@@ -163,10 +163,10 @@ const restaurantController = {
       // originalRecords 與 newRecords 比較 -> get removeData
       const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
       // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.dish, status)
+      venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.dish, status)
       // 新增及刪除 vender_items
-      await venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'dish')
-      await venderRepository.removeVenderItems(removeData, restaurant_id, 'dish')
+      venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'dish')
+      venderRepository.removeVenderItems(removeData, restaurant_id, 'dish')
       // return data
       return res.status(200).json({
         status: 'success',
