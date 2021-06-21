@@ -27,7 +27,6 @@ const restaurantController = {
         throw new NotFound('This restaurant does not exist.')
       }
       const { response, status } = await venderService.getVenderData(venderUrl.keyword, restaurant.restaurant_name)
-
       if (!response) {
         throw new BluePlanetError('Blue Planet return no value')
       }
@@ -38,10 +37,10 @@ const restaurantController = {
       /* 差異比對 */
       // get input data
       const inputData = await restaurantService.getInputData(originalRecords, response.result)
-      console.log('inputData', inputData)
+
       // get remove data
       const removeData = await restaurantService.getRemoveData(originalRecords, response.result)
-      console.log('removeData', removeData)
+
       // 新增 raw data
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.keyword, status)
       // 新增 restaurant_basic_extend
@@ -66,9 +65,14 @@ const restaurantController = {
       const { restaurant_id } = req.query
       // 要改成從 data1 拉資料
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      if (!restaurant) {
+        throw new NotFound('This restaurant does not exist.')
+      }
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.purpose, restaurant.restaurant_name)
-      console.log(response.result)
+      if (!response) {
+        throw new BluePlanetError('Blue Planet return no value')
+      }
       // 抓取舊資料
       const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'purpose')
       /* 新舊資料比對 */
@@ -101,22 +105,24 @@ const restaurantController = {
     try {
       const { restaurant_id } = req.query
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      if (!restaurant) {
+        throw new NotFound('This restaurant does not exist.')
+      }
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.type, restaurant.restaurant_name)
-      console.log('response', response)
+      if (!response) {
+        throw new BluePlanetError('Blue Planet return no value')
+      }
       // 抓取舊資料
       const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'type')
-      console.log('originalRecords', originalRecords)
+
       /* 新舊資料比對 */
       // 新資料 -> response data 配對 keyId
       const newRecords = await restaurantService.matchKeyId(response.result)
-      console.log('newRecords', newRecords)
       // newRecords 與 originalRecords 比較 -> get inputData
       const inputData = await restaurantService.getInputData(originalRecords, newRecords)
-      console.log('inputData', inputData)
       // originalRecords 與 newRecords 比較 -> get removeData
       const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
-      console.log('removeData', removeData)
       // 新增 raw data
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.type, status)
       // 新增及刪除 vender_items
@@ -139,22 +145,23 @@ const restaurantController = {
     try {
       const { restaurant_id } = req.query
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      if (!restaurant) {
+        throw new NotFound('This restaurant does not exist.')
+      }
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.dish, restaurant.restaurant_name)
-      console.log('response', response)
+      if (!response) {
+        throw new BluePlanetError('Blue Planet return no value')
+      }
       // 抓取舊資料
       const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'dish')
-      console.log('originalRecords', originalRecords)
       /* 新舊資料比對 */
       // 新資料 -> response data 配對 keyId
       const newRecords = await restaurantService.matchKeyId(response.result)
-      console.log('newRecords', newRecords)
       // newRecords 與 originalRecords 比較 -> get inputData
       const inputData = await restaurantService.getInputData(originalRecords, newRecords)
-      console.log('inputData', inputData)
       // originalRecords 與 newRecords 比較 -> get removeData
       const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
-      console.log('removeData', removeData)
       // 新增 raw data
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.dish, status)
       // 新增及刪除 vender_items
@@ -177,10 +184,14 @@ const restaurantController = {
     try {
       const { restaurant_id } = req.query
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      console.log('restaurant', restaurant)
+      if (!restaurant) {
+        throw new NotFound('This restaurant does not exist.')
+      }
       // 跟藍星球要資料
       const { response, status } = await venderService.getVenderData(venderUrl.basic, restaurant.restaurant_name)
-      console.log('response', response)
+      if (!response) {
+        throw new BluePlanetError('Blue Planet return no value')
+      }
 
       // get original data (comments, photos, opening_hours)
       const hourRecords = await venderRepository.getHourOriginals(restaurant_id)
@@ -189,11 +200,6 @@ const restaurantController = {
 
       // 新增 raw data
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
-
-      // blue planet response error
-      if (response.error) {
-        console.log('blue planet response error')
-      }
 
       // update basic
       await venderRepository.updateBasic(restaurant_id, response.result)

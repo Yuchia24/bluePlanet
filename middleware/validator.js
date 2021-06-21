@@ -21,10 +21,10 @@ function validResultCheck (req, res, next) {
 
   console.log('errorResults', errorResults)
   const errors = errorResults.errors.map(error => error.msg)
-  // return res.status(400).json({
-  //   status: 'error',
-  //   message: `${errors}`
-  // })
+  return res.status(400).json({
+    status: 'error',
+    message: `${errors}`
+  })
 }
 
 module.exports = {

@@ -379,3 +379,9 @@ response: {"status":"error","errorCode":"103","message":"No match restaurant"}
 {2021} 06-03T10:40:32 GET /api/restaurants/keyword?restaurant_id=1941 200 - 654.655 ms 
 request: {"restaurant_id":"1941"} 
 response: {"status":"success","result":[{"count":2,"word":"美食"},{"count":2,"word":"成都"},{"count":1,"word":"板橋"},{"count":1,"word":"國父紀念館"},{"count":1,"word":"韓國遊客"},{"count":1,"word":"創始店"},{"count":1,"word":"川菜"},{"count":1,"word":"藍心湄"},{"count":1,"word":"舒淇"},{"count":1,"word":"誠品"}],"errorCode":"203","message":"Number of keywords should not be under 40"}
+{2021} 06-21T11:55:49 GET /api/restaurant/basic?restaurant_id=4525 404 - 987.027 ms 
+request: {"restaurant_id":"4525"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-21T11:55:49 GET /api/restaurant/basic?restaurant_id=gsem; 400 - 7.898 ms 
+request: {"restaurant_id":"gsem;"} 
+response: {"status":"error","message":"keyword invalid"}
