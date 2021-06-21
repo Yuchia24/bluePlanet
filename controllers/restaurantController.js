@@ -4,10 +4,15 @@ const VenderService = require('../service/venderService')
 const venderService = new VenderService()
 const RestaurantService = require('../service/restaurantService')
 const restaurantService = new RestaurantService()
+const BusinessService = require('../service/businessService')
+const businessService = new BusinessService()
 
 const { BluePlanetError, NotFound } = require('../utils/errors')
 
 const { vender_input_data } = require('../models')
+
+const UPDATE_TIME_LIMIT = 90
+const today = Date.now()
 
 const venderUrl = {
   keyword: '/all_kw',
@@ -17,50 +22,19 @@ const venderUrl = {
   basic: '/basic',
   pic: '/pic'
 }
+
 const restaurantController = {
-  getKeyword: async (req, res, next) => {
+  fetchKeyword: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      // 要改成從 data1 拉資料
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
-      const { response, status } = await venderService.getVenderData(venderUrl.keyword, restaurant.restaurant_name)
-      if (!response) {
-        throw new BluePlanetError('Blue Planet return no value')
-      }
+      const result = await businessService.syncKeyword(restaurant_id)
 
-      // get original records
-      const originalRecords = await venderRepository.getBasicExtendOriginals(restaurant_id, 'keyword')
-
-      /* 差異比對 */
-      // get input data
-      const inputData = await restaurantService.getInputData(originalRecords, response.result)
-
-      // get remove data
-      const removeData = await restaurantService.getRemoveData(originalRecords, response.result)
-
-      // 新增 raw data
-      venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.keyword, status)
-      // 新增 restaurant_basic_extend
-      venderRepository.updateBasicExtend(inputData, restaurant_id, 'keyword')
-      // 刪除 restaurant_basic_extend
-      venderRepository.removeBasicExtend(removeData, restaurant_id, 'keyword')
-      // return
-      return res.status(200).json({
-        status: 'success',
-        response: {
-          restaurant_id,
-          restaurant_name: restaurant.restaurant_name,
-          result: response.result
-        }
-      })
+      return res.status(200).json(result)
     } catch (error) {
       next(error)
     }
   },
-  getPurpose: async (req, res, next) => {
+  fetchPurpose: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
       // 要改成從 data1 拉資料
@@ -101,7 +75,7 @@ const restaurantController = {
       next(error)
     }
   },
-  getType: async (req, res, next) => {
+  fetchType: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
@@ -141,7 +115,7 @@ const restaurantController = {
       next(error)
     }
   },
-  getDish: async (req, res, next) => {
+  fetchDish: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
@@ -180,7 +154,7 @@ const restaurantController = {
       next(error)
     }
   },
-  getBasic: async (req, res, next) => {
+  fetchBasic: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
       const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
@@ -219,6 +193,25 @@ const restaurantController = {
           result: response.result
         }
       })
+    } catch (error) {
+      next(error)
+    }
+  },
+
+  getKeyword: async (req, res, next) => {
+    try {
+      const { restaurant_id } = req.query
+      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
+      if (!restaurant) {
+        throw new NotFound('This restaurant does not exist.')
+      }
+      let result = await venderRepository.getBasicExtendOriginals(restaurant_id, 'keyword')
+      if (!result.length || (today - result[0].updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
+        console.log('result2')
+        result = await businessService.syncKeyword(restaurant_id)
+      }
+
+      return res.status(200).json(result)
     } catch (error) {
       next(error)
     }

@@ -397,3 +397,36 @@ response: {"status":"error","message":"Cannot read property 'map' of undefined"}
 {2021} 06-21T12:32:04 GET /api/restaurant/basic?restaurant_id=2517 502 - 28725.051 ms 
 request: {"restaurant_id":"2517"} 
 response: {"status":"error","message":"Blue Planet return no value"}
+{2021} 06-21T14:32:46 GET /api/restaurant/getKeyword?restaurant_id=315 500 - 1221.923 ms 
+request: {"restaurant_id":"315"} 
+response: {"status":"error","message":"this.fetchKeyword is not a function"}
+{2021} 06-21T14:34:15 GET /api/restaurant/getKeyword?restaurant_id=315 500 - 15816.841 ms 
+request: {"restaurant_id":"315"} 
+response: {"status":"error","message":"Cannot set headers after they are sent to the client"}
+{2021} 06-21T15:34:35 GET /api/restaurant/getKeyword?restaurant_id=1858 500 - 828.137 ms 
+request: {"restaurant_id":"1858"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T15:43:24 GET /api/restaurant/getKeyword?restaurant_id=1736 500 - 879.883 ms 
+request: {"restaurant_id":"1736"} 
+response: {"status":"error","message":"dayjs(...).fromNow is not a function"}
+{2021} 06-21T15:55:29 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 343.543 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:04:28 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 774.728 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:06:58 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 841.553 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:08:07 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 777.866 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:09:38 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 774.458 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:10:12 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 868.411 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:28:02 GET /api/restaurant/getKeyword?restaurant_id=1836 500 - 772.561 ms 
+request: {"restaurant_id":"1836"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
