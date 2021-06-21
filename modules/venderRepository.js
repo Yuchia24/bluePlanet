@@ -9,7 +9,7 @@ const {
   google_details
 } = require('../models')
 
-const { BadRequest } = require('../utils/errors')
+const { BadRequest, BluePlanetError } = require('../utils/errors')
 
 const vender_id = 1
 const baseURL = 'http://demo.blueplanet.com.tw:11693'
@@ -100,8 +100,8 @@ module.exports = class VenderRepository {
 
   updateBasic (restaurant_id, data) {
     return new Promise((resolve, reject) => {
-      if (!restaurant_id) {
-        reject(new Error('no value'))
+      if (!data.length) {
+        reject(new BluePlanetError('Blue Planet return no value'))
       } else {
         resolve(restaurant_basic.create({
           restaurant_id,
@@ -125,8 +125,8 @@ module.exports = class VenderRepository {
 
   updateComments (restaurant_id, newRecords, oldRecords) {
     return new Promise((resolve, reject) => {
-      if (!restaurant_id) {
-        reject(new Error('no value'))
+      if (!newRecords.length) {
+        reject(new BluePlanetError('Blue Planet return no value'))
       } else {
         newRecords = newRecords.map((comment) => ({
           restaurant_id,
@@ -146,7 +146,9 @@ module.exports = class VenderRepository {
           insertArray.splice(0, 1)
           deleteArray.splice(0, 1)
         }
-        deleteArray = deleteArray.map((item) => item.id)
+        if (deleteArray.length) {
+          deleteArray = deleteArray.map((item) => item.id)
+        }
         const newArray = updateArray.concat(insertArray)
 
         resolve(
@@ -163,8 +165,8 @@ module.exports = class VenderRepository {
 
   updateOpeningHours (restaurant_id, newRecords, oldRecords) {
     return new Promise((resolve, reject) => {
-      if (!restaurant_id) {
-        reject(new Error('no value'))
+      if (!newRecords.length) {
+        reject(new BluePlanetError('Blue Planet return no value'))
       } else {
         newRecords = newRecords.map((hour) => ({
           restaurant_id,
@@ -186,7 +188,9 @@ module.exports = class VenderRepository {
           insertArray.splice(0, 1)
           deleteArray.splice(0, 1)
         }
-        deleteArray = deleteArray.map((item) => item.id)
+        if (deleteArray.length) {
+          deleteArray = deleteArray.map((item) => item.id)
+        }
         const newArray = updateArray.concat(insertArray)
 
         resolve(
@@ -203,45 +207,51 @@ module.exports = class VenderRepository {
 
   updateBasicExtend (array, restaurant_id, group, url, oldArray) {
     return new Promise((resolve, reject) => {
-      if (url) {
-        // group = 'photo'
-        array = array.map((item) => ({
-          restaurant_id,
-          group,
-          value: baseURL.concat(url, '/', item.photo_reference)
-        }))
-        const length = oldArray.length > array.length ? array.length : oldArray.length
-        let updateArray = []
-        let insertArray = [...array]
-        let deleteArray = [...oldArray]
-
-        for (let i = 0; i < length; i++) {
-          const updateData = {
-            id: oldArray[i].id,
-            ...array[i]
-          }
-          updateArray.push(updateData)
-          insertArray.splice(0, 1)
-          deleteArray.splice(0, 1)
-        }
-        deleteArray = deleteArray.map((item) => item.id)
-        const newArray = updateArray.concat(insertArray)
-
-        resolve(
-          restaurant_basic_extend.bulkCreate(newArray, { updateOnDuplicate: ['value'] })
-            .then(() => restaurant_basic_extend.destroy({
-              where: { id: [deleteArray] }
-            }))
-        )
+      if (!array.length) {
+        reject(new BluePlanetError('Blue Planet return no value'))
       } else {
-        // group = keyword
-        const inputArray = array.map((item) => ({
-          restaurant_id,
-          group,
-          value: item.word,
-          count: item.count
-        }))
-        resolve(restaurant_basic_extend.bulkCreate(inputArray))
+        if (url) {
+          // group = 'photo'
+          array = array.map((item) => ({
+            restaurant_id,
+            group,
+            value: baseURL.concat(url, '/', item.photo_reference)
+          }))
+          const length = oldArray.length > array.length ? array.length : oldArray.length
+          let updateArray = []
+          let insertArray = [...array]
+          let deleteArray = [...oldArray]
+
+          for (let i = 0; i < length; i++) {
+            const updateData = {
+              id: oldArray[i].id,
+              ...array[i]
+            }
+            updateArray.push(updateData)
+            insertArray.splice(0, 1)
+            deleteArray.splice(0, 1)
+          }
+          if (deleteArray.length) {
+            deleteArray = deleteArray.map((item) => item.id)
+          }
+          const newArray = updateArray.concat(insertArray)
+
+          resolve(
+            restaurant_basic_extend.bulkCreate(newArray, { updateOnDuplicate: ['value'] })
+              .then(() => restaurant_basic_extend.destroy({
+                where: { id: [deleteArray] }
+              }))
+          )
+        } else {
+          // group = keyword
+          const inputArray = array.map((item) => ({
+            restaurant_id,
+            group,
+            value: item.word,
+            count: item.count
+          }))
+          resolve(restaurant_basic_extend.bulkCreate(inputArray))
+        }
       }
     })
   }
@@ -267,7 +277,6 @@ module.exports = class VenderRepository {
       resolve(vender_items.bulkCreate(newArray))
     })
   }
-
 
   removeVenderItems (array, restaurant_id, kind) {
     return new Promise((resolve, reject) => {

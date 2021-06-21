@@ -385,3 +385,15 @@ response: {"status":"error","message":"This restaurant does not exist."}
 {2021} 06-21T11:55:49 GET /api/restaurant/basic?restaurant_id=gsem; 400 - 7.898 ms 
 request: {"restaurant_id":"gsem;"} 
 response: {"status":"error","message":"keyword invalid"}
+{2021} 06-21T12:11:21 GET /api/restaurant/basic?restaurant_id=2517 500 - 28473.139 ms 
+request: {"restaurant_id":"2517"} 
+response: {"status":"error","message":"Cannot read property 'map' of undefined"}
+{2021} 06-21T12:18:21 GET /api/restaurant/basic?restaurant_id=2517 500 - 28890.652 ms 
+request: {"restaurant_id":"2517"} 
+response: {"status":"error","message":"Cannot read property 'map' of undefined"}
+{2021} 06-21T12:20:04 GET /api/restaurant/basic?restaurant_id=2517 500 - 28856.315 ms 
+request: {"restaurant_id":"2517"} 
+response: {"status":"error","message":"Cannot read property 'map' of undefined"}
+{2021} 06-21T12:32:04 GET /api/restaurant/basic?restaurant_id=2517 502 - 28725.051 ms 
+request: {"restaurant_id":"2517"} 
+response: {"status":"error","message":"Blue Planet return no value"}

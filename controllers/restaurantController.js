@@ -44,7 +44,7 @@ const restaurantController = {
       // 新增 raw data
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.keyword, status)
       // 新增 restaurant_basic_extend
-      await venderRepository.insertBasicExtend(inputData, restaurant_id, 'keyword')
+      await venderRepository.updateBasicExtend(inputData, restaurant_id, 'keyword')
       // 刪除 restaurant_basic_extend
       await venderRepository.removeBasicExtend(removeData, restaurant_id, 'keyword')
       // return
@@ -199,16 +199,16 @@ const restaurantController = {
       const comments = await venderRepository.getCommentOriginals(restaurant_id)
 
       // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
+      venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
 
       // update basic
-      await venderRepository.updateBasic(restaurant_id, response.result)
+      venderRepository.updateBasic(restaurant_id, response.result)
       // update openingHours
-      await venderRepository.updateOpeningHours(restaurant_id, response.result.opening_hours.periods, hourRecords)
+      venderRepository.updateOpeningHours(restaurant_id, response.result.opening_hours.periods, hourRecords)
       // update comments
-      await venderRepository.updateComments(restaurant_id, response.result.comments_highest.good, comments)
+      venderRepository.updateComments(restaurant_id, response.result.comments_highest.good, comments)
       // update photos
-      await venderRepository.updateBasicExtend(response.result.photos, restaurant_id, 'photo', venderUrl.pic, photos)
+      venderRepository.updateBasicExtend(response.result.photos, restaurant_id, 'photo', venderUrl.pic, photos)
 
       // return
       return res.status(200).json({
