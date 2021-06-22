@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   google_details.init({
     restaurant_id: DataTypes.INTEGER,
     address: DataTypes.STRING,
+    place_id: DataTypes.STRING,
     country: DataTypes.STRING,
     formatted_phone_number: DataTypes.STRING,
     name: DataTypes.STRING,

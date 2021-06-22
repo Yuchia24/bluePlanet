@@ -17,7 +17,7 @@
     "window.zoomLevel": 0,
     "prettier.singleQuote": true,
     "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "vscode.json-language-features"
     },
     "cSpell.userWords": [
         "body",
