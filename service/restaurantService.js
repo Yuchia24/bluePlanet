@@ -75,7 +75,7 @@ const types = [
   { kind: 'dish', keyId: '31', value: '親子餐廳' },
   { kind: 'dish', keyId: '32', value: '寵物餐廳' },
   { kind: 'dish', keyId: '33', value: '居酒屋' },
-  { kind: 'dish', keyId: '34', value: '合菜( or 桌菜)' },
+  { kind: 'dish', keyId: '34', value: '合菜' },
   { kind: 'dish', keyId: '35', value: '啤酒餐廳' },
   { kind: 'dish', keyId: '36', value: '輕食' },
   { kind: 'dish', keyId: '37', value: '壽喜燒' },
@@ -109,38 +109,13 @@ module.exports = class RestaurantService {
     })
   }
 
-  getInputData (oldArray, newArray) {
+  findKeyName (array) {
     return new Promise((resolve, reject) => {
       resolve(
-        newArray.filter((newItem) => {
-          if (newItem.word) {
-            // keyword API
-            const target = oldArray.find((oldItem) => oldItem.value === newItem.word) || {}
-            const condition1 = !oldArray.find((oldItem) => oldItem.value === newItem.word)
-            const condition2 = target.count !== newItem.count
-            return condition1 || condition2
-          }
-          // other API
-          return !oldArray.map((oldItem) => oldItem.keyId).includes(newItem.keyId)
-        })
-      )
-    })
-  }
-
-  getRemoveData (oldArray, newArray) {
-    return new Promise((resolve, reject) => {
-      resolve(
-        oldArray.filter((oldItem) => {
-          if (oldItem.value) {
-            // keyword API
-            const target = newArray.find((newItem) => newItem.word === oldItem.value) || {}
-            const condition1 = newArray.find((newItem) => newItem.word === oldItem.word)
-            const condition2 = target.count !== oldItem.count
-            return condition1 || condition2
-          }
-          // other API
-          return !newArray.map((newItem) => newItem.word).includes(oldItem.value)
-        })
+        array.map((item) => ({
+          ...item,
+          value: types.find((type) => type.keyId === item.keyId).value
+        }))
       )
     })
   }

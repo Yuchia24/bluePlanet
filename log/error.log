@@ -430,3 +430,60 @@ response: {"status":"error","message":"Cannot read property 'updatedAt' of undef
 {2021} 06-21T16:28:02 GET /api/restaurant/getKeyword?restaurant_id=1836 500 - 772.561 ms 
 request: {"restaurant_id":"1836"} 
 response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T20:44:28 GET /api/restaurant/getBasic?restaurant_id=409 500 - 11.402 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"vender_input_data is not defined"}
+{2021} 06-21T20:48:34 GET /api/restaurant/getBasic?restaurant_id=409 500 - 880.449 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"Cannot read property 'length' of undefined"}
+{2021} 06-21T20:56:19 GET /api/restaurant/getBasic?restaurant_id=409 500 - 938.490 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"Cannot read property 'length' of null"}
+{2021} 06-21T20:57:04 GET /api/restaurant/getBasic?restaurant_id=409 500 - 728.930 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"Cannot destructure property 'basic' of '(intermediate value)' as it is null."}
+{2021} 06-21T20:57:51 GET /api/restaurant/getBasic?restaurant_id=409 500 - 866.669 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T20:58:23 GET /api/restaurant/getBasic?restaurant_id=409 500 - 931.470 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:19:46 GET /api/restaurant/getBasic?restaurant_id=409 500 - 1155.970 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:22:46 GET /api/restaurant/getBasic?restaurant_id=409 500 - 1107.265 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:24:20 GET /api/restaurant/getBasic?restaurant_id=409 500 - 845.464 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:26:27 GET /api/restaurant/getBasic?restaurant_id=409 500 - 709.053 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:26:27 GET /api/restaurant/getBasic?restaurant_id=14116 500 - 329.915 ms 
+request: {"restaurant_id":"14116"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:33:15 GET /api/restaurant/getBasic?restaurant_id=14116 500 - 686.767 ms 
+request: {"restaurant_id":"14116"} 
+response: {"status":"error","message":"Cannot read property 'length' of undefined"}
+{2021} 06-21T21:34:20 GET /api/restaurant/getBasic?restaurant_id=14116 500 - 793.870 ms 
+request: {"restaurant_id":"14116"} 
+response: {"status":"error","message":"Cannot read property 'length' of undefined"}
+{2021} 06-21T21:48:43 GET /api/restaurant/getBasic?restaurant_id=622 500 - 1155.345 ms 
+request: {"restaurant_id":"622"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of null"}
+{2021} 06-21T22:08:06 GET /api/restaurant/getBasic?restaurant_id=622 500 - 1113.064 ms 
+request: {"restaurant_id":"622"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of null"}
+{2021} 06-21T22:09:38 GET /api/restaurant/getBasic?restaurant_id=622 500 - 935.137 ms 
+request: {"restaurant_id":"622"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of null"}
+{2021} 06-21T22:10:35 GET /api/restaurant/getBasic?restaurant_id=622 500 - 945.654 ms 
+request: {"restaurant_id":"622"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of null"}
+{2021} 06-21T22:12:12 GET /api/restaurant/getBasic?restaurant_id=622 500 - 1089.307 ms 
+request: {"restaurant_id":"622"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of null"}
+{2021} 06-21T23:45:07 GET /api/restaurant/basic?restaurant_id=14116 404 - 5.785 ms 
+request: {"restaurant_id":"14116"} 
+response: undefined

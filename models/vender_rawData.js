@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     posted_data: DataTypes.TEXT,
     response_data: DataTypes.TEXT,
     api_url: DataTypes.STRING,
+    api_endPoint: DataTypes.STRING,
     status: DataTypes.INTEGER
   }, {
     sequelize,
