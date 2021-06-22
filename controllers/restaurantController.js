@@ -5,10 +5,6 @@ const businessService = new BusinessService()
 const RestaurantService = require('../service/restaurantService')
 const restaurantService = new RestaurantService()
 
-const { vender_input_data } = require('../models')
-
-const { BluePlanetError, NotFound } = require('../utils/errors')
-
 const UPDATE_TIME_LIMIT = 90
 const today = Date.now()
 
@@ -61,10 +57,6 @@ const restaurantController = {
   getKeyword: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
       let result = await venderRepository.getBasicExtendRecords(restaurant_id, 'keyword')
       if (!result.length || (today - result[0].updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
         result = await businessService.syncKeyword(restaurant_id)
@@ -77,10 +69,6 @@ const restaurantController = {
   getPurpose: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
       let result = await venderRepository.getVenderItemRecords(restaurant_id, 'purpose')
       if (!result.length || (today - result[0].updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
         console.log('result 2', result)
@@ -97,10 +85,6 @@ const restaurantController = {
   getType: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
       let result = await venderRepository.getVenderItemRecords(restaurant_id, 'type')
       if (!result.length || (today - result[0].updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
         result = await businessService.syncType(restaurant_id)
@@ -116,11 +100,9 @@ const restaurantController = {
   getDish: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
+      // query records from database
       let result = await venderRepository.getVenderItemRecords(restaurant_id, 'dish')
+      // records not exist or updatedAt > 90 days -> call sync
       if (!result.length || (today - result[0].updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
         console.log('result 2', result)
         result = await businessService.syncDish(restaurant_id)
@@ -136,12 +118,8 @@ const restaurantController = {
   getBasic: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
-      let result = await venderRepository.getBasicRecords(restaurant_id)
 
+      let result = await venderRepository.getBasicRecords(restaurant_id)
       if (!result.basic || (today - result.basic.updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
         result = await businessService.syncBasic(restaurant_id)
       }

@@ -487,3 +487,72 @@ response: {"status":"error","message":"Cannot read property 'updatedAt' of null"
 {2021} 06-21T23:45:07 GET /api/restaurant/basic?restaurant_id=14116 404 - 5.785 ms 
 request: {"restaurant_id":"14116"} 
 response: undefined
+{2021} 06-22T12:02:15 GET /api/restaurant/getDish?restaurant_id=59 500 - 9525.742 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Cannot read property 'status' of undefined"}
+{2021} 06-22T12:05:53 GET /api/restaurant/getDish?restaurant_id=59 500 - 985.948 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Cannot read property 'status' of undefined"}
+{2021} 06-22T12:09:43 GET /api/restaurant/getDish?restaurant_id=59 500 - 1014.044 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Cannot read property 'status' of undefined"}
+{2021} 06-22T12:12:58 GET /api/restaurant/getDish?restaurant_id=59 500 - 872.772 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Cannot read property 'status' of undefined"}
+{2021} 06-22T12:24:52 GET /api/restaurant/fetchDisg?restaurant_id=59 404 - 3.626 ms 
+request: {"restaurant_id":"59"} 
+response: undefined
+{2021} 06-22T12:26:44 GET /api/restaurant/fetchDisg?restaurant_id=59 404 - 3.811 ms 
+request: {"restaurant_id":"59"} 
+response: undefined
+{2021} 06-22T14:18:41 GET /api/restaurant/getDish?restaurant_id=3123123 400 - 613.251 ms 
+request: {"restaurant_id":"3123123"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:18:41 GET /api/restaurant/getDish?restaurant_id=31235 400 - 67445.438 ms 
+request: {"restaurant_id":"31235"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:18:41 GET /api/restaurant/getDish?restaurant_id=123456 400 - 333.004 ms 
+request: {"restaurant_id":"123456"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:26:28 GET /api/restaurant/getDish?restaurant_id=123456 400 - 632.927 ms 
+request: {"restaurant_id":"123456"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:28:19 GET /api/restaurant/getDish?restaurant_id=123456 400 - 582.419 ms 
+request: {"restaurant_id":"123456"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:28:19 GET /api/restaurant/getDish?restaurant_id=43141 400 - 1348.325 ms 
+request: {"restaurant_id":"43141"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:31:14 GET /api/restaurant/getDish?restaurant_id=43141 400 - 604.666 ms 
+request: {"restaurant_id":"43141"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:31:54 GET /api/restaurant/getDish?restaurant_id=43141 400 - 35706.105 ms 
+request: {"restaurant_id":"43141"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:31:54 GET /api/restaurant/getDish?restaurant_id=54321 400 - 35432.541 ms 
+request: {"restaurant_id":"54321"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:37:22 GET /api/restaurant/getDish?restaurant_id=54321 400 - 683.180 ms 
+request: {"restaurant_id":"54321"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:38:10 GET /api/restaurant/getDish?restaurant_id=54321 400 - 11660.117 ms 
+request: {"restaurant_id":"54321"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-22T14:38:10 GET /api/restaurant/getDish?restaurant_id=5432132 400 - 376.088 ms 
+request: {"restaurant_id":"5432132"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-22T14:38:10 GET /api/restaurant/getDish?restaurant_id=4134314 400 - 370.834 ms 
+request: {"restaurant_id":"4134314"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-22T14:38:10 GET /api/restaurant/getDish?restaurant_id=76743 400 - 336.816 ms 
+request: {"restaurant_id":"76743"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-22T14:40:27 GET /api/restaurant/getDish?restaurant_id=76743434134 400 - 613.407 ms 
+request: {"restaurant_id":"76743434134"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-22T14:40:27 GET /api/restaurant/getDish?restaurant_id=gegeg 400 - 3.630 ms 
+request: {"restaurant_id":"gegeg"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-22T14:40:27 GET /api/restaurant/getDish?restaurant_id= 400 - 3.350 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","message":"Invalid value,Missing keyword for request."}

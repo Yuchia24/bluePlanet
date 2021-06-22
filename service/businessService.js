@@ -5,8 +5,7 @@ const venderService = new VenderService()
 const RestaurantService = require('./restaurantService')
 const restaurantService = new RestaurantService()
 
-const { vender_input_data } = require('../models')
-const { BluePlanetError, NotFound } = require('../utils/errors')
+const { BluePlanetError } = require('../utils/errors')
 
 const venderUrl = {
   keyword: '/all_kw',
@@ -20,11 +19,8 @@ const venderUrl = {
 module.exports = class BusinessService {
   async syncKeyword (restaurant_id) {
     try {
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
-      const { response, status } = await venderService.getVenderData(venderUrl.keyword, restaurant.restaurant_name)
+      const restaurant_name = await restaurantService.getRestaurantInfo(restaurant_id)
+      const { response, status } = await venderService.getVenderData(venderUrl.keyword, restaurant_name)
       if (!response) {
         throw new BluePlanetError('Blue Planet return no value')
       }
@@ -33,7 +29,7 @@ module.exports = class BusinessService {
       const originalRecords = await venderRepository.getBasicExtendRecords(restaurant_id, 'keyword')
 
       // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.keyword, status)
+      await venderRepository.insertRawData(restaurant_id, restaurant_name, response, venderUrl.keyword, status)
       // 新增 restaurant_basic_extend
       await venderRepository.updateBasicExtend(restaurant_id, response.result, originalRecords, 'keyword')
       // get data from db
@@ -46,12 +42,9 @@ module.exports = class BusinessService {
 
   async syncPurpose (restaurant_id) {
     try {
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
+      const restaurant_name = await restaurantService.getRestaurantInfo(restaurant_id)
       // 跟藍星球要資料
-      const { response, status } = await venderService.getVenderData(venderUrl.purpose, restaurant.restaurant_name)
+      const { response, status } = await venderService.getVenderData(venderUrl.purpose, restaurant_name)
       if (!response) {
         throw new BluePlanetError('Blue Planet return no value')
       }
@@ -60,9 +53,9 @@ module.exports = class BusinessService {
       // 新資料 -> response data 配對 keyId
       const newRecords = await restaurantService.matchKeyId(response.result)
       // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.purpose, status)
+      await venderRepository.insertRawData(restaurant_id, restaurant_name, response, venderUrl.purpose, status)
       // 新增及刪除 vender_items
-      await venderRepository.updateVenderItems(restaurant_id, newRecords, originalRecords, 'purpose', restaurant.restaurant_name)
+      await venderRepository.updateVenderItems(restaurant_id, newRecords, originalRecords, 'purpose', restaurant_name)
       let result = await venderRepository.getVenderItemRecords(restaurant_id, 'purpose')
       result = await restaurantService.findKeyName(result)
       return result
@@ -73,12 +66,9 @@ module.exports = class BusinessService {
 
   async syncType (restaurant_id) {
     try {
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
+      const restaurant_name = await restaurantService.getRestaurantInfo(restaurant_id)
       // 跟藍星球要資料
-      const { response, status } = await venderService.getVenderData(venderUrl.type, restaurant.restaurant_name)
+      const { response, status } = await venderService.getVenderData(venderUrl.type, restaurant_name)
       if (!response) {
         throw new BluePlanetError('Blue Planet return no value')
       }
@@ -88,8 +78,8 @@ module.exports = class BusinessService {
       // 新資料 -> response data 配對 keyId
       const newRecords = await restaurantService.matchKeyId(response.result)
       // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.type, status)
-      await venderRepository.updateVenderItems(restaurant_id, newRecords, originalRecords, 'type', restaurant.restaurant_name)
+      await venderRepository.insertRawData(restaurant_id, restaurant_name, response, venderUrl.type, status)
+      await venderRepository.updateVenderItems(restaurant_id, newRecords, originalRecords, 'type', restaurant_name)
       let result = await venderRepository.getVenderItemRecords(restaurant_id, 'type')
       result = await restaurantService.findKeyName(result)
       return result
@@ -100,11 +90,9 @@ module.exports = class BusinessService {
 
   async syncDish (restaurant_id) {
     try {
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
-      const { response, status } = await venderService.getVenderData(venderUrl.dish, restaurant.restaurant_name)
+      const restaurant_name = await restaurantService.getRestaurantInfo(restaurant_id)
+      const { response, status } = await venderService.getVenderData(venderUrl.dish, restaurant_name)
+      console.log('response', response)
       if (!response) {
         throw new BluePlanetError('Blue Planet return no value')
       }
@@ -113,8 +101,8 @@ module.exports = class BusinessService {
       // 新資料 -> response data 配對 keyId
       const newRecords = await restaurantService.matchKeyId(response.result)
       // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.dish, status)
-      await venderRepository.updateVenderItems(restaurant_id, newRecords, originalRecords, 'dish', restaurant.restaurant_name)
+      await venderRepository.insertRawData(restaurant_id, restaurant_name, response, venderUrl.dish, status)
+      await venderRepository.updateVenderItems(restaurant_id, newRecords, originalRecords, 'dish', restaurant_name)
       let result = await venderRepository.getVenderItemRecords(restaurant_id, 'dish')
       result = await restaurantService.findKeyName(result)
       return result
@@ -125,18 +113,15 @@ module.exports = class BusinessService {
 
   async syncBasic (restaurant_id) {
     try {
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      if (!restaurant) {
-        throw new NotFound('This restaurant does not exist.')
-      }
+      const restaurant_name = await restaurantService.getRestaurantInfo(restaurant_id)
       // 跟藍星球要資料
-      const { response, status } = await venderService.getVenderData(venderUrl.basic, restaurant.restaurant_name)
+      const { response, status } = await venderService.getVenderData(venderUrl.basic, restaurant_name)
       if (!response) {
         throw new BluePlanetError('Blue Planet return no value')
       }
       const { basic, comments, opening_hours, photos } = await venderRepository.getBasicRecords(restaurant_id)
       // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
+      await venderRepository.insertRawData(restaurant_id, restaurant_name, response, venderUrl.basic, status)
       // update basic
       await venderRepository.updateBasic(restaurant_id, response.result)
       // update openingHours

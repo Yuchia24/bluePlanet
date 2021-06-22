@@ -91,6 +91,9 @@ const types = [
   { kind: 'purpose', keyId: '9', value: '慶祝' }
 ]
 
+const access_token = process.env.access_token
+const axios = require('axios')
+
 module.exports = class RestaurantService {
   matchKeyId (array) {
     return new Promise((resolve, reject) => {
@@ -118,5 +121,21 @@ module.exports = class RestaurantService {
         }))
       )
     })
+  }
+
+  async getRestaurantInfo (keyword) {
+    try {
+      console.log('keyword', keyword)
+      const res = await axios.get('https://api.eztable.com/v3/admin/restaurant/search?start=0&n=25&locale=zh_TW&', {
+        params: {
+          keyword,
+          access_token
+        }
+      })
+      console.log('res', res.data, res.data[0].name)
+      return res.data[0].name
+    } catch (error) {
+      console.log('rest info', error)
+    }
   }
 }
