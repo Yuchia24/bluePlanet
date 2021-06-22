@@ -5,7 +5,6 @@ module.exports = {
     database: process.env.DATABASE,
     host: process.env.HOSTNAME,
     dialect: 'mysql',
-    googleAPIKey: process.env.GOOGLEAPIKEY
   },
   production: {
     use_env_variable: ''

@@ -6,7 +6,9 @@ const {
   restaurant_basic,
   restaurant_comments,
   restaurant_openingHours,
-  google_details
+  google_details,
+  google_reviews,
+  google_photos
 } = require('../models')
 
 const vender_id = 1
@@ -241,14 +243,6 @@ module.exports = class VenderRepository {
     })
   }
 
-  insertGoogleDetails (response) {
-    return new Promise((resolve, reject) => {
-      resolve(google_details.create(
-        response
-      ))
-    })
-  }
-
   insertVenderItems (array, restaurant_id, restaurant_name, kind) {
     return new Promise((resolve, reject) => {
       const newArray = array.map((item) => ({
@@ -262,7 +256,6 @@ module.exports = class VenderRepository {
       resolve(vender_items.bulkCreate(newArray))
     })
   }
-
 
   removeVenderItems (array, restaurant_id, kind) {
     return new Promise((resolve, reject) => {
@@ -295,4 +288,109 @@ module.exports = class VenderRepository {
       )
     })
   }
+
+  getGoogleDetails (place_id) {
+    return new Promise((resolve, reject) => {
+      resolve(google_details.findAll({
+        raw: true,
+        attributes: ['place_id'],
+        where: {
+          place_id: place_id
+        }
+      }))
+    })
+  }
+
+  insertGoogleDetails (response) {
+    return new Promise((resolve, reject) => {
+      resolve(google_details.create(
+        response
+      ))
+    })
+  }
+
+  updateGoogleDetails (response) {
+    return new Promise((resolve, reject) => {
+      if (!response.place_id) {
+        reject(new Error('no value'))
+      } else {
+        resolve(google_details.update(response, { where: { place_id: response.place_id } }))
+      }
+    })
+  }
+
+  getGoogleReviews (place_id, author_name, review_date) {
+    return new Promise((resolve, reject) => {
+      resolve(google_reviews.findAll({
+        raw: true,
+        attributes: ['place_id', 'author_name', 'review_date'],
+        where: {
+          place_id: place_id,
+          author_name: author_name,
+          review_date: review_date
+        }
+      }))
+    })
+  }
+
+  insertGoogleReviews (response) {
+    return new Promise((resolve, reject) => {
+      resolve(google_reviews.create(
+        response
+      ))
+    })
+  }
+
+  updateGoogleReviews (response) {
+    return new Promise((resolve, reject) => {
+      if (!response.place_id) {
+        reject(new Error('no value'))
+      } else {
+        resolve(google_reviews.update(response,
+          {
+            where: {
+              place_id: response.place_id,
+              author_name: response.author_name,
+              review_date: response.review_date
+            }
+          }))
+      }
+    })
+  }
+
+  getGooglePhotos (photo_reference) {
+    return new Promise((resolve, reject) => {
+      resolve(google_photos.findAll({
+        raw: true,
+        attributes: ['photo_reference'],
+        where: {
+          photo_reference: photo_reference,
+        }
+      }))
+    })
+  }
+
+  insertGooglePhotos (response) {
+    return new Promise((resolve, reject) => {
+      resolve(google_photos.create(
+        response
+      ))
+    })
+  }
+
+  updateGooglePhotos (response) {
+    return new Promise((resolve, reject) => {
+      if (!response.photo_reference) {
+        reject(new Error('no value'))
+      } else {
+        resolve(google_reviews.update(response,
+          {
+            where: {
+              photo_reference: response.photo_reference
+            }
+          }))
+      }
+    })
+  }
+
 }
