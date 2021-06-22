@@ -1,53 +1,67 @@
 const VenderRepository = require('../modules/venderRepository')
 const venderRepository = new VenderRepository()
-const VenderService = require('../service/venderService')
-const venderService = new VenderService()
+const BusinessService = require('../service/businessService')
+const businessService = new BusinessService()
 const RestaurantService = require('../service/restaurantService')
 const restaurantService = new RestaurantService()
 
-const { vender_input_data } = require('../models')
+const UPDATE_TIME_LIMIT = 90
+const today = Date.now()
 
-const venderUrl = {
-  keyword: '/all_kw',
-  purpose: '/purpose',
-  type: '/type',
-  dish: '/dish',
-  basic: '/basic',
-  pic: '/pic'
-}
 const restaurantController = {
+  fetchKeyword: async (req, res, next) => {
+    try {
+      const { restaurant_id } = req.query
+      const result = await businessService.syncKeyword(restaurant_id)
+      return res.status(200).json(result)
+    } catch (error) {
+      next(error)
+    }
+  },
+  fetchPurpose: async (req, res, next) => {
+    try {
+      const { restaurant_id } = req.query
+      const result = await businessService.syncPurpose(restaurant_id)
+      return res.status(200).json(result)
+    } catch (error) {
+      next(error)
+    }
+  },
+  fetchType: async (req, res, next) => {
+    try {
+      const { restaurant_id } = req.query
+      const result = await businessService.syncType(restaurant_id)
+      return res.status(200).json(result)
+    } catch (error) {
+      next(error)
+    }
+  },
+  fetchDish: async (req, res, next) => {
+    try {
+      const { restaurant_id } = req.query
+      const result = await businessService.syncDish(restaurant_id)
+      return res.status(200).json(result)
+    } catch (error) {
+      next(error)
+    }
+  },
+  fetchBasic: async (req, res, next) => {
+    try {
+      const { restaurant_id } = req.query
+      const result = await businessService.syncBasic(restaurant_id)
+      return res.status(200).json(result)
+    } catch (error) {
+      next(error)
+    }
+  },
   getKeyword: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      // 要改成從 data1 拉資料
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      const { response, status } = await venderService.getVenderData(venderUrl.keyword, restaurant.restaurant_name)
-      console.log('response', response.result)
-      // get original records
-      const originalRecords = await venderRepository.getBasicExtendOriginals(restaurant_id, 'keyword')
-      console.log('originalRecords', originalRecords)
-      /* 差異比對 */
-      // get input data
-      const inputData = await restaurantService.getInputData(originalRecords, response.result)
-      console.log('inputData', inputData)
-      // get remove data
-      const removeData = await restaurantService.getRemoveData(originalRecords, response.result)
-      console.log('removeData', removeData)
-      // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.keyword, status)
-      // 新增 restaurant_basic_extend
-      await venderRepository.insertBasicExtend(inputData, restaurant_id, 'keyword')
-      // 刪除 restaurant_basic_extend
-      await venderRepository.removeBasicExtend(removeData, restaurant_id, 'keyword')
-      // return
-      return res.status(200).json({
-        status: 'success',
-        response: {
-          restaurant_id,
-          restaurant_name: restaurant.restaurant_name,
-          result: response.result
-        }
-      })
+      let result = await venderRepository.getBasicExtendRecords(restaurant_id, 'keyword')
+      if (!result.length || (today - result[0].updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
+        result = await businessService.syncKeyword(restaurant_id)
+      }
+      return res.status(200).json(result)
     } catch (error) {
       next(error)
     }
@@ -55,73 +69,30 @@ const restaurantController = {
   getPurpose: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      // 要改成從 data1 拉資料
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      // 跟藍星球要資料
-      const { response, status } = await venderService.getVenderData(venderUrl.purpose, restaurant.restaurant_name)
-      console.log(response.result)
-      // 抓取舊資料
-      const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'purpose')
-      /* 新舊資料比對 */
-      // 新資料 -> response data 配對 keyId
-      const newRecords = await restaurantService.matchKeyId(response.result)
-      // newRecords 與 originalRecords 比較 -> get inputData
-      const inputData = await restaurantService.getInputData(originalRecords, newRecords)
-      // originalRecords 與 newRecords 比較 -> get removeData
-      const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
-      // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.purpose, status)
-      // 新增及刪除 vender_items
-      await venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'purpose')
-      await venderRepository.removeVenderItems(removeData, restaurant_id, 'purpose')
-      // return data
-      return res.status(200).json({
-        status: 'success',
-        response: {
-          restaurant_id,
-          restaurant_name: restaurant.restaurant_name,
-          result: response.result
-        }
-      })
+      let result = await venderRepository.getVenderItemRecords(restaurant_id, 'purpose')
+      if (!result.length || (today - result[0].updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
+        console.log('result 2', result)
+        result = await businessService.syncPurpose(restaurant_id)
+      } else {
+        result = await restaurantService.findKeyName(result)
+      }
+
+      return res.status(200).json(result)
     } catch (error) {
-      // 紀錄log
       next(error)
     }
   },
   getType: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      // 跟藍星球要資料
-      const { response, status } = await venderService.getVenderData(venderUrl.type, restaurant.restaurant_name)
-      console.log('response', response)
-      // 抓取舊資料
-      const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'type')
-      console.log('originalRecords', originalRecords)
-      /* 新舊資料比對 */
-      // 新資料 -> response data 配對 keyId
-      const newRecords = await restaurantService.matchKeyId(response.result)
-      console.log('newRecords', newRecords)
-      // newRecords 與 originalRecords 比較 -> get inputData
-      const inputData = await restaurantService.getInputData(originalRecords, newRecords)
-      console.log('inputData', inputData)
-      // originalRecords 與 newRecords 比較 -> get removeData
-      const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
-      console.log('removeData', removeData)
-      // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.type, status)
-      // 新增及刪除 vender_items
-      await venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'type')
-      await venderRepository.removeVenderItems(removeData, restaurant_id, 'type')
-      // return data
-      return res.status(200).json({
-        status: 'success',
-        response: {
-          restaurant_id,
-          restaurant_name: restaurant.restaurant_name,
-          result: response.result
-        }
-      })
+      let result = await venderRepository.getVenderItemRecords(restaurant_id, 'type')
+      if (!result.length || (today - result[0].updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
+        result = await businessService.syncType(restaurant_id)
+      } else {
+        result = await restaurantService.findKeyName(result)
+      }
+
+      return res.status(200).json(result)
     } catch (error) {
       next(error)
     }
@@ -129,37 +100,17 @@ const restaurantController = {
   getDish: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      // 跟藍星球要資料
-      const { response, status } = await venderService.getVenderData(venderUrl.dish, restaurant.restaurant_name)
-      console.log('response', response)
-      // 抓取舊資料
-      const originalRecords = await venderRepository.getVenderItemOriginals(restaurant_id, 'dish')
-      console.log('originalRecords', originalRecords)
-      /* 新舊資料比對 */
-      // 新資料 -> response data 配對 keyId
-      const newRecords = await restaurantService.matchKeyId(response.result)
-      console.log('newRecords', newRecords)
-      // newRecords 與 originalRecords 比較 -> get inputData
-      const inputData = await restaurantService.getInputData(originalRecords, newRecords)
-      console.log('inputData', inputData)
-      // originalRecords 與 newRecords 比較 -> get removeData
-      const removeData = await restaurantService.getRemoveData(originalRecords, newRecords)
-      console.log('removeData', removeData)
-      // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.dish, status)
-      // 新增及刪除 vender_items
-      await venderRepository.insertVenderItems(inputData, restaurant_id, restaurant.restaurant_name, 'dish')
-      await venderRepository.removeVenderItems(removeData, restaurant_id, 'dish')
-      // return data
-      return res.status(200).json({
-        status: 'success',
-        response: {
-          restaurant_id,
-          restaurant_name: restaurant.restaurant_name,
-          result: response.result
-        }
-      })
+      // query records from database
+      let result = await venderRepository.getVenderItemRecords(restaurant_id, 'dish')
+      // records not exist or updatedAt > 90 days -> call sync
+      if (!result.length || (today - result[0].updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
+        console.log('result 2', result)
+        result = await businessService.syncDish(restaurant_id)
+      } else {
+        result = await restaurantService.findKeyName(result)
+      }
+
+      return res.status(200).json(result)
     } catch (error) {
       next(error)
     }
@@ -167,44 +118,17 @@ const restaurantController = {
   getBasic: async (req, res, next) => {
     try {
       const { restaurant_id } = req.query
-      const restaurant = await vender_input_data.findOne({ raw: true, where: { restaurant_id } })
-      // 跟藍星球要資料
-      const { response, status } = await venderService.getVenderData(venderUrl.basic, restaurant.restaurant_name)
 
-      // get original data (comments, photos, opening_hours)
-      const hourRecords = await venderRepository.getHourOriginals(restaurant_id)
-      const photos = await venderRepository.getPhotoOriginals(restaurant_id)
-      const comments = await venderRepository.getCommentOriginals(restaurant_id)
-
-      // 新增 raw data
-      await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
-
-      // blue planet response error
-      if (response.error) {
-        console.log('blue planet response error')
+      let result = await venderRepository.getBasicRecords(restaurant_id)
+      if (!result.basic || (today - result.basic.updatedAt) / 86400000 > UPDATE_TIME_LIMIT) {
+        result = await businessService.syncBasic(restaurant_id)
       }
 
-      // update basic
-      await venderRepository.updateBasic(restaurant_id, response.result)
-      // update openingHours
-      await venderRepository.updateOpeningHours(restaurant_id, response.result.opening_hours.periods, hourRecords)
-      // update comments
-      await venderRepository.updateComments(restaurant_id, response.result.comments_highest.good, comments)
-      // update photos
-      await venderRepository.updateBasicExtend(response.result.photos, restaurant_id, 'photo', venderUrl.pic, photos)
-
-      // return
-      return res.status(200).json({
-        status: 'success',
-        response: {
-          restaurant_id,
-          restaurant_name: restaurant.restaurant_name,
-          result: response.result
-        }
-      })
+      return res.status(200).json(result)
     } catch (error) {
       next(error)
     }
   }
 }
+
 module.exports = restaurantController

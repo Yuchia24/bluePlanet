@@ -11,18 +11,19 @@ const {
   google_photos
 } = require('../models')
 
+const { BadRequest, BluePlanetError } = require('../utils/errors')
+
 const vender_id = 1
-const baseURL = 'http://demo.blueplanet.com.tw:11693'
+const api_endPoint = 'http://demo.blueplanet.com.tw:11693'
 
 module.exports = class VenderRepository {
-  getVenderItemOriginals (restaurant_id, kind) {
+  getVenderItemRecords (restaurant_id, kind) {
     return new Promise((resolve, reject) => {
       if (!restaurant_id || !kind) {
-        reject(new Error('no value'))
+        reject(new BadRequest('Required parameters does not exist.'))
       } else {
         resolve(vender_items.findAll({
           raw: true,
-          attributes: ['count', 'keyId'],
           where: {
             restaurant_id,
             kind
@@ -32,66 +33,63 @@ module.exports = class VenderRepository {
     })
   }
 
-  getBasicExtendOriginals (restaurant_id, group) {
+  getBasicExtendRecords (restaurant_id, group) {
     return new Promise((resolve, reject) => {
-      resolve(restaurant_basic_extend.findAll({
-        raw: true,
-        attributes: ['count', 'value'],
-        where: {
-          restaurant_id,
-          group
-        }
-      }))
+      if (!restaurant_id || !group) {
+        reject(new BadRequest('Required parameters does not exist.'))
+      } else {
+        resolve(restaurant_basic_extend.findAll({
+          raw: true,
+          where: {
+            restaurant_id,
+            group
+          }
+        }))
+      }
     })
   }
 
-  getCommentOriginals (restaurant_id) {
+  getBasicRecords (restaurant_id) {
     return new Promise((resolve, reject) => {
-      resolve(
-        restaurant_comments.findAll({
-          raw: true,
-          attributes: ['id'],
-          where: { restaurant_id }
-        })
-      )
-    })
-  }
-
-  getPhotoOriginals (restaurant_id) {
-    return new Promise((resolve, reject) => {
-      resolve(
-        restaurant_basic_extend.findAll({
-          raw: true,
-          attributes: ['id'],
-          where: { restaurant_id, group: 'photo' }
-        })
-      )
-    })
-  }
-
-  getHourOriginals (restaurant_id) {
-    return new Promise((resolve, reject) => {
-      resolve(
-        restaurant_openingHours.findAll({
-          raw: true,
-          attributes: ['id'],
-          where: { restaurant_id }
-        })
-      )
+      if (!restaurant_id) {
+        reject(new BadRequest('Required parameters does not exist.'))
+      } else {
+        const result = {}
+        resolve(
+          restaurant_basic.findOne({ raw: true, where: { restaurant_id } })
+            .then((basic) => {
+              result.basic = basic
+              return restaurant_comments.findAll({ raw: true, where: { restaurant_id } })
+            })
+            .then((comments) => {
+              result.comments = comments
+              return restaurant_openingHours.findAll({ raw: true, where: { restaurant_id } })
+            })
+            .then((opening_hours) => {
+              result.opening_hours = opening_hours
+              return restaurant_basic_extend.findAll({ raw: true, where: { restaurant_id, group: 'photo' } })
+            })
+            .then((photos) => {
+              result.photos = photos
+              return result
+            })
+        )
+      }
     })
   }
 
   insertRawData (restaurant_id, posted_data, response_data, api_url, status) {
     return new Promise((resolve, reject) => {
-      if (!restaurant_id || !posted_data || !api_url) {
-        reject(new Error('no value'))
+      if (!response_data) {
+        reject(new BluePlanetError('Blue Planet return no value'))
       } else {
         resolve(vender_rawData.create({
           vender_id,
           restaurant_id,
           posted_data: JSON.stringify({ data: posted_data }),
           response_data: JSON.stringify(response_data),
-          api_url: baseURL.concat(api_url),
+          api_url,
+          api_endPoint,
           status
         }))
       }
@@ -100,10 +98,11 @@ module.exports = class VenderRepository {
 
   updateBasic (restaurant_id, data) {
     return new Promise((resolve, reject) => {
-      if (!restaurant_id) {
-        reject(new Error('no value'))
+      if (!data) {
+        reject(new BluePlanetError('Blue Planet return no value'))
       } else {
-        resolve(restaurant_basic.update({
+        resolve(restaurant_basic.create({
+          restaurant_id,
           address: data.address,
           country: data.country,
           formatted_phone_number: data.formatted_phone_number,
@@ -115,15 +114,17 @@ module.exports = class VenderRepository {
           locationLat: data.geometry.location.lat,
           locationLng: data.geometry.location.lng,
           website: data.website
-        }, { where: { restaurant_id } }))
+        }, {
+          updateOnDuplicate: ['address', 'country', 'formatted_phone_number', 'name', 'price_level', 'rating', 'user_ratings_total', 'route', 'locationLat', 'locationLng', 'website', 'updatedAt']
+        }))
       }
     })
   }
 
   updateComments (restaurant_id, newRecords, oldRecords) {
     return new Promise((resolve, reject) => {
-      if (!restaurant_id) {
-        reject(new Error('no value'))
+      if (!newRecords.length) {
+        reject(new BluePlanetError('Blue Planet return no value'))
       } else {
         newRecords = newRecords.map((comment) => ({
           restaurant_id,
@@ -143,13 +144,15 @@ module.exports = class VenderRepository {
           insertArray.splice(0, 1)
           deleteArray.splice(0, 1)
         }
-        deleteArray = deleteArray.map((item) => item.id)
+        if (deleteArray.length) {
+          deleteArray = deleteArray.map((item) => item.id)
+        }
+        const newArray = updateArray.concat(insertArray)
 
         resolve(
-          restaurant_comments.bulkCreate(updateArray, {
-            updateOnDuplicate: ['author', 'comment_time', 'content', 'star']
+          restaurant_comments.bulkCreate(newArray, {
+            updateOnDuplicate: ['author', 'comment_time', 'content', 'star', 'updatedAt']
           })
-            .then(() => restaurant_comments.bulkCreate(insertArray))
             .then(() => restaurant_comments.destroy({
               where: { id: deleteArray }
             }))
@@ -160,8 +163,8 @@ module.exports = class VenderRepository {
 
   updateOpeningHours (restaurant_id, newRecords, oldRecords) {
     return new Promise((resolve, reject) => {
-      if (!restaurant_id) {
-        reject(new Error('no value'))
+      if (!newRecords.length) {
+        reject(new BluePlanetError('Blue Planet return no value'))
       } else {
         newRecords = newRecords.map((hour) => ({
           restaurant_id,
@@ -183,13 +186,15 @@ module.exports = class VenderRepository {
           insertArray.splice(0, 1)
           deleteArray.splice(0, 1)
         }
-        deleteArray = deleteArray.map((item) => item.id)
+        if (deleteArray.length) {
+          deleteArray = deleteArray.map((item) => item.id)
+        }
+        const newArray = updateArray.concat(insertArray)
 
         resolve(
-          restaurant_openingHours.bulkCreate(updateArray, {
-            updateOnDuplicate: ['day', 'startTime', 'endTime']
+          restaurant_openingHours.bulkCreate(newArray, {
+            updateOnDuplicate: ['day', 'startTime', 'endTime', 'updatedAt']
           })
-            .then(() => restaurant_openingHours.bulkCreate(insertArray))
             .then(() => restaurant_openingHours.destroy({
               where: { id: deleteArray }
             }))
@@ -198,94 +203,85 @@ module.exports = class VenderRepository {
     })
   }
 
-  updateBasicExtend (array, restaurant_id, group, url, oldArray) {
+  updateBasicExtend (restaurant_id, newRecords, oldRecords, group, url) {
     return new Promise((resolve, reject) => {
-      if (url) {
-        // group = 'photo'
-        array = array.map((item) => ({
+      if (!newRecords.length) {
+        reject(new BluePlanetError('Blue Planet return no value'))
+      } else {
+        newRecords = newRecords.map((item) => ({
           restaurant_id,
           group,
-          value: baseURL.concat(url, '/', item.photo_reference)
+          value: group === 'photo' ? api_endPoint.concat(url, '/', item.photo_reference) : item.word,
+          count: group === 'photo' ? '' : item.count
         }))
-        const length = oldArray.length > array.length ? array.length : oldArray.length
+        const length = oldRecords.length > newRecords.length ? newRecords.length : oldRecords.length
         let updateArray = []
-        let insertArray = [...array]
-        let deleteArray = [...oldArray]
+        let insertArray = [...newRecords]
+        let deleteArray = [...oldRecords]
 
         for (let i = 0; i < length; i++) {
           const updateData = {
-            id: oldArray[i].id,
-            ...array[i]
+            id: oldRecords[i].id,
+            ...newRecords[i]
           }
           updateArray.push(updateData)
           insertArray.splice(0, 1)
           deleteArray.splice(0, 1)
         }
-        deleteArray = deleteArray.map((item) => item.id)
+        if (deleteArray.length) {
+          deleteArray = deleteArray.map((item) => item.id)
+        }
+        const newArray = updateArray.concat(insertArray)
 
         resolve(
-          restaurant_basic_extend.bulkCreate(updateArray, { updateOnDuplicate: ['value'] })
-            .then(() => restaurant_basic_extend.bulkCreate(insertArray))
+          restaurant_basic_extend.bulkCreate(newArray, { updateOnDuplicate: ['value', 'count', 'updatedAt'] })
             .then(() => restaurant_basic_extend.destroy({
-              where: { id: [deleteArray] }
+              where: { id: deleteArray }
             }))
         )
-      } else {
-        // group = keyword
-        const inputArray = array.map((item) => ({
-          restaurant_id,
-          group,
-          value: item.word,
-          count: item.count
-        }))
-        resolve(restaurant_basic_extend.bulkCreate(inputArray))
       }
     })
   }
 
-  insertVenderItems (array, restaurant_id, restaurant_name, kind) {
+  updateVenderItems (restaurant_id, newRecords, oldRecords, kind, restaurant_name) {
     return new Promise((resolve, reject) => {
-      const newArray = array.map((item) => ({
-        vender_id,
-        restaurant_id,
-        restaurant_name,
-        kind,
-        keyId: item.keyId,
-        count: item.count
-      }))
-      resolve(vender_items.bulkCreate(newArray))
-    })
-  }
+      if (!newRecords.length) {
+        reject(new BluePlanetError('Blue Planet return no value'))
+      } else {
+        newRecords = newRecords.map((item) => ({
+          vender_id,
+          restaurant_id,
+          restaurant_name,
+          kind,
+          keyId: item.keyId,
+          count: item.count
+        }))
+        const length = oldRecords.length > newRecords.length ? newRecords.length : oldRecords.length
+        let updateArray = []
+        let insertArray = [...newRecords]
+        let deleteArray = [...oldRecords]
 
-  removeVenderItems (array, restaurant_id, kind) {
-    return new Promise((resolve, reject) => {
-      const removeArray = array.map((item) => item.keyId)
-      resolve(
-        vender_items.destroy({
-          where: {
-            restaurant_id,
-            kind,
-            keyId: removeArray
+        for (let i = 0; i < length; i++) {
+          const updateData = {
+            id: oldRecords[i].id,
+            ...newRecords[i]
           }
-        })
-      )
-    })
-  }
+          updateArray.push(updateData)
+          insertArray.splice(0, 1)
+          deleteArray.splice(0, 1)
+        }
+        if (deleteArray.length) {
+          deleteArray = deleteArray.map((item) => item.id)
+        }
+        const newArray = updateArray.concat(insertArray)
 
-  removeBasicExtend (array, restaurant_id, group) {
-    return new Promise((resolve, reject) => {
-      resolve(
-        array.forEach((item) => {
-          restaurant_basic_extend.destroy({
-            where: {
-              restaurant_id,
-              group,
-              value: item.value,
-              count: item.count
-            }
-          })
-        })
-      )
+        resolve(
+          vender_items.bulkCreate(newArray, { updateOnDuplicate: ['keyId', 'count', 'updatedAt'] })
+            .then(() => vender_items.destroy({
+              where: { id: deleteArray }
+            }))
+        )
+      }
     })
   }
 

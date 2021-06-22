@@ -1,0 +1,558 @@
+{2021} 05-27T16:28:00 GET /api/restaurants/keyword?restaurant_id=???? 500 - 2787.031 ms 
+request: {"restaurant_id":"????"} 
+response: {"status":"error","message":"Request failed with status code 403"}
+{2021} 05-28T11:14:38 GET /api/restaurants/keyword?restaurant_id=???? 500 - 1283.723 ms 
+request: {"restaurant_id":"????"} 
+response: {"status":"error","message":"Request failed with status code 403"}
+{2021} 05-28T11:15:19 GET /api/restaurants/keyword?restaurant_id=1 404 - 701.343 ms 
+request: {"restaurant_id":"1"} 
+response: {"status":"error","message":"The restaurant does not exist."}
+{2021} 05-28T11:30:33 GET /api/restaurants/type?restaurant_id=1941 500 - 6244.725 ms 
+request: {"restaurant_id":"1941"} 
+response: {"status":"error","message":"Request failed with status code 500"}
+{2021} 05-28T15:46:44 GET /api/restaurants/keyword?restaurant_id= 500 - 6.413 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","message":"Cannot read property '1' of undefined"}
+{2021} 05-28T15:49:31 GET /api/restaurants/keyword?restaurant_id= 500 - 3.281 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","message":"Cannot read property '1' of undefined"}
+{2021} 05-28T15:49:55 GET /api/restaurants/keyword?restaurant_id= 500 - 8.336 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","message":"Cannot read property '1' of undefined"}
+{2021} 05-28T15:56:39 GET /api/restaurants/keyword?restaurant_id=? 500 - 865.806 ms 
+request: {"restaurant_id":"?"} 
+response: {"status":"error","message":"Request failed with status code 403"}
+{2021} 05-28T15:57:35 GET /api/restaurants/keyword?restaurant_id=? 500 - 768.599 ms 
+request: {"restaurant_id":"?"} 
+response: {"status":"error","message":"Request failed with status code 403"}
+{2021} 05-28T15:57:35 GET /api/restaurants/keyword?restaurant_id=?? 500 - 117.787 ms 
+request: {"restaurant_id":"??"} 
+response: {"status":"error","message":"Request failed with status code 403"}
+{2021} 05-28T15:57:35 GET /api/restaurants/keyword?restaurant_id=asnf;anfkf 500 - 101.082 ms 
+request: {"restaurant_id":"asnf;anfkf"} 
+response: {"status":"error","message":"Request failed with status code 403"}
+{2021} 05-28T16:16:05 GET /api/restaurants/keyword?restaurant_id=15354 502 - 882.775 ms 
+request: {"restaurant_id":"15354"} 
+response: {"status":"error","errorCode":"blue planet error"}
+{2021} 05-28T16:17:52 GET /api/restaurants/keyword?restaurant_id=15354 500 - 7625.218 ms 
+request: {"restaurant_id":"15354"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-28T16:21:47 GET /api/restaurants/keyword?restaurant_id=15354 500 - 866.459 ms 
+request: {"restaurant_id":"15354"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-28T16:21:47 GET /api/restaurants/keyword?restaurant_id=16267 500 - 256.411 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-28T16:47:38 GET /api/restaurants/keyword?restaurant_id=16267 500 - 722.502 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-29T16:25:19 GET /api/restaurants/keyword?restaurant_id=16267 500 - 3428.799 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-29T16:29:12 GET /api/restaurants/keyword?restaurant_id=16267 500 - 710.557 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-29T16:31:13 GET /api/restaurants/keyword?restaurant_id=16267 500 - 792.567 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-29T16:34:58 GET /api/restaurants/keyword?restaurant_id=16267 500 - 699.888 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-29T16:35:29 GET /api/restaurants/keyword?restaurant_id=16267 500 - 641.037 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-29T16:35:47 GET /api/restaurants/keyword?restaurant_id=16267 500 - 654.660 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-29T16:37:04 GET /api/restaurants/keyword?restaurant_id=16267 500 - 718.719 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 05-29T16:37:24 GET /api/restaurants/keyword?restaurant_id=16267 500 - 739.722 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 05-29T16:56:53 GET /api/restaurants/keyword?restaurant_id=16267 500 - 691.602 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 05-29T16:57:25 GET /api/restaurants/keyword?restaurant_id=16267 500 - 652.512 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 05-29T16:58:39 GET /api/restaurants/keyword?restaurant_id=16267 500 - 754.288 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 05-29T16:59:21 GET /api/restaurants/keyword?restaurant_id=16267 500 - 645.117 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"response is not defined"}
+{2021} 05-29T17:00:59 GET /api/restaurants/keyword?restaurant_id=16267 500 - 659.153 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 05-29T17:08:31 GET /api/restaurants/keyword?restaurant_id=16267 500 - 657.362 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"NotFound is not a constructor"}
+{2021} 05-29T17:08:59 GET /api/restaurants/keyword?restaurant_id=16267 500 - 3330.817 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"NotFound is not a constructor"}
+{2021} 05-29T17:14:18 GET /api/restaurants/keyword?restaurant_id=16267 500 - 765.551 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 05-29T17:14:41 GET /api/restaurants/keyword?restaurant_id=16267 500 - 756.556 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 05-29T17:14:59 GET /api/restaurants/keyword?restaurant_id=16267 500 - 736.995 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 05-29T17:15:15 GET /api/restaurants/keyword?restaurant_id=16267 500 - 733.651 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 05-29T17:16:12 GET /api/restaurants/keyword?restaurant_id=16267 502 - 761.106 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","errorCode":"???","message":"Need 'kw' field in request form body."}
+{2021} 05-29T17:18:59 GET /api/restaurants/keyword?restaurant_id=16267 502 - 720.746 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","errorCode":"005","message":"Token or keyword mistake"}
+{2021} 05-29T17:20:32 GET /api/restaurants/keyword?restaurant_id=16267 502 - 737.869 ms 
+request: {"restaurant_id":"16267"} 
+response: {"status":"error","errorCode":"005","message":"Token or keyword mistake"}
+{2021} 05-29T17:21:00 GET /api/restaurants/keyword?restaurant_id=1941 502 - 1922.907 ms 
+request: {"restaurant_id":"1941"} 
+response: {"status":"error","errorCode":"005","message":"Token or keyword mistake"}
+{2021} 05-29T17:21:49 GET /api/restaurants/keyword?restaurant_id=1941 502 - 1494.069 ms 
+request: {"restaurant_id":"1941"} 
+response: {"status":"error","errorCode":"005","message":{"error":"Unknown error, please contact developers.","success":false}}
+{2021} 05-29T17:22:21 GET /api/restaurants/keyword?restaurant_id=1941 502 - 6690.636 ms 
+request: {"restaurant_id":"1941"} 
+response: {"status":"error","errorCode":"005","message":"Unknown error, please contact developers."}
+{2021} 05-29T17:23:27 GET /api/restaurants/keyword?restaurant_id= 502 - 733.234 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"202","message":"Value of field 'kw' cant be empty."}
+{2021} 05-29T17:31:03 GET /api/restaurants/keyword?restaurant_id= 502 - 827.102 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"202","message":"Value of field 'kw' cant be empty."}
+{2021} 05-29T17:34:28 GET /api/restaurants/keyword?restaurant_id= 502 - 725.223 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"202","message":"Value of field 'kw' cant be empty."}
+{2021} 05-29T17:34:55 GET /api/restaurants/keyword?restaurant_id= 502 - 732.779 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"202","message":"Value of field 'kw' cant be empty."}
+{2021} 05-29T17:38:05 GET /api/restaurants/keyword?restaurant_id=15311 502 - 17207.474 ms 
+request: {"restaurant_id":"15311"} 
+response: {"status":"error","errorCode":"201","message":"No match data for your input"}
+{2021} 05-29T17:42:06 GET /api/restaurants/keyword?restaurant_id=1941 502 - 6810.635 ms 
+request: {"restaurant_id":"1941"} 
+response: {"status":"error","errorCode":"202","message":"Unknown error, please contact developers."}
+{2021} 05-29T17:52:32 GET /api/restaurants/keyword?restaurant_id= 400 - 7.081 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T17:52:32 GET /api/restaurants/keyword?restaurant_id=15843 200 - 14747.740 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T17:55:06 GET /api/restaurants/keyword?restaurant_id=15843 200 - 626.983 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T17:55:44 GET /api/restaurants/keyword?restaurant_id=15843 200 - 674.708 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T18:03:24 GET /api/restaurants/keyword?restaurant_id= 400 - 5.189 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T18:03:24 GET /api/restaurants/keyword?restaurant_id=15843 200 - 611.519 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T18:04:23 GET /api/restaurants/keyword?restaurant_id=15843 200 - 628.073 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T18:04:23 GET /api/restaurants/keyword?restaurant_id= 400 - 1.145 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T18:04:23 GET /api/restaurants/keyword?restaurant_id=15843 200 - 273.976 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T18:10:31 GET /api/restaurants/keyword?restaurant_id= 400 - 4.898 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T18:10:31 GET /api/restaurants/keyword?restaurant_id=15843 200 - 642.952 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T18:16:24 GET /api/restaurants/keyword?restaurant_id= 400 - 7.043 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T18:16:24 GET /api/restaurants/keyword?restaurant_id=15843 200 - 664.155 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T18:17:58 GET /api/restaurants/keyword?restaurant_id=15843 200 - 695.037 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T18:17:58 GET /api/restaurants/keyword?restaurant_id= 400 - 1.100 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T19:06:52 GET /api/restaurants/keyword?restaurant_id= 400 - 5.763 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T19:09:48 GET /api/restaurants/keyword?restaurant_id=1afaf 400 - 8.450 ms 
+request: {"restaurant_id":"1afaf"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T19:09:48 GET /api/restaurants/keyword?restaurant_id=15843 200 - 676.213 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T19:09:48 GET /api/restaurants/keyword?restaurant_id= 400 - 0.635 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T19:17:51 GET /api/restaurants/keyword?restaurant_id=15843 200 - 683.613 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T19:17:51 GET /api/restaurants/keyword?restaurant_id= 400 - 1.152 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T19:21:13 GET /api/restaurants/keyword?restaurant_id= 400 - 5.600 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T19:21:35 GET /api/restaurants/keyword?restaurant_id= 400 - 5.564 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T19:22:55 GET /api/restaurants/keyword?restaurant_id=15843 200 - 681.899 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T19:22:55 GET /api/restaurants/keyword?restaurant_id=15843 200 - 318.974 ms 
+request: {"restaurant_id":"15843"} 
+response: {"status":"success","result":[{"count":45,"word":"蛤蜊"},{"count":39,"word":"員林大道"},{"count":34,"word":"鍋物"},{"count":31,"word":"旗艦店"},{"count":28,"word":"新鮮"},{"count":27,"word":"檸檬"},{"count":23,"word":"醬料"},{"count":23,"word":"員林"},{"count":18,"word":"湯底"},{"count":17,"word":"牛奶鍋"},{"count":14,"word":"蒜頭"},{"count":14,"word":"台中"},{"count":13,"word":"適合"},{"count":13,"word":"美食"},{"count":13,"word":"彰化"},{"count":12,"word":"推薦"},{"count":12,"word":"沙茶醬"},{"count":12,"word":"濃郁"},{"count":12,"word":"喜歡"},{"count":11,"word":"菜單"},{"count":11,"word":"用餐"},{"count":11,"word":"南瓜"},{"count":11,"word":"清爽"},{"count":11,"word":"鮮甜"},{"count":9,"word":"松阪豬"},{"count":9,"word":"養生"},{"count":8,"word":"霜降"},{"count":8,"word":"牛奶"},{"count":8,"word":"高湯"},{"count":8,"word":"麻辣鍋"},{"count":8,"word":"龍蝦"},{"count":8,"word":"吃火鍋"},{"count":7,"word":"預約"},{"count":7,"word":"主廚"},{"count":7,"word":"粉絲團"},{"count":7,"word":"日式"},{"count":7,"word":"美味"},{"count":7,"word":"起司"},{"count":7,"word":"豬肉"},{"count":6,"word":"波士頓龍蝦"}]}
+{2021} 05-29T19:24:09 GET /api/restaurants/keyword?restaurant_id= 400 - 6.578 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T19:24:09 GET /api/restaurants/keyword?restaurant_id=afnafa; 400 - 1.193 ms 
+request: {"restaurant_id":"afnafa;"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T19:24:09 GET /api/restaurants/keyword?restaurant_id=1394734704 400 - 295.554 ms 
+request: {"restaurant_id":"1394734704"} 
+response: {"status":"error","errorCode":"103","message":"No match restaurant"}
+{2021} 05-29T19:25:41 GET /api/restaurants/keyword?restaurant_id=1394734704 400 - 701.853 ms 
+request: {"restaurant_id":"1394734704"} 
+response: {"status":"error","errorCode":"103","message":"No match restaurant"}
+{2021} 05-29T19:25:41 GET /api/restaurants/keyword?restaurant_id=550 502 - 363.369 ms 
+request: {"restaurant_id":"550"} 
+response: {"status":"error","errorCode":"202","message":"Need 'kw' field in request form body."}
+{2021} 05-29T19:57:29 GET /api/restaurants/keyword?restaurant_id=14177808 400 - 308.370 ms 
+request: {"restaurant_id":"14177808"} 
+response: {"status":"error","errorCode":"103","message":"No match restaurant"}
+{2021} 05-29T20:15:49 GET /api/restaurants/keyword?restaurant_id=14177808 400 - 1664.127 ms 
+request: {"restaurant_id":"14177808"} 
+response: {"status":"error","errorCode":"103","message":"No match restaurant"}
+{2021} 05-29T20:16:51 GET /api/restaurants/keyword?restaurant_id=14177808100 400 - 728.962 ms 
+request: {"restaurant_id":"14177808100"} 
+response: {"status":"error","errorCode":"103","message":"No match restaurant"}
+{2021} 05-29T20:30:22 GET /api/restaurants/keyword?restaurant_id=1540 502 - 357.725 ms 
+request: {"restaurant_id":"1540"} 
+response: {"status":"error","errorCode":"202","message":"Need 'kw' field in request form body."}
+{2021} 05-29T22:14:45 GET /api/restaurants/keyword?restaurant_id= 400 - 14.313 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T22:15:17 GET /api/restaurants/keyword?restaurant_id= 400 - 11.957 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T22:15:48 GET /api/restaurants/keyword?restaurant_id=amfma; 400 - 9.552 ms 
+request: {"restaurant_id":"amfma;"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:21:48 GET /api/restaurants/keyword?restaurant_id=2137947 400 - 827.922 ms 
+request: {"restaurant_id":"2137947"} 
+response: {"status":"error","errorCode":"103","message":"No match restaurant"}
+{2021} 05-29T22:25:37 GET /api/restaurants/keyword?restaurant_id=2137947 400 - 682.325 ms 
+request: {"restaurant_id":"2137947"} 
+response: {"status":"error","errorCode":"103","message":"No match restaurant"}
+{2021} 05-29T22:26:22 GET /api/restaurants/keyword?restaurant_id=fa;ff 400 - 2.766 ms 
+request: {"restaurant_id":"fa;ff"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:26:22 GET /api/restaurants/keyword?restaurant_id=fa;ff 400 - 3.799 ms 
+request: {"restaurant_id":"fa;ff"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:29:22 GET /api/restaurants/keyword?restaurant_id= 400 - 3.126 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T22:29:22 GET /api/restaurants/keyword?restaurant_id= 400 - 3.930 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T22:29:22 GET /api/restaurants/keyword?restaurant_id=fsdfwf 400 - 3.866 ms 
+request: {"restaurant_id":"fsdfwf"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:32:37 GET /api/restaurants/keyword?restaurant_id=fsdfwf 400 - 7.876 ms 
+request: {"restaurant_id":"fsdfwf"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:33:00 GET /api/restaurants/keyword?restaurant_id= 400 - 8.817 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T22:33:00 GET /api/restaurants/keyword?restaurant_id=244141vsdfsd 400 - 1.577 ms 
+request: {"restaurant_id":"244141vsdfsd"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:41:52 GET /api/restaurants/keyword?restaurant_id=14958dzgg 400 - 1.397 ms 
+request: {"restaurant_id":"14958dzgg"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:45:25 GET /api/restaurants/keyword?restaurant_id=14958dzgg 400 - 13.929 ms 
+request: {"restaurant_id":"14958dzgg"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:45:25 GET /api/restaurants/keyword?restaurant_id= 400 - 1.605 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T22:47:05 GET /api/restaurants/keyword?restaurant_id=afag 400 - 9.382 ms 
+request: {"restaurant_id":"afag"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:47:05 GET /api/restaurants/keyword?restaurant_id= 400 - 2.936 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T22:47:45 GET /api/restaurants/keyword?restaurant_id=gagg 400 - 1.925 ms 
+request: {"restaurant_id":"gagg"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:50:41 GET /api/restaurants/keyword?restaurant_id=234q2t 400 - 2.005 ms 
+request: {"restaurant_id":"234q2t"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:52:43 GET /api/restaurants/keyword?restaurant_id=42q44 400 - 12.080 ms 
+request: {"restaurant_id":"42q44"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T22:52:43 GET /api/restaurants/keyword?restaurant_id= 400 - 1.237 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T22:58:20 GET /api/restaurants/keyword?restaurant_id= 400 - 650.988 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T22:58:20 GET /api/restaurants/keyword?restaurant_id= 400 - 245.579 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:02:52 GET /api/restaurants/keyword?restaurant_id= 400 - 10.594 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:02:52 GET /api/restaurants/keyword?restaurant_id=;j;jj%27 400 - 1.044 ms 
+request: {"restaurant_id":";j;jj'"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T23:07:55 GET /api/restaurants/keyword?restaurant_id=zgzgg 400 - 45.787 ms 
+request: {"restaurant_id":"zgzgg"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T23:07:55 GET /api/restaurants/keyword?restaurant_id= 400 - 2.236 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:09:09 GET /api/restaurants/keyword?restaurant_id= 400 - 11.130 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:09:09 GET /api/restaurants/keyword?restaurant_id=a%27ml%27mgag 400 - 1.761 ms 
+request: {"restaurant_id":"a'ml'mgag"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T23:09:09 GET /api/restaurants/keyword?restaurant_id=a%27ml%27mgag 400 - 1.419 ms 
+request: {"restaurant_id":"a'ml'mgag"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T23:09:09 GET /api/restaurants/keyword?restaurant_id=5234q234 400 - 1.142 ms 
+request: {"restaurant_id":"5234q234"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T23:12:33 GET /api/restaurants/keyword?restaurant_id=5knnk 400 - 3.982 ms 
+request: {"restaurant_id":"5knnk"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T23:12:33 GET /api/restaurants/keyword?restaurant_id= 400 - 3.391 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:12:33 GET /api/restaurants/keyword?restaurant_id= 400 - 1.454 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:14:37 GET /api/restaurants/keyword?restaurant_id= 400 - 11.405 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:14:37 GET /api/restaurants/keyword?restaurant_id=mg%27ga 400 - 2.048 ms 
+request: {"restaurant_id":"mg'ga"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T23:15:25 GET /api/restaurants/keyword?restaurant_id= 400 - 23.597 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:15:44 GET /api/restaurants/keyword?restaurant_id= 400 - 678.641 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:15:44 GET /api/restaurants/keyword?restaurant_id= 400 - 295.694 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:16:48 GET /api/restaurants/keyword?restaurant_id= 400 - 687.492 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 05-29T23:18:02 GET /api/restaurants/keyword?restaurant_id=534q353 400 - 13.872 ms 
+request: {"restaurant_id":"534q353"} 
+response: {"status":"error","errorCode":"102","message":"keyword invalid"}
+{2021} 05-29T23:18:02 GET /api/restaurants/keyword?restaurant_id= 400 - 1.825 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","errorCode":"101","message":"Missing keyword for request"}
+{2021} 06-03T10:40:32 GET /api/restaurants/keyword?restaurant_id=1941 200 - 867.419 ms 
+request: {"restaurant_id":"1941"} 
+response: {"status":"success","result":[{"count":2,"word":"美食"},{"count":2,"word":"成都"},{"count":1,"word":"板橋"},{"count":1,"word":"國父紀念館"},{"count":1,"word":"韓國遊客"},{"count":1,"word":"創始店"},{"count":1,"word":"川菜"},{"count":1,"word":"藍心湄"},{"count":1,"word":"舒淇"},{"count":1,"word":"誠品"}],"errorCode":"203","message":"Number of keywords should not be under 40"}
+{2021} 06-03T10:40:32 GET /api/restaurants/keyword?restaurant_id=15904 400 - 298.323 ms 
+request: {"restaurant_id":"15904"} 
+response: {"status":"error","errorCode":"103","message":"No match restaurant"}
+{2021} 06-03T10:40:32 GET /api/restaurants/keyword?restaurant_id=1941 200 - 654.655 ms 
+request: {"restaurant_id":"1941"} 
+response: {"status":"success","result":[{"count":2,"word":"美食"},{"count":2,"word":"成都"},{"count":1,"word":"板橋"},{"count":1,"word":"國父紀念館"},{"count":1,"word":"韓國遊客"},{"count":1,"word":"創始店"},{"count":1,"word":"川菜"},{"count":1,"word":"藍心湄"},{"count":1,"word":"舒淇"},{"count":1,"word":"誠品"}],"errorCode":"203","message":"Number of keywords should not be under 40"}
+{2021} 06-21T11:55:49 GET /api/restaurant/basic?restaurant_id=4525 404 - 987.027 ms 
+request: {"restaurant_id":"4525"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-21T11:55:49 GET /api/restaurant/basic?restaurant_id=gsem; 400 - 7.898 ms 
+request: {"restaurant_id":"gsem;"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-21T12:11:21 GET /api/restaurant/basic?restaurant_id=2517 500 - 28473.139 ms 
+request: {"restaurant_id":"2517"} 
+response: {"status":"error","message":"Cannot read property 'map' of undefined"}
+{2021} 06-21T12:18:21 GET /api/restaurant/basic?restaurant_id=2517 500 - 28890.652 ms 
+request: {"restaurant_id":"2517"} 
+response: {"status":"error","message":"Cannot read property 'map' of undefined"}
+{2021} 06-21T12:20:04 GET /api/restaurant/basic?restaurant_id=2517 500 - 28856.315 ms 
+request: {"restaurant_id":"2517"} 
+response: {"status":"error","message":"Cannot read property 'map' of undefined"}
+{2021} 06-21T12:32:04 GET /api/restaurant/basic?restaurant_id=2517 502 - 28725.051 ms 
+request: {"restaurant_id":"2517"} 
+response: {"status":"error","message":"Blue Planet return no value"}
+{2021} 06-21T14:32:46 GET /api/restaurant/getKeyword?restaurant_id=315 500 - 1221.923 ms 
+request: {"restaurant_id":"315"} 
+response: {"status":"error","message":"this.fetchKeyword is not a function"}
+{2021} 06-21T14:34:15 GET /api/restaurant/getKeyword?restaurant_id=315 500 - 15816.841 ms 
+request: {"restaurant_id":"315"} 
+response: {"status":"error","message":"Cannot set headers after they are sent to the client"}
+{2021} 06-21T15:34:35 GET /api/restaurant/getKeyword?restaurant_id=1858 500 - 828.137 ms 
+request: {"restaurant_id":"1858"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T15:43:24 GET /api/restaurant/getKeyword?restaurant_id=1736 500 - 879.883 ms 
+request: {"restaurant_id":"1736"} 
+response: {"status":"error","message":"dayjs(...).fromNow is not a function"}
+{2021} 06-21T15:55:29 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 343.543 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:04:28 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 774.728 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:06:58 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 841.553 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:08:07 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 777.866 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:09:38 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 774.458 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:10:12 GET /api/restaurant/getKeyword?restaurant_id=1827 500 - 868.411 ms 
+request: {"restaurant_id":"1827"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T16:28:02 GET /api/restaurant/getKeyword?restaurant_id=1836 500 - 772.561 ms 
+request: {"restaurant_id":"1836"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of undefined"}
+{2021} 06-21T20:44:28 GET /api/restaurant/getBasic?restaurant_id=409 500 - 11.402 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"vender_input_data is not defined"}
+{2021} 06-21T20:48:34 GET /api/restaurant/getBasic?restaurant_id=409 500 - 880.449 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"Cannot read property 'length' of undefined"}
+{2021} 06-21T20:56:19 GET /api/restaurant/getBasic?restaurant_id=409 500 - 938.490 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"Cannot read property 'length' of null"}
+{2021} 06-21T20:57:04 GET /api/restaurant/getBasic?restaurant_id=409 500 - 728.930 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"Cannot destructure property 'basic' of '(intermediate value)' as it is null."}
+{2021} 06-21T20:57:51 GET /api/restaurant/getBasic?restaurant_id=409 500 - 866.669 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T20:58:23 GET /api/restaurant/getBasic?restaurant_id=409 500 - 931.470 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:19:46 GET /api/restaurant/getBasic?restaurant_id=409 500 - 1155.970 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:22:46 GET /api/restaurant/getBasic?restaurant_id=409 500 - 1107.265 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:24:20 GET /api/restaurant/getBasic?restaurant_id=409 500 - 845.464 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:26:27 GET /api/restaurant/getBasic?restaurant_id=409 500 - 709.053 ms 
+request: {"restaurant_id":"409"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:26:27 GET /api/restaurant/getBasic?restaurant_id=14116 500 - 329.915 ms 
+request: {"restaurant_id":"14116"} 
+response: {"status":"error","message":"result is not defined"}
+{2021} 06-21T21:33:15 GET /api/restaurant/getBasic?restaurant_id=14116 500 - 686.767 ms 
+request: {"restaurant_id":"14116"} 
+response: {"status":"error","message":"Cannot read property 'length' of undefined"}
+{2021} 06-21T21:34:20 GET /api/restaurant/getBasic?restaurant_id=14116 500 - 793.870 ms 
+request: {"restaurant_id":"14116"} 
+response: {"status":"error","message":"Cannot read property 'length' of undefined"}
+{2021} 06-21T21:48:43 GET /api/restaurant/getBasic?restaurant_id=622 500 - 1155.345 ms 
+request: {"restaurant_id":"622"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of null"}
+{2021} 06-21T22:08:06 GET /api/restaurant/getBasic?restaurant_id=622 500 - 1113.064 ms 
+request: {"restaurant_id":"622"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of null"}
+{2021} 06-21T22:09:38 GET /api/restaurant/getBasic?restaurant_id=622 500 - 935.137 ms 
+request: {"restaurant_id":"622"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of null"}
+{2021} 06-21T22:10:35 GET /api/restaurant/getBasic?restaurant_id=622 500 - 945.654 ms 
+request: {"restaurant_id":"622"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of null"}
+{2021} 06-21T22:12:12 GET /api/restaurant/getBasic?restaurant_id=622 500 - 1089.307 ms 
+request: {"restaurant_id":"622"} 
+response: {"status":"error","message":"Cannot read property 'updatedAt' of null"}
+{2021} 06-21T23:45:07 GET /api/restaurant/basic?restaurant_id=14116 404 - 5.785 ms 
+request: {"restaurant_id":"14116"} 
+response: undefined
+{2021} 06-22T12:02:15 GET /api/restaurant/getDish?restaurant_id=59 500 - 9525.742 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Cannot read property 'status' of undefined"}
+{2021} 06-22T12:05:53 GET /api/restaurant/getDish?restaurant_id=59 500 - 985.948 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Cannot read property 'status' of undefined"}
+{2021} 06-22T12:09:43 GET /api/restaurant/getDish?restaurant_id=59 500 - 1014.044 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Cannot read property 'status' of undefined"}
+{2021} 06-22T12:12:58 GET /api/restaurant/getDish?restaurant_id=59 500 - 872.772 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Cannot read property 'status' of undefined"}
+{2021} 06-22T12:24:52 GET /api/restaurant/fetchDisg?restaurant_id=59 404 - 3.626 ms 
+request: {"restaurant_id":"59"} 
+response: undefined
+{2021} 06-22T12:26:44 GET /api/restaurant/fetchDisg?restaurant_id=59 404 - 3.811 ms 
+request: {"restaurant_id":"59"} 
+response: undefined
+{2021} 06-22T14:18:41 GET /api/restaurant/getDish?restaurant_id=3123123 400 - 613.251 ms 
+request: {"restaurant_id":"3123123"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:18:41 GET /api/restaurant/getDish?restaurant_id=31235 400 - 67445.438 ms 
+request: {"restaurant_id":"31235"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:18:41 GET /api/restaurant/getDish?restaurant_id=123456 400 - 333.004 ms 
+request: {"restaurant_id":"123456"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:26:28 GET /api/restaurant/getDish?restaurant_id=123456 400 - 632.927 ms 
+request: {"restaurant_id":"123456"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:28:19 GET /api/restaurant/getDish?restaurant_id=123456 400 - 582.419 ms 
+request: {"restaurant_id":"123456"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:28:19 GET /api/restaurant/getDish?restaurant_id=43141 400 - 1348.325 ms 
+request: {"restaurant_id":"43141"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:31:14 GET /api/restaurant/getDish?restaurant_id=43141 400 - 604.666 ms 
+request: {"restaurant_id":"43141"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:31:54 GET /api/restaurant/getDish?restaurant_id=43141 400 - 35706.105 ms 
+request: {"restaurant_id":"43141"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:31:54 GET /api/restaurant/getDish?restaurant_id=54321 400 - 35432.541 ms 
+request: {"restaurant_id":"54321"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:37:22 GET /api/restaurant/getDish?restaurant_id=54321 400 - 683.180 ms 
+request: {"restaurant_id":"54321"} 
+response: {"status":"error","message":"Cannot read property 'data' of undefined"}
+{2021} 06-22T14:38:10 GET /api/restaurant/getDish?restaurant_id=54321 400 - 11660.117 ms 
+request: {"restaurant_id":"54321"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-22T14:38:10 GET /api/restaurant/getDish?restaurant_id=5432132 400 - 376.088 ms 
+request: {"restaurant_id":"5432132"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-22T14:38:10 GET /api/restaurant/getDish?restaurant_id=4134314 400 - 370.834 ms 
+request: {"restaurant_id":"4134314"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-22T14:38:10 GET /api/restaurant/getDish?restaurant_id=76743 400 - 336.816 ms 
+request: {"restaurant_id":"76743"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-22T14:40:27 GET /api/restaurant/getDish?restaurant_id=76743434134 400 - 613.407 ms 
+request: {"restaurant_id":"76743434134"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-22T14:40:27 GET /api/restaurant/getDish?restaurant_id=gegeg 400 - 3.630 ms 
+request: {"restaurant_id":"gegeg"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-22T14:40:27 GET /api/restaurant/getDish?restaurant_id= 400 - 3.350 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","message":"Invalid value,Missing keyword for request."}
