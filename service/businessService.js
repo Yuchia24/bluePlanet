@@ -92,7 +92,6 @@ module.exports = class BusinessService {
       await venderRepository.updateVenderItems(restaurant_id, newRecords, originalRecords, 'type', restaurant.restaurant_name)
       let result = await venderRepository.getVenderItemRecords(restaurant_id, 'type')
       result = await restaurantService.findKeyName(result)
-      console.log('result', result)
       return result
     } catch (error) {
       return error
@@ -118,7 +117,6 @@ module.exports = class BusinessService {
       await venderRepository.updateVenderItems(restaurant_id, newRecords, originalRecords, 'dish', restaurant.restaurant_name)
       let result = await venderRepository.getVenderItemRecords(restaurant_id, 'dish')
       result = await restaurantService.findKeyName(result)
-      console.log('result', result)
       return result
     } catch (error) {
       return error
@@ -136,9 +134,7 @@ module.exports = class BusinessService {
       if (!response) {
         throw new BluePlanetError('Blue Planet return no value')
       }
-
       const { basic, comments, opening_hours, photos } = await venderRepository.getBasicRecords(restaurant_id)
-
       // 新增 raw data
       await venderRepository.insertRawData(restaurant_id, restaurant.restaurant_name, response, venderUrl.basic, status)
       // update basic
@@ -149,6 +145,7 @@ module.exports = class BusinessService {
       await venderRepository.updateComments(restaurant_id, response.result.comments_highest.good, comments)
       // update photos
       await venderRepository.updateBasicExtend(restaurant_id, response.result.photos, photos, 'photo', venderUrl.pic)
+
       const result = await venderRepository.getBasicRecords(restaurant_id)
       return result
     } catch (error) {

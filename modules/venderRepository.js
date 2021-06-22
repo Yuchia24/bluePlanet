@@ -113,7 +113,7 @@ module.exports = class VenderRepository {
           locationLng: data.geometry.location.lng,
           website: data.website
         }, {
-          updateOnDuplicate: ['address', 'country', 'formatted_phone_number', 'name', 'price_level', 'rating', 'user_ratings_total', 'route', 'locationLat', 'locationLng', 'website']
+          updateOnDuplicate: ['address', 'country', 'formatted_phone_number', 'name', 'price_level', 'rating', 'user_ratings_total', 'route', 'locationLat', 'locationLng', 'website', 'updatedAt']
         }))
       }
     })
@@ -149,7 +149,7 @@ module.exports = class VenderRepository {
 
         resolve(
           restaurant_comments.bulkCreate(newArray, {
-            updateOnDuplicate: ['author', 'comment_time', 'content', 'star']
+            updateOnDuplicate: ['author', 'comment_time', 'content', 'star', 'updatedAt']
           })
             .then(() => restaurant_comments.destroy({
               where: { id: deleteArray }
@@ -191,7 +191,7 @@ module.exports = class VenderRepository {
 
         resolve(
           restaurant_openingHours.bulkCreate(newArray, {
-            updateOnDuplicate: ['day', 'startTime', 'endTime']
+            updateOnDuplicate: ['day', 'startTime', 'endTime', 'updatedAt']
           })
             .then(() => restaurant_openingHours.destroy({
               where: { id: deleteArray }
@@ -206,12 +206,10 @@ module.exports = class VenderRepository {
       if (!newRecords.length) {
         reject(new BluePlanetError('Blue Planet return no value'))
       } else {
-        console.log('newRecords', newRecords)
-        console.log('oldRecords', oldRecords.length)
         newRecords = newRecords.map((item) => ({
           restaurant_id,
           group,
-          value: group === 'photo' ? baseURL.concat(url, '/', item.photo_reference) : item.word,
+          value: group === 'photo' ? api_endPoint.concat(url, '/', item.photo_reference) : item.word,
           count: group === 'photo' ? '' : item.count
         }))
         const length = oldRecords.length > newRecords.length ? newRecords.length : oldRecords.length
@@ -228,15 +226,13 @@ module.exports = class VenderRepository {
           insertArray.splice(0, 1)
           deleteArray.splice(0, 1)
         }
-        console.log('deleteArray', deleteArray)
         if (deleteArray.length) {
           deleteArray = deleteArray.map((item) => item.id)
-          console.log('deleteArray', deleteArray)
         }
         const newArray = updateArray.concat(insertArray)
 
         resolve(
-          restaurant_basic_extend.bulkCreate(newArray, { updateOnDuplicate: ['value', 'count'] })
+          restaurant_basic_extend.bulkCreate(newArray, { updateOnDuplicate: ['value', 'count', 'updatedAt'] })
             .then(() => restaurant_basic_extend.destroy({
               where: { id: deleteArray }
             }))
@@ -250,8 +246,6 @@ module.exports = class VenderRepository {
       if (!newRecords.length) {
         reject(new BluePlanetError('Blue Planet return no value'))
       } else {
-        console.log('newRecords', newRecords)
-        console.log('oldRecords', oldRecords.length)
         newRecords = newRecords.map((item) => ({
           vender_id,
           restaurant_id,
@@ -274,15 +268,13 @@ module.exports = class VenderRepository {
           insertArray.splice(0, 1)
           deleteArray.splice(0, 1)
         }
-        console.log('deleteArray', deleteArray)
         if (deleteArray.length) {
           deleteArray = deleteArray.map((item) => item.id)
-          console.log('deleteArray', deleteArray)
         }
         const newArray = updateArray.concat(insertArray)
 
         resolve(
-          vender_items.bulkCreate(newArray, { updateOnDuplicate: ['keyId', 'count'] })
+          vender_items.bulkCreate(newArray, { updateOnDuplicate: ['keyId', 'count', 'updatedAt'] })
             .then(() => vender_items.destroy({
               where: { id: deleteArray }
             }))
