@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
   restaurant_openingHours.init({
     restaurant_id: DataTypes.INTEGER,
     day: DataTypes.INTEGER,
-    startTime: DataTypes.INTEGER,
-    endTime: DataTypes.INTEGER
+    startTime: DataTypes.STRING,
+    endTime: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'restaurant_openingHours',
