@@ -23,6 +23,7 @@ module.exports = class BusinessService {
     if (status !== 200) {
       throw new BluePlanetError(response.error)
     }
+    // 資料監控
     if (!response.result) {
       throw new BluePlanetError('Blue Planet return no value')
     }
@@ -46,6 +47,7 @@ module.exports = class BusinessService {
     if (status !== 200) {
       throw new BluePlanetError(response.error)
     }
+    // 資料監控
     if (!response.result) {
       throw new BluePlanetError('Blue Planet return no value')
     }
@@ -69,6 +71,7 @@ module.exports = class BusinessService {
     if (status !== 200) {
       throw new BluePlanetError(response.error)
     }
+    // 資料監控
     if (!response.result) {
       throw new BluePlanetError('Blue Planet return no value')
     }
@@ -91,6 +94,7 @@ module.exports = class BusinessService {
     if (status !== 200) {
       throw new BluePlanetError(response.error)
     }
+    // 資料監控
     if (!response.result) {
       throw new BluePlanetError('Blue Planet return no value')
     }
@@ -114,10 +118,14 @@ module.exports = class BusinessService {
     if (status !== 200) {
       throw new BluePlanetError(response.error)
     }
-    if (!response.result) {
+    // 資料監控
+    if (!response.result || !response.result.opening_hours || !response.result.comments_highest || !response.result.photos) {
       throw new BluePlanetError('Blue Planet return no value')
     }
+
+    // 抓取舊資料
     const { basic, comments, opening_hours, photos } = await venderRepository.getBasicRecords(restaurant_id)
+
     // 新增 raw data
     await venderRepository.insertRawData(restaurant_id, restaurant_name, response, venderUrl.basic, status)
     // update basic
