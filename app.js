@@ -4,6 +4,7 @@ const cors = require('cors')
 
 const handleErrors = require('./middleware/handleErrors')
 const handleLogs = require('./middleware/handleLogs')
+const handleNotification = require('./middleware/handleNotification')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cors())
 handleLogs(app)
+handleNotification(app)
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)

@@ -51,6 +51,7 @@ const restaurantController = {
       const result = await businessService.syncBasic(restaurant_id)
       return res.status(200).json(result)
     } catch (error) {
+      console.log('controller error')
       next(error)
     }
   },

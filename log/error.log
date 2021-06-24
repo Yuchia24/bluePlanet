@@ -556,3 +556,78 @@ response: {"status":"error","message":"keyword invalid"}
 {2021} 06-22T14:40:27 GET /api/restaurant/getDish?restaurant_id= 400 - 3.350 ms 
 request: {"restaurant_id":""} 
 response: {"status":"error","message":"Invalid value,Missing keyword for request."}
+{2021} 06-24T13:25:24 GET / 404 - 398.227 ms 
+request: {} 
+response: undefined
+{2021} 06-24T13:46:57 GET /api/restaurant/getBasic?restaurant_id= 400 - 434.195 ms 
+request: {"restaurant_id":""} 
+response: {"status":"error","message":"Invalid value,Missing keyword for request."}
+{2021} 06-24T14:08:48 GET /api/restaurant/getBasic?restaurant_id=fgaeger 400 - 2.862 ms 
+request: {"restaurant_id":"fgaeger"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-24T14:11:10 GET /api/restaurant/getBasic?restaurant_id=fgaeger 400 - 15.455 ms 
+request: {"restaurant_id":"fgaeger"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-24T14:16:04 GET /api/restaurant/getBasic?restaurant_id=fgaeger 400 - 58.169 ms 
+request: {"restaurant_id":"fgaeger"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-24T14:20:01 GET /api/restaurant/getBasic?restaurant_id=fgaeger 400 - 10.453 ms 
+request: {"restaurant_id":"fgaeger"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-24T14:20:01 GET /api/restaurant/getBasic?restaurant_id=abcde 400 - 2.360 ms 
+request: {"restaurant_id":"abcde"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-24T14:21:17 GET /api/restaurant/getBasic?restaurant_id=abcde 400 - 18.478 ms 
+request: {"restaurant_id":"abcde"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-24T14:21:33 GET /api/restaurant/getBasic?restaurant_id=abcde 400 - 53.675 ms 
+request: {"restaurant_id":"abcde"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-24T14:31:30 GET /api/restaurant/fetchBasic?restaurant_id=59 500 - 2180.564 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Invalid status code: undefined"}
+{2021} 06-24T14:57:33 GET /api/restaurant/fetchBasic?restaurant_id=59 500 - 68495.791 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Cannot read property 'length' of undefined"}
+{2021} 06-24T15:00:48 GET /api/restaurant/fetchBasic?restaurant_id=59 500 - 68478.201 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Cannot read property 'length' of undefined"}
+{2021} 06-24T15:03:43 GET /api/restaurant/fetchBasic?restaurant_id=59 502 - 1138.262 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Need 'token' field in request form body."}
+{2021} 06-24T15:07:17 GET /api/restaurant/fetchBasic?restaurant_id=59 502 - 68589.048 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Need 'kw' field in request form body."}
+{2021} 06-24T15:14:42 GET /api/restaurant/fetchBasic?restaurant_id=59 502 - 1223.995 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Blue Planet return no value"}
+{2021} 06-24T15:23:05 GET /api/restaurant/fetchBasic?restaurant_id=59 502 - 69408.096 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Blue Planet return no value"}
+{2021} 06-24T15:33:44 GET /api/restaurant/fetchBasic?restaurant_id=123456 400 - 361.050 ms 
+request: {"restaurant_id":"123456"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-24T15:33:44 GET /api/restaurant/fetchBasic?restaurant_id=agsg 400 - 2.263 ms 
+request: {"restaurant_id":"agsg"} 
+response: {"status":"error","message":"keyword invalid"}
+{2021} 06-24T15:40:36 GET /api/restaurant/fetchKeyword?restaurant_id=123456 400 - 696.112 ms 
+request: {"restaurant_id":"123456"} 
+response: {"status":"error","message":"This restaurant does not exist."}
+{2021} 06-24T15:42:14 GET /api/restaurant/fetchKeyword?restaurant_id=59 502 - 87598.924 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Need 'kw' field in request form body."}
+{2021} 06-24T15:42:14 GET /api/restaurant/fetchPurpose?restaurant_id=59 502 - 6115.454 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Need 'kw' field in request form body."}
+{2021} 06-24T15:45:42 GET /api/restaurant/fetchType?restaurant_id=59 502 - 68289.751 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Need 'kw' field in request form body."}
+{2021} 06-24T15:45:42 GET /api/restaurant/fetchDish?restaurant_id=59 502 - 68045.202 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Need 'kw' field in request form body."}
+{2021} 06-24T16:03:18 GET /api/restaurant/fetchPurpose?restaurant_id=59 502 - 68354.425 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"Need 'kw' field in request form body."}
+{2021} 06-24T16:11:14 GET /api/restaurant/fetchPurpose?restaurant_id=59 500 - 68851.819 ms 
+request: {"restaurant_id":"59"} 
+response: {"status":"error","message":"restaurant_id is not defined"}

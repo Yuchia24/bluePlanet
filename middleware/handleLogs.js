@@ -8,6 +8,7 @@ const errorLogStream = fs.createWriteStream(path.join(__dirname, '../log', 'erro
 
 const handleLogs = (app) => {
   app.use((req, res, next) => {
+    console.log('handle log')
     const originalSend = res.send
     res.send = function (body) {
       res.__body_response = body
