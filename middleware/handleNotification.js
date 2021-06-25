@@ -12,8 +12,8 @@ console.log('secretAccessKey', secretAccessKey)
 
 const handleNotification = (app) => {
   AWS.config.update({
-    // accessKeyId,
-    // secretAccessKey,
+    accessKeyId,
+    secretAccessKey,
     region: 'ap-northeast-1'
   })
 
