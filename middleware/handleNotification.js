@@ -1,12 +1,19 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const AWS = require('aws-sdk')
 const accessKeyId = process.env.accessKeyId
 const secretAccessKey = process.env.secretAccessKey
 const morgan = require('morgan')
 
+console.log('accessKeyId', accessKeyId)
+console.log('secretAccessKey', secretAccessKey)
+
 const handleNotification = (app) => {
   AWS.config.update({
-    accessKeyId,
-    secretAccessKey,
+    // accessKeyId,
+    // secretAccessKey,
     region: 'ap-northeast-1'
   })
 
