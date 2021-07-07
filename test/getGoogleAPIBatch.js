@@ -1,9 +1,13 @@
 const axios = require('axios');
-const restaurantData = require('../restaurantJSON.json');
+const restaurantData = require('./restaurantJSON.json');
 const restaurantDataKey = Object.keys(restaurantData);
 let index = 0
-console.log(restaurantDataKey.length)
+// console.log(restaurantDataKey.length)
 function runit (index) {
+  if (index == restaurantDataKey.length) {
+    console.log("全數執行完畢");
+    return false
+  }
   const name = restaurantDataKey[index];
   console.log("index: ", index, " name: ", name);
   for (let i = 0; i < restaurantData[name].length; i++) {
